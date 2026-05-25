@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAT Math Practice Exam</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#1b3a6b;--accent:#0d6efd;--success:#198754;--danger:#dc3545;
+  --warning:#d97706;--bg:#f0f2f5;--card:#fff;--text:#212529;
+  --muted:#6c757d;--border:#dee2e6;--header-h:60px;--footer-h:60px;
+}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* START SCREEN */
+.start-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+.start-card{background:var(--card);border-radius:12px;padding:3rem 3.5rem;max-width:620px;width:100%;box-shadow:0 4px 24px rgba(0,0,0,.09);text-align:center}
+.start-logo{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--muted);margin-bottom:1.5rem}
+.start-card h1{font-size:1.9rem;font-weight:800;color:var(--primary);margin-bottom:.4rem}
+.start-subtitle{font-size:1rem;color:var(--muted);margin-bottom:2rem}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:2rem;text-align:left}
+.info-item{background:#f8f9fa;border-radius:8px;padding:.875rem 1rem}
+.info-item .i-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:.2rem}
+.info-item .i-val{font-size:.95rem;font-weight:600}
+.directions{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.75rem;text-align:left;font-size:.875rem;color:#1e40af;line-height:1.6}
+.directions strong{display:block;margin-bottom:.35rem;font-size:.8rem;text-transform:uppercase;letter-spacing:1px}
+.btn-primary{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:.875rem 2.75rem;font-size:1rem;font-weight:700;cursor:pointer;transition:background .15s,transform .1s}
+.btn-primary:hover{background:#0b5ed7}
+.btn-primary:active{transform:scale(.98)}
+
+/* EXAM LAYOUT */
+.exam-layout{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.exam-header{background:var(--primary);color:#fff;height:var(--header-h);display:flex;align-items:center;padding:0 1.25rem;gap:1rem;flex-shrink:0;z-index:100}
+.hdr-left{flex:1;display:flex;flex-direction:column;gap:1px}
+.hdr-center{display:flex;align-items:center;gap:.5rem}
+.hdr-right{flex:1;display:flex;justify-content:flex-end;gap:.5rem}
+.hdr-module-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;opacity:.65}
+.hdr-module-title{font-size:.95rem;font-weight:700}
+.timer-box{background:rgba(255,255,255,.15);border-radius:6px;padding:.35rem .875rem;font-size:1.2rem;font-weight:700;font-variant-numeric:tabular-nums;min-width:80px;text-align:center;letter-spacing:1px}
+.timer-box.warn{background:rgba(220,53,69,.75)}
+.hide-timer-btn{background:none;border:none;color:rgba(255,255,255,.7);font-size:.75rem;cursor:pointer;padding:.2rem .4rem;border-radius:4px}
+.hide-timer-btn:hover{color:#fff}
+.hdr-btn{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:.35rem .875rem;font-size:.8rem;font-weight:600;cursor:pointer;transition:background .15s;white-space:nowrap}
+.hdr-btn:hover{background:rgba(255,255,255,.22)}
+.hdr-btn.calc-active{background:rgba(255,255,255,.3)}
+
+/* QUESTION AREA */
+.question-area{flex:1;overflow-y:auto;display:flex;justify-content:center;padding:1.75rem 1.25rem}
+.question-wrapper{width:100%;max-width:760px}
+.q-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem}
+.q-num-badge{background:var(--primary);color:#fff;border-radius:6px;padding:.25rem .7rem;font-size:.8rem;font-weight:700}
+.q-topic-badge{background:#e8f0fe;color:#1a56db;border-radius:4px;padding:.2rem .5rem;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.flag-toggle{margin-left:auto;display:flex;align-items:center;gap:.4rem;background:none;border:1px solid var(--border);border-radius:6px;padding:.3rem .7rem;font-size:.8rem;cursor:pointer;color:var(--muted);transition:all .15s}
+.flag-toggle:hover{border-color:var(--warning);color:var(--warning)}
+.flag-toggle.flagged{border-color:var(--warning);color:var(--warning);background:#fff7ed}
+.flag-icon{font-size:.9rem}
+.question-card{background:var(--card);border-radius:10px;padding:1.75rem;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.question-text{font-size:1.03rem;line-height:1.75;margin-bottom:1.5rem;color:var(--text)}
+.question-text sub,.question-text sup{font-size:.75em}
+.calc-note{font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:1rem;padding:.5rem .75rem;background:#f8f9fa;border-radius:4px;display:inline-block}
+
+/* MC OPTIONS */
+.options-list{display:flex;flex-direction:column;gap:.55rem}
+.opt-btn{display:flex;align-items:center;gap:.875rem;padding:.8rem 1.1rem;border:2px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;text-align:left;font-size:.97rem;color:var(--text);width:100%;transition:border-color .15s,background .15s;line-height:1.4}
+.opt-btn:hover:not(.selected):not(.correct):not(.incorrect){border-color:#93c5fd;background:#f0f7ff}
+.opt-btn.selected{border-color:var(--accent);background:#dbeafe}
+.opt-btn.correct{border-color:var(--success);background:#d1fae5;pointer-events:none}
+.opt-btn.incorrect{border-color:var(--danger);background:#fee2e2;pointer-events:none}
+.opt-letter{width:30px;height:30px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0;transition:all .15s}
+.opt-btn.selected .opt-letter{background:var(--accent);border-color:var(--accent);color:#fff}
+.opt-btn.correct .opt-letter{background:var(--success);border-color:var(--success);color:#fff}
+.opt-btn.incorrect .opt-letter{background:var(--danger);border-color:var(--danger);color:#fff}
+
+/* SPR */
+.spr-wrap{display:flex;flex-direction:column;gap:.75rem}
+.spr-label{font-size:.85rem;font-weight:600;color:var(--muted)}
+.spr-input{border:2px solid var(--border);border-radius:8px;padding:.8rem 1rem;font-size:1.1rem;max-width:200px;outline:none;transition:border-color .15s}
+.spr-input:focus{border-color:var(--accent)}
+.spr-input.correct{border-color:var(--success);background:#d1fae5}
+.spr-input.incorrect{border-color:var(--danger);background:#fee2e2}
+.spr-hint{font-size:.78rem;color:var(--muted)}
+
+/* EXAM FOOTER */
+.exam-footer{background:var(--card);border-top:1px solid var(--border);height:var(--footer-h);display:flex;align-items:center;padding:0 1.25rem;flex-shrink:0}
+.ftr-left{flex:1}
+.ftr-right{flex:1;display:flex;justify-content:flex-end}
+.ftr-center{flex:0}
+.btn-back,.btn-next,.btn-submit{border-radius:6px;font-size:.88rem;font-weight:700;cursor:pointer;padding:.5rem 1.25rem;transition:all .15s}
+.btn-back{background:#fff;border:1px solid var(--border);color:var(--text)}
+.btn-back:hover{border-color:var(--accent);color:var(--accent)}
+.btn-next{background:var(--accent);color:#fff;border:none}
+.btn-next:hover{background:#0b5ed7}
+.btn-submit{background:var(--success);color:#fff;border:none}
+.btn-submit:hover{background:#146c43}
+
+/* NAVIGATOR OVERLAY */
+.nav-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:flex;align-items:flex-end;justify-content:center}
+.nav-panel{background:var(--card);border-radius:16px 16px 0 0;padding:1.5rem;width:100%;max-width:760px;max-height:65vh;overflow-y:auto}
+.nav-panel-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.nav-panel-title{font-size:1rem;font-weight:700}
+.close-x{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);line-height:1;padding:.2rem .4rem;border-radius:4px}
+.close-x:hover{background:#f0f2f5}
+.nav-legend{display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}
+.leg-item{display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--muted)}
+.leg-dot{width:12px;height:12px;border-radius:3px}
+.q-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:.5rem}
+.q-dot{width:46px;height:46px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;cursor:pointer;border:2px solid var(--border);background:#fff;color:var(--text);transition:all .15s}
+.q-dot:hover{border-color:var(--accent)}
+.q-dot.q-current{border-color:var(--accent);background:var(--accent);color:#fff}
+.q-dot.q-answered{background:#e8f0fe;border-color:#93c5fd}
+.q-dot.q-flagged{border-color:var(--warning);background:#fff7ed;color:var(--warning)}
+.q-dot.q-answered.q-flagged{background:#fff7ed;border-color:var(--warning)}
+
+/* CALCULATOR */
+.calc-panel{position:fixed;top:calc(var(--header-h) + 8px);right:1rem;width:min(960px,calc(100vw - 2rem));height:min(700px,calc(100vh - var(--header-h) - var(--footer-h) - 18px));min-height:540px;background:#fff;border:1px solid #1f1f1f;border-radius:8px;box-shadow:0 12px 36px rgba(0,0,0,.24);z-index:150;overflow:hidden;display:flex;flex-direction:column}
+.calc-hdr{height:52px;background:#2b2b2b;color:#fff;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 .85rem;font-size:.9rem}
+.calc-brand{display:flex;align-items:center;gap:.75rem;min-width:0}
+.calc-folder{font-size:1.35rem;color:#e8e8e8}
+.calc-title{font-size:1.02rem;white-space:nowrap}
+.calc-save{background:#2f7de1;color:#fff;border:none;border-radius:4px;padding:.52rem 1.05rem;font-size:.95rem;font-weight:700}
+.calc-logo{font-size:2.05rem;line-height:1;font-weight:800;letter-spacing:-1px;text-shadow:0 2px 2px rgba(0,0,0,.55)}
+.calc-actions{display:flex;align-items:center;justify-content:flex-end;gap:.55rem}
+.calc-action{border:1px solid rgba(255,255,255,.55);border-radius:4px;background:transparent;color:#fff;padding:.45rem .78rem;font-weight:700;font-size:.9rem}
+.calc-action.blue{background:#2f7de1;border-color:#2f7de1}
+.calc-mini{font-size:1.25rem;opacity:.9}
+.calc-close{background:none;border:none;color:#ddd;font-size:1.35rem;cursor:pointer;width:30px;height:30px;border-radius:5px}
+.calc-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.graph-calc{flex:1;min-height:0;display:grid;grid-template-columns:380px 1fr;grid-template-rows:1fr 242px;background:#fff}
+.graph-side{grid-row:1;border-right:1px solid #c7c7c7;display:flex;flex-direction:column;min-height:0;background:#fff}
+.graph-side-top{height:60px;border-bottom:1px solid #dedede;display:flex;align-items:center;gap:1.8rem;padding:0 1.05rem;background:#fafafa;box-shadow:0 6px 18px rgba(0,0,0,.08)}
+.graph-panel-tools{margin-left:auto;display:flex;align-items:center;gap:.45rem}
+.graph-icon-btn{width:34px;height:34px;border:1px solid transparent;border-radius:4px;background:transparent;color:#5c5c5c;font-size:1.7rem;font-weight:700;cursor:pointer;line-height:1}
+.graph-icon-btn.small{font-size:1.2rem}
+.graph-icon-btn:hover{background:#eee;border-color:#ddd}
+.graph-expressions{flex:1;min-height:0;overflow-y:auto;background:#fff}
+.graph-row{display:grid;grid-template-columns:38px 1fr 68px;align-items:start;min-height:66px;border-bottom:1px solid #e3e3e3;background:#fff}
+.graph-row:focus-within{box-shadow:inset 0 0 0 1px #2f7de1}
+.graph-row.row-options-open{background:#f7fbff;box-shadow:inset 3px 0 0 #2f7de1}
+.graph-index{align-self:stretch;background:#f1f1f1;color:#5f6b7a;font-size:.75rem;padding:.28rem .2rem;text-align:left;font-variant-numeric:tabular-nums}
+.graph-entry{display:grid;grid-template-columns:18px 1fr;gap:.55rem;align-items:center;padding:.75rem .6rem}
+.graph-swatch{width:13px;height:13px;border-radius:50%;box-shadow:0 0 0 2px rgba(0,0,0,.08)}
+.graph-input{width:100%;border:none;border-radius:0;padding:.25rem .2rem;font-size:1.05rem;background:transparent;outline:none;color:#111;font-family:'Segoe UI',system-ui,sans-serif}
+.graph-row-tools{display:flex;align-items:center;justify-content:flex-end;gap:.1rem;padding:.55rem .3rem 0 0}
+.graph-row-btn{height:28px;width:28px;border:1px solid transparent;border-radius:5px;background:transparent;color:#a9a9a9;cursor:pointer;font-size:1.2rem;line-height:1}
+.graph-row-btn:hover{border-color:#ddd;color:#555;background:#f7f7f7}
+.graph-remove{font-size:1.7rem;line-height:.8}
+.graph-error{padding:.45rem .75rem;color:#b42318;font-size:.75rem;min-height:1.6rem;border-top:1px solid #edf0f4;background:#fff}
+.graph-main{position:relative;min-width:0;min-height:0;background:#fff;overflow:hidden}
+.graph-canvas{width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+.graph-canvas.dragging{cursor:grabbing}
+.graph-zoom{position:absolute;right:.55rem;top:.55rem;display:flex;flex-direction:column}
+.graph-btn{border:1px solid #d1d1d1;background:#f7f7f7;padding:.42rem .5rem;font-size:.78rem;font-weight:700;cursor:pointer;color:#4b5563}
+.graph-btn:hover{background:#eee}
+.graph-zoom .graph-btn{width:36px;height:36px;padding:0;font-size:1.18rem;border-radius:6px 6px 0 0;background:rgba(246,246,246,.95);box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.graph-zoom .graph-btn + .graph-btn{border-radius:0;border-top:none}
+.graph-zoom .graph-btn:last-child{border-radius:0 0 6px 6px}
+.graph-settings-panel{position:absolute;right:3.3rem;top:.6rem;width:350px;background:#fff;border:1px solid #c7c7c7;border-radius:6px;box-shadow:0 4px 18px rgba(0,0,0,.22);padding:.8rem;z-index:2;font-size:.9rem}
+.graph-settings-panel.hidden{display:none}
+.settings-segment{display:grid;grid-template-columns:1fr 1fr;border:1px solid #c9c9c9;border-radius:4px;overflow:hidden;margin-bottom:.7rem}
+.settings-segment button{border:none;background:#fff;padding:.55rem;font-weight:700;cursor:pointer}
+.settings-segment button.active{background:#5d5d5d;color:#fff}
+.settings-row{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #ececec;padding:.45rem 0;gap:.7rem}
+.settings-row:first-of-type{border-top:none}
+.settings-row label{display:flex;align-items:center;gap:.45rem}
+.settings-input{width:112px;border:1px solid #c9c9c9;border-radius:5px;padding:.35rem}
+.graph-keypad{grid-column:1 / span 2;grid-row:2;border-top:1px solid #d8d8d8;background:#ededed;padding:.35rem .75rem;display:flex;flex-direction:column;gap:.35rem}
+.keypad-tabs{display:flex;gap:.35rem}
+.keypad-tab{border:1px solid #c8c8c8;background:#f8f8f8;border-radius:5px;padding:.35rem .8rem;font-weight:700;text-transform:uppercase;font-size:.72rem;cursor:pointer}
+.keypad-tab.active{background:#5f6368;color:#fff;border-color:#5f6368}
+.keypad-grid{flex:1;display:grid;grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(4,1fr);gap:.35rem}
+.graph-key{border:1px solid #d4d4d4;border-radius:4px;background:linear-gradient(#fff,#f6f6f6);min-height:38px;padding:.25rem;font-size:1rem;font-weight:500;color:#111;cursor:pointer;box-shadow:inset 0 -1px 0 rgba(0,0,0,.04)}
+.graph-key.num{background:linear-gradient(#d8d8d8,#c5c5c5)}
+.graph-key.blue{background:#2f7de1;color:#fff;border-color:#2f7de1}
+.graph-key.wide{grid-column:span 2}
+.graph-key:hover{filter:brightness(.97)}
+.graph-help{display:none}
+.graph-login{margin:1rem 2rem;border:1px solid #d2d2d2;border-radius:5px;padding:.8rem;color:#555;font-size:.9rem}
+.graph-login a{color:#2f7de1}
+.graph-powered{color:#c7c7c7;text-align:center;font-size:.8rem;margin-top:.2rem}
+
+/* REFERENCE SHEET */
+.ref-overlay{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:210;display:flex;align-items:center;justify-content:center;padding:1rem}
+.ref-panel{background:#fff;border-radius:10px;box-shadow:0 16px 44px rgba(0,0,0,.24);width:min(900px,100%);max-height:min(760px,calc(100vh - 2rem));display:flex;flex-direction:column;overflow:hidden}
+.ref-hdr{background:var(--primary);color:#fff;padding:.8rem 1rem;display:flex;align-items:center;justify-content:space-between;font-weight:800}
+.ref-hdr .calc-close{color:rgba(255,255,255,.75)}
+.ref-hdr .calc-close:hover{background:rgba(255,255,255,.16);color:#fff}
+.ref-body{padding:1rem;overflow:auto;background:#f8f9fa}
+.ref-img{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--border);border-radius:6px}
+
+/* MODULE END */
+.mod-end-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+.mod-end-card{background:var(--card);border-radius:12px;padding:2.5rem 3rem;max-width:520px;width:100%;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.score-ring{width:110px;height:110px;border-radius:50%;background:var(--primary);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 1.5rem}
+.ring-num{font-size:2.2rem;font-weight:800;line-height:1}
+.ring-of{font-size:.75rem;opacity:.7}
+.mod-end-card h2{font-size:1.5rem;font-weight:800;margin-bottom:.5rem}
+.mod-end-card p{color:var(--muted);line-height:1.6;margin-bottom:1.75rem;font-size:.95rem}
+.path-badge{display:inline-block;padding:.35rem .875rem;border-radius:20px;font-size:.8rem;font-weight:700;margin-bottom:1.5rem}
+.path-badge.hard{background:#fee2e2;color:#991b1b}
+.path-badge.easy{background:#d1fae5;color:#065f46}
+
+/* RESULTS */
+.results-screen{max-width:880px;margin:0 auto;padding:2rem 1.25rem 4rem}
+.results-hdr{text-align:center;margin-bottom:2rem}
+.results-hdr h1{font-size:1.85rem;font-weight:800;color:var(--primary);margin-bottom:.35rem}
+.results-hdr p{color:var(--muted);font-size:.95rem}
+.score-display{display:flex;gap:1rem;justify-content:center;margin-bottom:2rem;flex-wrap:wrap}
+.score-card{background:var(--card);border-radius:12px;padding:1.5rem 2rem;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.06);min-width:155px}
+.score-card.main{border-top:4px solid var(--primary)}
+.sc-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:.4rem}
+.sc-val{font-size:2.4rem;font-weight:800;color:var(--primary);line-height:1}
+.sc-sub{font-size:.78rem;color:var(--muted);margin-top:.25rem}
+.section-card{background:var(--card);border-radius:12px;padding:1.5rem;margin-bottom:1.25rem;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.section-card h2{font-size:1rem;font-weight:700;margin-bottom:1.1rem;padding-bottom:.75rem;border-bottom:1px solid var(--border)}
+/* Topic bars */
+.topic-row{margin-bottom:1rem}
+.topic-row-hdr{display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:.3rem}
+.topic-bar-track{height:8px;background:#e9ecef;border-radius:4px;overflow:hidden}
+.topic-bar-fill{height:100%;border-radius:4px;background:var(--accent)}
+/* Answer review */
+.review-item{display:flex;gap:.875rem;padding:1.1rem 0;border-bottom:1px solid var(--border)}
+.review-item:last-child{border-bottom:none}
+.rev-icon{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0;margin-top:.1rem}
+.rev-icon.c{background:var(--success);color:#fff}
+.rev-icon.w{background:var(--danger);color:#fff}
+.rev-icon.u{background:var(--muted);color:#fff}
+.rev-body{flex:1}
+.rev-qnum{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:.2rem}
+.rev-qtext{font-size:.9rem;margin-bottom:.4rem;line-height:1.5}
+.rev-ans{font-size:.82rem;color:var(--muted);margin-bottom:.4rem}
+.rev-exp{font-size:.82rem;background:#f8f9fa;border-left:3px solid var(--accent);padding:.5rem .75rem;border-radius:0 5px 5px 0;line-height:1.5}
+/* Suggestions */
+.sug-item{display:flex;gap:.875rem;padding:.875rem 0;border-bottom:1px solid var(--border)}
+.sug-item:last-child{border-bottom:none}
+.sug-icon{font-size:1.25rem;flex-shrink:0;margin-top:.1rem}
+.sug-text h4{font-size:.88rem;font-weight:700;margin-bottom:.2rem}
+.sug-text p{font-size:.8rem;color:var(--muted);line-height:1.4}
+.btn-restart{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:.75rem 2rem;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:1.5rem;display:block;margin-left:auto;margin-right:auto}
+.btn-restart:hover{background:#152e57}
+
+/* Responsive */
+@media(max-width:560px){
+  .start-card{padding:2rem 1.25rem}
+  .info-grid{grid-template-columns:1fr}
+  .calc-panel{left:.5rem;right:.5rem;width:auto;min-height:360px}
+  .calc-hdr{grid-template-columns:1fr auto;height:44px}
+  .calc-logo,.calc-actions .calc-action,.calc-mini{display:none}
+  .graph-calc{grid-template-columns:1fr;grid-template-rows:190px 1fr}
+  .graph-side{grid-row:auto;border-right:none;border-bottom:1px solid var(--border)}
+  .graph-side-top{height:34px}
+  .graph-row{min-height:42px}
+  .graph-keypad{display:none}
+  .graph-help{display:none}
+  .score-card{min-width:130px;padding:1.25rem 1.25rem}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// =====================================================================
+// QUESTION BANKS
+// =====================================================================
+
+const Q_M1 = [
+  // ── EASY ──
+  {id:'m1_1',diff:'easy',topic:'Algebra',type:'mc',calc:false,
+   q:'If 3<i>x</i> + 7 = 22, what is the value of <i>x</i>?',
+   opts:['3','4','5','6'],ans:'C',
+   exp:'Subtract 7 from both sides: 3x = 15. Divide by 3: x = 5.'},
+  {id:'m1_2',diff:'easy',topic:'Algebra',type:'mc',calc:false,
+   q:'Which of the following is equivalent to 4(2<i>x</i> − 3) + 5<i>x</i>?',
+   opts:['13<i>x</i> − 12','13<i>x</i> − 3','8<i>x</i> − 12','12<i>x</i> − 12'],ans:'A',
+   exp:'Distribute: 8x − 12 + 5x = 13x − 12.'},
+  {id:'m1_3',diff:'easy',topic:'Problem Solving & Data Analysis',type:'mc',calc:true,
+   q:'A jacket is on sale for $120, which is 20% off its original price. What was the original price of the jacket?',
+   opts:['$96','$140','$144','$150'],ans:'D',
+   exp:'If the sale price is 80% of original: 120 = 0.80 × original, so original = 120 ÷ 0.80 = $150.'},
+  {id:'m1_4',diff:'easy',topic:'Geometry & Trigonometry',type:'mc',calc:false,
+   q:'A rectangle has a length of 12 and a width of 5. What is the length of its diagonal?',
+   opts:['10','13','15','17'],ans:'B',
+   exp:'By the Pythagorean theorem: √(12² + 5²) = √(144 + 25) = √169 = 13.'},
+  {id:'m1_5',diff:'easy',topic:'Algebra',type:'spr',calc:false,
+   q:'If 2<i>x</i> − 5 = 11, what is the value of 4<i>x</i>?',
+   ans:'32',
+   exp:'2x = 16, so x = 8. Therefore 4x = 4 × 8 = 32.'},
+  {id:'m1_6',diff:'easy',topic:'Problem Solving & Data Analysis',type:'mc',calc:true,
+   q:'The number of books read by five students last month were 3, 7, 5, 9, and 6. What is the mean number of books read?',
+   opts:['5','6','7','8'],ans:'B',
+   exp:'Mean = (3 + 7 + 5 + 9 + 6) ÷ 5 = 30 ÷ 5 = 6.'},
+  {id:'m1_7',diff:'easy',topic:'Algebra',type:'mc',calc:false,
+   q:'Which inequality represents the statement "5 less than twice a number is greater than 15"?',
+   opts:['2<i>n</i> − 5 &gt; 15','5 − 2<i>n</i> &gt; 15','2<i>n</i> + 5 &gt; 15','2(<i>n</i> − 5) &gt; 15'],ans:'A',
+   exp:'"Twice a number" = 2n; "5 less than" = 2n − 5; "is greater than 15" gives 2n − 5 > 15.'},
+  {id:'m1_8',diff:'easy',topic:'Geometry & Trigonometry',type:'mc',calc:false,
+   q:'Two parallel lines are cut by a transversal. One of the angles formed is 65°. What is the measure of the alternate interior angle?',
+   opts:['25°','65°','115°','125°'],ans:'B',
+   exp:'Alternate interior angles are congruent when lines are parallel, so the angle is also 65°.'},
+  // ── MEDIUM ──
+  {id:'m1_9',diff:'medium',topic:'Advanced Math',type:'mc',calc:false,
+   q:'Which of the following is equivalent to <sup><i>x</i>² − 9</sup>/<sub><i>x</i> − 3</sub> for <i>x</i> ≠ 3?',
+   opts:['<i>x</i> − 3','<i>x</i> + 3','<i>x</i>² + 3','<i>x</i> − 9'],ans:'B',
+   exp:'Factor the numerator: (x + 3)(x − 3) ÷ (x − 3) = x + 3.'},
+  {id:'m1_10',diff:'medium',topic:'Advanced Math',type:'mc',calc:false,
+   q:'If <i>f</i>(<i>x</i>) = 2<i>x</i>² − 3<i>x</i> + 1, what is <i>f</i>(−2)?',
+   opts:['15','11','9','−7'],ans:'A',
+   exp:'f(−2) = 2(−2)² − 3(−2) + 1 = 2(4) + 6 + 1 = 8 + 6 + 1 = 15.'},
+  {id:'m1_11',diff:'medium',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
+   q:'A bag contains 4 red marbles, 6 blue marbles, and 2 green marbles. If one marble is drawn at random, what is the probability that it is <em>not</em> red?',
+   opts:['1/3','2/3','3/4','1/4'],ans:'B',
+   exp:'Total marbles = 12. Not red = 8. Probability = 8/12 = 2/3.'},
+  {id:'m1_12',diff:'medium',topic:'Geometry & Trigonometry',type:'mc',calc:false,
+   q:'A right triangle has legs of length 7 and 24. What is the length of the hypotenuse?',
+   opts:['25','26','27','31'],ans:'A',
+   exp:'√(7² + 24²) = √(49 + 576) = √625 = 25.'},
+  {id:'m1_13',diff:'medium',topic:'Algebra',type:'mc',calc:true,
+   q:'A train travels at a constant speed and covers 240 miles in 4 hours. At this same rate, how many hours will it take the train to travel 390 miles?',
+   opts:['5.5','6','6.5','7'],ans:'C',
+   exp:'Speed = 240 ÷ 4 = 60 mph. Time = 390 ÷ 60 = 6.5 hours.'},
+  {id:'m1_14',diff:'medium',topic:'Advanced Math',type:'spr',calc:false,
+   q:'If <i>x</i>² − 5<i>x</i> + 6 = 0, what is the sum of all values of <i>x</i> that satisfy the equation?',
+   ans:'5',
+   exp:'Factor: (x − 2)(x − 3) = 0, so x = 2 or x = 3. Sum = 2 + 3 = 5. (Also: by Vieta\'s, sum of roots = −(−5)/1 = 5.)'},
+  {id:'m1_15',diff:'medium',topic:'Problem Solving & Data Analysis',type:'mc',calc:true,
+   q:'A line of best fit for a scatterplot passes through the points (0, 3) and (5, 13). Which equation best represents this line?',
+   opts:['<i>y</i> = 2<i>x</i> + 3','<i>y</i> = 3<i>x</i> + 2','<i>y</i> = 2<i>x</i> − 3','<i>y</i> = <i>x</i> + 3'],ans:'A',
+   exp:'Slope = (13 − 3) ÷ (5 − 0) = 2. y-intercept = 3 (given). Equation: y = 2x + 3.'},
+  {id:'m1_16',diff:'medium',topic:'Geometry & Trigonometry',type:'mc',calc:true,
+   q:'A circle has a circumference of 16π. What is the area of the circle?',
+   opts:['8π','16π','32π','64π'],ans:'D',
+   exp:'Circumference = 2πr = 16π → r = 8. Area = π(8²) = 64π.'},
+  // ── HARD ──
+  {id:'m1_17',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
+   q:'The function <i>f</i> is defined by <i>f</i>(<i>x</i>) = 3 · 2<sup><i>x</i></sup>. What is the <i>y</i>-intercept of the graph of <i>y</i> = <i>f</i>(<i>x</i>) in the <i>xy</i>-plane?',
+   opts:['(0, 1)','(0, 2)','(0, 3)','(0, 6)'],ans:'C',
+   exp:'f(0) = 3 · 2⁰ = 3 · 1 = 3. The y-intercept is (0, 3).'},
+  {id:'m1_18',diff:'hard',topic:'Algebra',type:'spr',calc:true,
+   q:'A store sells apples for $1.50 each and oranges for $0.90 each. Maria buys a total of 20 pieces of fruit and spends exactly $24.00. How many apples did she buy?',
+   ans:'10',
+   exp:'Let a = apples, o = oranges. System: a + o = 20 and 1.50a + 0.90o = 24. Substitute o = 20 − a: 1.50a + 0.90(20 − a) = 24 → 0.60a = 6 → a = 10.'},
+  {id:'m1_19',diff:'hard',topic:'Problem Solving & Data Analysis',type:'mc',calc:true,
+   q:'A random survey of 1,000 households found that 340 had at least one pet. Based on this survey, what is the best estimate of the number of households with at least one pet in a city of 250,000 households?',
+   opts:['65,000','75,000','85,000','95,000'],ans:'C',
+   exp:'340/1000 = 0.34. Estimate: 0.34 × 250,000 = 85,000.'},
+  {id:'m1_20',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
+   q:'Which of the following is equivalent to <sup>2<i>x</i>³ − 5<i>x</i>² + 3<i>x</i></sup>/<sub><i>x</i></sub> for <i>x</i> ≠ 0?',
+   opts:['2<i>x</i>² − 5<i>x</i> + 3','2<i>x</i>² + 5<i>x</i> + 3','2<i>x</i>² − 5<i>x</i> − 3','2<i>x</i>³ − 5<i>x</i> + 3'],ans:'A',
+   exp:'Divide each term by x: 2x³/x − 5x²/x + 3x/x = 2x² − 5x + 3.'},
+  {id:'m1_21',diff:'hard',topic:'Geometry & Trigonometry',type:'mc',calc:true,
+   q:'In a right triangle, one acute angle measures 30°. The hypotenuse has a length of 20. What is the area of the triangle?',
+   opts:['50','50√3','100','100√3'],ans:'B',
+   exp:'In a 30-60-90 triangle: short leg = 10 (opposite 30°), long leg = 10√3 (opposite 60°). Area = ½ × 10 × 10√3 = 50√3.'},
+  {id:'m1_22',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
+   q:'The system of equations below has no solution. Which of the following could be the value of <i>k</i>?<br><i>y</i> = 2<i>x</i> + 5<br><i>y</i> = <i>kx</i> − 3',
+   opts:['−2','−1','1','2'],ans:'D',
+   exp:'For no solution, lines must be parallel (same slope, different y-intercepts). The first line has slope 2, so k = 2. Since 5 ≠ −3, there is no solution.'},
+];
+
+const Q_M2_HARD = [
+  {id:'m2h_1',diff:'hard',topic:'Algebra',type:'mc',calc:false,
+   q:'If (<i>x</i> + 2)² = 49, what are all possible values of <i>x</i>?',
+   opts:['<i>x</i> = 5 only','<i>x</i> = −9 only','<i>x</i> = 5 or <i>x</i> = −9','<i>x</i> = 7 or <i>x</i> = −7'],ans:'C',
+   exp:'Take the square root of both sides: x + 2 = ±7. So x = 5 or x = −9.'},
+  {id:'m2h_2',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
+   q:'The function <i>g</i> is defined by <i>g</i>(<i>x</i>) = <i>x</i>² − 4<i>x</i> + <i>k</i>. For what value of <i>k</i> does <i>g</i> have exactly one real root?',
+   opts:['−4','0','4','8'],ans:'C',
+   exp:'For exactly one real root, the discriminant equals zero: b² − 4ac = 0. Here: 16 − 4k = 0 → k = 4.'},
+  {id:'m2h_3',diff:'hard',topic:'Problem Solving & Data Analysis',type:'mc',calc:true,
+   q:'A data set of adult heights is approximately normally distributed with a mean of 68 inches and a standard deviation of 3 inches. Approximately what percentage of adults have heights between 62 and 74 inches?',
+   opts:['68%','95%','99.7%','50%'],ans:'B',
+   exp:'62 = 68 − 2(3) and 74 = 68 + 2(3), so the interval is within 2 standard deviations of the mean. By the empirical rule, approximately 95% of data falls within 2 SDs.'},
+  {id:'m2h_4',diff:'hard',topic:'Geometry & Trigonometry',type:'mc',calc:true,
+   q:'A regular hexagon has a side length of 6. What is the area of the hexagon?',
+   opts:['36√3','54√3','72√3','108√3'],ans:'B',
+   exp:'Area of a regular hexagon = (3√3/2)s² = (3√3/2)(36) = 54√3.'},
+  {id:'m2h_5',diff:'hard',topic:'Algebra',type:'spr',calc:false,
+   q:'If 2<sup><i>x</i>+1</sup> = 32, what is the value of <i>x</i>?',
+   ans:'4',
+   exp:'Write 32 as a power of 2: 32 = 2⁵. So 2^(x+1) = 2⁵ → x + 1 = 5 → x = 4.'},
+  {id:'m2h_6',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
+   q:'The polynomial <i>p</i>(<i>x</i>) = <i>x</i>³ − 7<i>x</i> + 6. Which of the following is a factor of <i>p</i>(<i>x</i>)?',
+   opts:['<i>x</i> + 1','<i>x</i> − 2','<i>x</i> + 3','<i>x</i> − 6'],ans:'B',
+   exp:'Test x = 2: p(2) = 8 − 14 + 6 = 0. Since p(2) = 0, (x − 2) is a factor by the Factor Theorem.'},
+  {id:'m2h_7',diff:'hard',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
+   q:'A researcher studying hours of sleep and test scores finds a correlation coefficient of r = 0.83. Which of the following conclusions is most appropriate?',
+   opts:['Students who sleep more will score higher','There is a strong positive linear association between sleep hours and test scores','Sleeping more causes higher test scores','There is a weak relationship between the two variables'],ans:'B',
+   exp:'r = 0.83 indicates a strong positive linear association. Correlation does not imply causation, so "causes" is not justified.'},
+  {id:'m2h_8',diff:'hard',topic:'Geometry & Trigonometry',type:'mc',calc:true,
+   q:'A circle is inscribed in a square with side length 10. What is the area of the region inside the square but outside the circle?',
+   opts:['100 − 25π','100 − 10π','100 − 50π','50 − 25π'],ans:'A',
+   exp:'The inscribed circle has radius 5 (half the side). Area of square = 100. Area of circle = π(5²) = 25π. Shaded area = 100 − 25π.'},
+  {id:'m2h_9',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
+   q:'The function <i>f</i> is defined by <i>f</i>(<i>x</i>) = <sup>2<i>x</i> − 1</sup>/<sub><i>x</i> + 3</sub>. For what value of <i>x</i> is <i>f</i>(<i>x</i>) undefined?',
+   opts:['<i>x</i> = 1/2','<i>x</i> = −1/2','<i>x</i> = 3','<i>x</i> = −3'],ans:'D',
+   exp:'A rational function is undefined when the denominator equals zero: x + 3 = 0 → x = −3.'},
+  {id:'m2h_10',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
+   q:'The graph of <i>y</i> = <i>f</i>(<i>x</i>) is a parabola with vertex at (3, −4). The graph passes through the point (1, 0). What is the value of <i>f</i>(5)?',
+   opts:['0','4','−4','8'],ans:'A',
+   exp:'Parabolas are symmetric about their vertex. Point (1, 0) is 2 units left of the vertex (x = 3). By symmetry, (5, 0) is 2 units right. So f(5) = 0.'},
+  {id:'m2h_11',diff:'hard',topic:'Problem Solving & Data Analysis',type:'spr',calc:false,
+   q:'In a class of 30 students, 18 play soccer, 12 play basketball, and 5 play both sports. How many students play neither soccer nor basketball?',
+   ans:'5',
+   exp:'By inclusion-exclusion: students who play at least one sport = 18 + 12 − 5 = 25. Students who play neither = 30 − 25 = 5.'},
+  {id:'m2h_12',diff:'hard',topic:'Geometry & Trigonometry',type:'mc',calc:true,
+   q:'A cone has a base radius of 5 and a slant height of 13. What is the volume of the cone? (Use V = ⅓πr²h)',
+   opts:['100π','200π','300π','400π'],ans:'A',
+   exp:'Find height: h = √(13² − 5²) = √(169 − 25) = √144 = 12. V = (1/3)π(25)(12) = 100π.'},
+  {id:'m2h_13',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
+   q:'Which of the following is equivalent to sin²θ + cos²θ · sin²θ + cos⁴θ for all values of θ?',
+   opts:['sin²θ','cos²θ','1','2sin²θ'],ans:'C',
+   exp:'Factor: sin²θ + cos²θ(sin²θ + cos²θ) = sin²θ + cos²θ · 1 = sin²θ + cos²θ = 1.'},
+  {id:'m2h_14',diff:'hard',topic:'Algebra',type:'mc',calc:true,
+   q:'The cost to rent a piece of equipment is a flat fee of $40 plus $0.25 per mile driven. James paid a total of $95. How many miles did he drive?',
+   opts:['180','220','240','380'],ans:'B',
+   exp:'40 + 0.25m = 95 → 0.25m = 55 → m = 220.'},
+  {id:'m2h_15',diff:'hard',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
+   q:'A data set has a mean of 50 and a standard deviation of 8. A new data point of 74 is added to the data set. Which of the following best describes the effect on the mean and standard deviation?',
+   opts:['The mean increases and the standard deviation increases','The mean increases and the standard deviation decreases','The mean decreases and the standard deviation increases','Both the mean and standard deviation remain the same'],ans:'A',
+   exp:'74 > 50 so the mean increases. 74 is 3 standard deviations above the mean, far from center, so it increases the spread, hence the standard deviation increases.'},
+  {id:'m2h_16',diff:'hard',topic:'Geometry & Trigonometry',type:'mc',calc:false,
+   q:'If sin(<i>x</i>°) = cos(52°) and 0 &lt; <i>x</i> &lt; 90, what is the value of <i>x</i>?',
+   opts:['28','38','48','52'],ans:'B',
+   exp:'sin(x°) = cos(52°) = sin(90° − 52°) = sin(38°). Therefore x = 38.'},
+  {id:'m2h_17',diff:'hard',topic:'Advanced Math',type:'spr',calc:false,
+   q:'If <i>x</i> and <i>y</i> are positive integers and <i>x</i>² − <i>y</i>² = 45, what is one possible value of <i>x</i> + <i>y</i>?',
+   ans:'9',
+   exp:'Factor: (x + y)(x − y) = 45. Factor pairs of 45: (9,5), (15,3), (45,1). For (x+y)=9 and (x−y)=5: x=7, y=2 ✓. So x + y = 9. (Also acceptable: 15 or 45.)'},
+  {id:'m2h_18',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
+   q:'The expression (3 + 2<i>i</i>)(4 − <i>i</i>) is equivalent to which of the following? (where <i>i</i>² = −1)',
+   opts:['10 + 5<i>i</i>','14 + 5<i>i</i>','12 − 2<i>i</i>','10 − <i>i</i>'],ans:'B',
+   exp:'FOIL: 12 − 3i + 8i − 2i² = 12 + 5i − 2(−1) = 12 + 5i + 2 = 14 + 5i.'},
+  {id:'m2h_19',diff:'hard',topic:'Algebra',type:'mc',calc:true,
+   q:'The graph of <i>f</i>(<i>x</i>) = <i>ax</i>² + <i>bx</i> + <i>c</i> passes through the points (−1, 4), (0, 1), and (2, 7). What is the value of <i>a</i>?',
+   opts:['1','2','3','4'],ans:'B',
+   exp:'From (0,1): c = 1. From (−1,4): a − b + 1 = 4 → a − b = 3. From (2,7): 4a + 2b + 1 = 7 → 2a + b = 3. Adding: 3a = 6 → a = 2.'},
+  {id:'m2h_20',diff:'hard',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
+   q:'A study models the relationship between years of education (<i>x</i>) and annual income in thousands of dollars (<i>y</i>) as <i>y</i> = 4.5<i>x</i> + 10.2. According to this model, what is the expected increase in annual income for each additional year of education?',
+   opts:['$4,500','$10,200','$14,700','$45,000'],ans:'A',
+   exp:'The slope 4.5 represents the increase in y (thousands of dollars) per unit increase in x (years). So each additional year of education is associated with a $4,500 increase in annual income.'},
+  {id:'m2h_21',diff:'hard',topic:'Geometry & Trigonometry',type:'mc',calc:true,
+   q:'In the <i>xy</i>-plane, what is the distance between the centers of the circles (<i>x</i> − 2)² + (<i>y</i> + 3)² = 16 and (<i>x</i> + 4)² + (<i>y</i> − 1)² = 25?',
+   opts:['2√13','6√2','√52','10'],ans:'A',
+   exp:'Centers: (2, −3) and (−4, 1). Distance = √((2−(−4))² + (−3−1)²) = √(36 + 16) = √52 = 2√13.'},
+  {id:'m2h_22',diff:'hard',topic:'Advanced Math',type:'spr',calc:false,
+   q:'If (<i>x</i> + 1/<i>x</i>)² = 9, what is the value of <i>x</i>² + 1/<i>x</i>²?',
+   ans:'7',
+   exp:'Expand: (x + 1/x)² = x² + 2(x)(1/x) + 1/x² = x² + 2 + 1/x² = 9. Therefore x² + 1/x² = 9 − 2 = 7.'},
+];
+
+const Q_M2_EASY = [
+  // ── EASY ──
+  {id:'m2e_1',diff:'easy',topic:'Algebra',type:'mc',calc:false,
+   q:'What is the value of <i>x</i> if 5<i>x</i> − 3 = 17?',
+   opts:['2','3','4','5'],ans:'C',
+   exp:'5x = 20 → x = 4.'},
+  {id:'m2e_2',diff:'easy',topic:'Algebra',type:'mc',calc:false,
+   q:'Which expression is equivalent to 3(<i>x</i> + 4) − 2<i>x</i>?',
+   opts:['<i>x</i> + 12','<i>x</i> + 4','5<i>x</i> + 12','<i>x</i> − 4'],ans:'A',
+   exp:'Distribute: 3x + 12 − 2x = x + 12.'},
+  {id:'m2e_3',diff:'easy',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
+   q:'A car travels at a constant speed of 55 miles per hour. How far will the car travel in 3 hours?',
+   opts:['155 miles','160 miles','165 miles','170 miles'],ans:'C',
+   exp:'Distance = rate × time = 55 × 3 = 165 miles.'},
+  {id:'m2e_4',diff:'easy',topic:'Geometry & Trigonometry',type:'mc',calc:false,
+   q:'A square has an area of 36. What is its perimeter?',
+   opts:['6','18','24','36'],ans:'C',
+   exp:'Side length = √36 = 6. Perimeter = 4 × 6 = 24.'},
+  {id:'m2e_5',diff:'easy',topic:'Algebra',type:'spr',calc:false,
+   q:'If <i>y</i> = 3<i>x</i> − 2, what is the value of <i>y</i> when <i>x</i> = 4?',
+   ans:'10',
+   exp:'y = 3(4) − 2 = 12 − 2 = 10.'},
+  {id:'m2e_6',diff:'easy',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
+   q:'The scores on a quiz are: 8, 10, 7, 10, 6, 10, 8. What is the mode of these scores?',
+   opts:['7','8','9','10'],ans:'D',
+   exp:'10 appears 3 times, more than any other value. The mode is 10.'},
+  {id:'m2e_7',diff:'easy',topic:'Algebra',type:'mc',calc:false,
+   q:'If −2<i>x</i> &gt; 8, which of the following must be true?',
+   opts:['<i>x</i> &gt; −4','<i>x</i> &lt; −4','<i>x</i> &gt; 4','<i>x</i> &lt; 4'],ans:'B',
+   exp:'Divide both sides by −2 and flip the inequality: x < −4.'},
+  {id:'m2e_8',diff:'easy',topic:'Geometry & Trigonometry',type:'mc',calc:false,
+   q:'Two angles are supplementary. If one angle measures 73°, what is the measure of the other angle?',
+   opts:['17°','90°','107°','117°'],ans:'C',
+   exp:'Supplementary angles sum to 180°. 180° − 73° = 107°.'},
+  // ── MEDIUM ──
+  {id:'m2e_9',diff:'medium',topic:'Algebra',type:'mc',calc:false,
+   q:'What is the slope of the line passing through the points (−2, 3) and (4, −9)?',
+   opts:['−2','−1','1','2'],ans:'A',
+   exp:'slope = (−9 − 3) ÷ (4 − (−2)) = −12 ÷ 6 = −2.'},
+  {id:'m2e_10',diff:'medium',topic:'Advanced Math',type:'mc',calc:false,
+   q:'If <i>f</i>(<i>x</i>) = <i>x</i>² − 4, what is the value of <i>f</i>(3) + <i>f</i>(−3)?',
+   opts:['5','10','15','20'],ans:'B',
+   exp:'f(3) = 9 − 4 = 5. f(−3) = 9 − 4 = 5. Sum = 10.'},
+  {id:'m2e_11',diff:'medium',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
+   q:'A box contains 5 red balls, 3 blue balls, and 2 yellow balls. If one ball is drawn at random, what is the probability of drawing a blue ball?',
+   opts:['1/5','3/10','2/5','1/2'],ans:'B',
+   exp:'P(blue) = 3 ÷ (5 + 3 + 2) = 3/10.'},
+  {id:'m2e_12',diff:'medium',topic:'Geometry & Trigonometry',type:'mc',calc:true,
+   q:'The area of a circle is 36π. What is the diameter of the circle?',
+   opts:['6','9','12','18'],ans:'C',
+   exp:'πr² = 36π → r² = 36 → r = 6. Diameter = 2r = 12.'},
+  {id:'m2e_13',diff:'medium',topic:'Algebra',type:'mc',calc:false,
+   q:'If 2<i>x</i> + 3<i>y</i> = 12 and <i>x</i> = 3, what is the value of <i>y</i>?',
+   opts:['1','2','3','4'],ans:'B',
+   exp:'Substitute x = 3: 6 + 3y = 12 → 3y = 6 → y = 2.'},
+  {id:'m2e_14',diff:'medium',topic:'Advanced Math',type:'spr',calc:false,
+   q:'If <i>x</i>² − 7<i>x</i> + 12 = 0, what is the larger value of <i>x</i> that satisfies the equation?',
+   ans:'4',
+   exp:'Factor: (x − 3)(x − 4) = 0, so x = 3 or x = 4. The larger value is 4.'},
+  {id:'m2e_15',diff:'medium',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
+   q:'A line has the equation <i>y</i> = 3<i>x</i> + 2. What is the <i>y</i>-intercept of this line?',
+   opts:['2','3','−2','0'],ans:'A',
+   exp:'In the form y = mx + b, the y-intercept is b = 2.'},
+  {id:'m2e_16',diff:'medium',topic:'Geometry & Trigonometry',type:'mc',calc:false,
+   q:'In triangle ABC, angle A = 45° and angle B = 75°. What is the measure of angle C?',
+   opts:['30°','45°','60°','90°'],ans:'C',
+   exp:'Angles in a triangle sum to 180°: C = 180° − 45° − 75° = 60°.'},
+  {id:'m2e_17',diff:'medium',topic:'Advanced Math',type:'mc',calc:false,
+   q:'Which of the following represents an exponential function?',
+   opts:['<i>y</i> = 3<i>x</i> + 2','<i>y</i> = <i>x</i>² + 1','<i>y</i> = 2 · 3<sup><i>x</i></sup>','<i>y</i> = <i>x</i>/3'],ans:'C',
+   exp:'An exponential function has the variable in the exponent. y = 2 · 3ˣ is exponential.'},
+  {id:'m2e_18',diff:'medium',topic:'Algebra',type:'mc',calc:true,
+   q:'The ratio of boys to girls in a class is 3:4. If there are 28 girls in the class, how many boys are there?',
+   opts:['15','18','21','24'],ans:'C',
+   exp:'3/4 = x/28 → x = 3 × 28/4 = 21.'},
+  {id:'m2e_19',diff:'medium',topic:'Problem Solving & Data Analysis',type:'mc',calc:true,
+   q:'A car that was originally worth $20,000 depreciates at a rate of 15% per year. What is the approximate value of the car after 2 years?',
+   opts:['$14,000','$14,450','$15,000','$17,000'],ans:'B',
+   exp:'After 2 years: $20,000 × (0.85)² = $20,000 × 0.7225 = $14,450.'},
+  {id:'m2e_20',diff:'medium',topic:'Advanced Math',type:'mc',calc:false,
+   q:'Which of the following is the positive solution to |3<i>x</i> + 1| = 7?',
+   opts:['<i>x</i> = −8/3','<i>x</i> = 1','<i>x</i> = 2','<i>x</i> = 3'],ans:'C',
+   exp:'Case 1: 3x + 1 = 7 → 3x = 6 → x = 2 ✓. Case 2: 3x + 1 = −7 → x = −8/3 (negative). Positive solution: x = 2.'},
+  {id:'m2e_21',diff:'medium',topic:'Geometry & Trigonometry',type:'mc',calc:true,
+   q:'A rectangular prism has a length of 4, a width of 3, and a height of 5. What is the volume of the prism?',
+   opts:['12','20','47','60'],ans:'D',
+   exp:'Volume = length × width × height = 4 × 3 × 5 = 60.'},
+  {id:'m2e_22',diff:'medium',topic:'Problem Solving & Data Analysis',type:'mc',calc:true,
+   q:'A survey shows that 60% of people prefer coffee over tea. If 450 people were surveyed, how many prefer tea?',
+   opts:['150','175','180','270'],ans:'C',
+   exp:'40% prefer tea. 0.40 × 450 = 180.'},
+];
+
+// =====================================================================
+// APP STATE
+// =====================================================================
+const state = {
+  phase: 'start',
+  m1: {
+    qs: Q_M1, answers: new Array(22).fill(null), flags: new Array(22).fill(false),
+    current: 0, timeLeft: 35*60, timer: null, submitted: false
+  },
+  m2: {
+    qs: null, answers: null, flags: null,
+    current: 0, timeLeft: 35*60, timer: null, submitted: false, isHard: false
+  },
+  calcVisible: false, navVisible: false, refVisible: false, timerHidden: false,
+  graph: {
+    expressions: [
+      {expr:'', color:'#c74440'},
+      {expr:'', color:'#2d70b3'}
+    ],
+    xMin:-10, xMax:10, yMin:-10, yMax:10, errors:{},
+    keypadTab:'main', settingsOpen:false, selectedPoint:null, hoverPoint:null,
+    settings:{grid:true, minorGrid:true, axisNumbers:true, radians:true}
+  }
+};
+
+// =====================================================================
+// RENDERING
+// =====================================================================
+function render() {
+  const app = document.getElementById('app');
+  if (state.phase === 'start') app.innerHTML = renderStart();
+  else if (state.phase === 'm1') app.innerHTML = renderExam('m1');
+  else if (state.phase === 'm1-end') app.innerHTML = renderModEnd();
+  else if (state.phase === 'm2') app.innerHTML = renderExam('m2');
+  else if (state.phase === 'results') app.innerHTML = renderResults();
+  bindAll();
+  initGraphCalc();
+}
+
+function renderStart() {
+  return `
+  <div class="start-screen">
+    <div class="start-card">
+      <div class="start-logo">SAT Practice &nbsp;|&nbsp; Math Section</div>
+      <h1>Digital SAT Math</h1>
+      <p class="start-subtitle">Full-Length Adaptive Practice Exam</p>
+      <div class="info-grid">
+        <div class="info-item"><div class="i-label">Modules</div><div class="i-val">2 Modules</div></div>
+        <div class="info-item"><div class="i-label">Questions</div><div class="i-val">22 per module</div></div>
+        <div class="info-item"><div class="i-label">Time per module</div><div class="i-val">35 minutes</div></div>
+        <div class="info-item"><div class="i-label">Score range</div><div class="i-val">200–800</div></div>
+      </div>
+      <div class="directions">
+        <strong>Before You Begin</strong>
+        Module 2 difficulty adapts based on your Module 1 performance. A calculator is available for select questions. Flag questions for review and revisit them before submitting. Explanations are shown only after completing the full exam.
+      </div>
+      <button class="btn-primary" id="start-btn">Start Module 1</button>
+    </div>
+  </div>`;
+}
+
+function renderExam(mod) {
+  const m = state[mod];
+  const q = m.qs[m.current];
+  const modLabel = mod === 'm1' ? 'Module 1' : 'Module 2';
+  const modPath = mod === 'm2' ? (state.m2.isHard ? ' &nbsp;·&nbsp; Advanced' : ' &nbsp;·&nbsp; Standard') : '';
+  const timerStr = state.timerHidden ? 'Hidden' : formatTime(m.timeLeft);
+  const timerWarn = m.timeLeft <= 300 && !state.timerHidden;
+  const isLast = m.current === m.qs.length - 1;
+
+  return `
+  <div class="exam-layout">
+    <header class="exam-header">
+      <div class="hdr-left">
+        <div class="hdr-module-label">Section 4, ${modLabel}${modPath}</div>
+        <div class="hdr-module-title">SAT Math Practice</div>
+      </div>
+      <div class="hdr-center">
+        <div class="timer-box${timerWarn ? ' warn' : ''}" id="timer-disp">${timerStr}</div>
+        <button class="hide-timer-btn" id="hide-timer-btn">${state.timerHidden ? 'Show' : 'Hide'}</button>
+      </div>
+      <div class="hdr-right">
+        <button class="hdr-btn${state.calcVisible ? ' calc-active' : ''}" id="calc-toggle-btn">Calculator</button>
+        <button class="hdr-btn${state.refVisible ? ' calc-active' : ''}" id="ref-toggle-btn">Reference</button>
+        <button class="hdr-btn" id="nav-toggle-btn">Question Navigator</button>
+      </div>
+    </header>
+    <main class="question-area" id="question-area">
+      <div class="question-wrapper">
+        <div class="q-header">
+          <span class="q-num-badge">Question ${m.current + 1} of ${m.qs.length}</span>
+          <span class="q-topic-badge">${q.topic}</span>
+          <button class="flag-toggle${m.flags[m.current] ? ' flagged' : ''}" id="flag-btn">
+            <span class="flag-icon">${m.flags[m.current] ? '🚩' : '⚑'}</span>
+            ${m.flags[m.current] ? 'Flagged' : 'Flag for Review'}
+          </button>
+        </div>
+        <div class="question-card">
+          ${q.calc ? '<div class="calc-note">Calculator available for this question</div>' : ''}
+          <div class="question-text">${q.q}</div>
+          ${renderAnswerArea(q, mod, m)}
+        </div>
+      </div>
+    </main>
+    <footer class="exam-footer">
+      <div class="ftr-left">
+        ${m.current > 0 ? '<button class="btn-back" id="prev-btn">← Back</button>' : ''}
+      </div>
+      <div class="ftr-right">
+        ${isLast
+          ? `<button class="btn-submit" id="submit-btn">Submit Module</button>`
+          : `<button class="btn-next" id="next-btn">Next →</button>`
+        }
+      </div>
+    </footer>
+  </div>
+  ${state.calcVisible ? renderCalc() : ''}
+  ${state.refVisible ? renderReferenceSheet() : ''}
+  ${state.navVisible ? renderNav(mod) : ''}`;
+}
+
+function renderAnswerArea(q, mod, m) {
+  const saved = m.answers[m.current];
+  if (q.type === 'mc') {
+    return `<div class="options-list">${q.opts.map((opt, i) => {
+      const letter = ['A','B','C','D'][i];
+      const sel = saved === letter ? ' selected' : '';
+      return `<button class="opt-btn${sel}" data-letter="${letter}" data-mod="${mod}">
+        <span class="opt-letter">${letter}</span><span>${opt}</span>
+      </button>`;
+    }).join('')}</div>`;
+  } else {
+    return `<div class="spr-wrap">
+      <div class="spr-label">Enter your answer:</div>
+      <input class="spr-input" id="spr-input" type="text" value="${saved || ''}" placeholder="e.g. 7" autocomplete="off" inputmode="decimal">
+      <div class="spr-hint">Enter a number, decimal, or fraction (e.g. 3/4). Do not include units.</div>
+    </div>`;
+  }
+}
+
+function renderNav(mod) {
+  const m = state[mod];
+  return `<div class="nav-overlay" id="nav-overlay">
+    <div class="nav-panel">
+      <div class="nav-panel-hdr">
+        <span class="nav-panel-title">Question Navigator — Module ${mod === 'm1' ? '1' : '2'}</span>
+        <button class="close-x" id="close-nav">×</button>
+      </div>
+      <div class="nav-legend">
+        <div class="leg-item"><div class="leg-dot" style="background:#e8f0fe;border:2px solid #93c5fd"></div> Answered</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#fff7ed;border:2px solid #d97706"></div> Flagged</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#fff;border:2px solid #dee2e6"></div> Unanswered</div>
+        <div class="leg-item"><div class="leg-dot" style="background:var(--accent);border:2px solid var(--accent)"></div> Current</div>
+      </div>
+      <div class="q-grid">
+        ${m.qs.map((_, i) => {
+          let cls = 'q-dot';
+          if (i === m.current) cls += ' q-current';
+          else if (m.answers[i] !== null) cls += ' q-answered';
+          if (m.flags[i]) cls += ' q-flagged';
+          return `<div class="${cls}" data-goto="${i}" data-mod="${mod}">${i+1}</div>`;
+        }).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderCalc() {
+  const g = state.graph;
+  const keys = getKeypadKeys(g.keypadTab);
+  return `<div class="calc-panel" id="calc-panel">
+    <div class="calc-hdr">
+      <div class="calc-brand">
+        <span class="calc-folder">▰</span>
+        <span class="calc-title">Untitled Graph</span>
+        <button class="calc-save">Save</button>
+      </div>
+      <div class="calc-logo">desmos</div>
+      <div class="calc-actions">
+        <button class="calc-action">Log In</button>
+        <button class="calc-action blue">Sign Up</button>
+        <span class="calc-mini">↗</span>
+        <span class="calc-mini">?</span>
+        <button class="calc-close" id="calc-close-btn">×</button>
+      </div>
+    </div>
+    <div class="graph-calc">
+      <aside class="graph-side">
+        <div class="graph-side-top">
+          <button class="graph-icon-btn" id="graph-add" title="Add expression">+</button>
+          <button class="graph-icon-btn small" title="Undo">↶</button>
+          <button class="graph-icon-btn small" title="Redo">↷</button>
+          <div class="graph-panel-tools">
+            <button class="graph-icon-btn small" title="Help">?</button>
+            <button class="graph-icon-btn small" title="Account">◉</button>
+            <button class="graph-icon-btn small" title="Menu">☰</button>
+            <button class="graph-icon-btn small" title="Collapse">≪</button>
+          </div>
+        </div>
+        <div class="graph-expressions" id="graph-expressions">
+          ${g.expressions.map((item, i) => `<div class="graph-row">
+            <span class="graph-index">${i + 1}</span>
+            <div class="graph-entry">
+              <span class="graph-swatch" style="background:${item.color}"></span>
+              <input class="graph-input" data-graph-expr="${i}" value="${escapeAttr(item.expr)}" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="graph-row-tools">
+              <button class="graph-row-btn" data-row-settings="${i}" title="Expression options">⚙</button>
+              <button class="graph-row-btn graph-remove" data-graph-remove="${i}" aria-label="Remove expression">×</button>
+            </div>
+          </div>`).join('')}
+        </div>
+        <div class="graph-error" id="graph-error">${Object.values(g.errors)[0] || ''}</div>
+        <div class="graph-login"><a>Log in</a> or <a>sign up</a> to save your beautiful math!</div>
+        <div class="graph-powered">powered by desmos</div>
+      </aside>
+      <div class="graph-main">
+        <canvas class="graph-canvas" id="graph-canvas"></canvas>
+        <div class="graph-settings-panel${g.settingsOpen ? '' : ' hidden'}" id="graph-settings-panel">
+          <div class="settings-segment">
+            <button class="${g.settings.radians ? 'active' : ''}" data-angle-mode="radians">Radians</button>
+            <button class="${g.settings.radians ? '' : 'active'}" data-angle-mode="degrees">Degrees</button>
+          </div>
+          <div class="settings-row"><label><input type="checkbox" data-setting="grid" ${g.settings.grid ? 'checked' : ''}> Grid</label><label><input type="checkbox" data-setting="minorGrid" ${g.settings.minorGrid ? 'checked' : ''}> Minor Gridlines</label></div>
+          <div class="settings-row"><label><input type="checkbox" data-setting="axisNumbers" ${g.settings.axisNumbers ? 'checked' : ''}> Axis Numbers</label><span>Projector Mode <input type="checkbox"></span></div>
+          <div class="settings-row"><label>X-Axis</label><input class="settings-input" placeholder='Label e.g. "x"'></div>
+          <div class="settings-row"><label>Y-Axis</label><input class="settings-input" placeholder='Label e.g. "y"'></div>
+          <div class="settings-row"><label><input type="checkbox"> Arrows</label><span>More Options ▸</span></div>
+        </div>
+        <div class="graph-zoom">
+          <button class="graph-btn" id="graph-settings" title="Graph settings">🔧</button>
+          <button class="graph-btn" id="graph-zoom-in">+</button>
+          <button class="graph-btn" id="graph-zoom-out">−</button>
+          <button class="graph-btn" id="graph-reset">⌂</button>
+        </div>
+      </div>
+      <div class="graph-keypad">
+        <div class="keypad-tabs">
+          ${['main','abc','functions','trig','misc'].map(tab => `<button class="keypad-tab${g.keypadTab === tab ? ' active' : ''}" data-keypad-tab="${tab}">${tab}</button>`).join('')}
+        </div>
+        <div class="keypad-grid">
+          ${keys.map(k => `<button class="graph-key${k.cls ? ' '+k.cls : ''}" ${k.action ? `data-graph-action="${k.action}"` : `data-graph-insert="${escapeAttr(k.insert)}"`}>${k.label}</button>`).join('')}
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderReferenceSheet() {
+  return `<div class="ref-overlay" id="ref-overlay">
+    <div class="ref-panel">
+      <div class="ref-hdr">
+        <span>Math Reference Sheet</span>
+        <button class="calc-close" id="ref-close-btn">×</button>
+      </div>
+      <div class="ref-body">
+        <img class="ref-img" src="pictures/body_mathintro.webp" alt="SAT Math reference sheet with geometry and volume formulas">
+      </div>
+    </div>
+  </div>`;
+}
+function renderModEnd() {
+  const m1 = state.m1;
+  let correct = 0;
+  m1.qs.forEach((q, i) => { if (isCorrect(q, m1.answers[i])) correct++; });
+  const pct = Math.round(correct / m1.qs.length * 100);
+  const isHard = correct >= 14;
+  state.m2.isHard = isHard;
+
+  return `<div class="mod-end-screen">
+    <div class="mod-end-card">
+      <div class="score-ring">
+        <div class="ring-num">${correct}</div>
+        <div class="ring-of">out of 22</div>
+      </div>
+      <h2>Module 1 Complete</h2>
+      <p>You answered ${correct} of 22 questions correctly (${pct}%).</p>
+      <div class="path-badge ${isHard ? 'hard' : 'easy'}">
+        ${isHard ? '🔥 Routing to Advanced Module 2' : '📘 Routing to Standard Module 2'}
+      </div>
+      <p style="margin-bottom:1.5rem">Take a short break if needed. Module 2 has 22 questions and 35 minutes. Click below when you are ready.</p>
+      <button class="btn-primary" id="start-m2-btn">Start Module 2</button>
+    </div>
+  </div>`;
+}
+
+function renderResults() {
+  const m1 = state.m1, m2 = state.m2;
+  const m1Q = Q_M1, m2Q = state.m2.qs;
+  let m1c = 0, m2c = 0;
+  m1Q.forEach((q,i) => { if (isCorrect(q, m1.answers[i])) m1c++; });
+  m2Q.forEach((q,i) => { if (isCorrect(q, m2.answers[i])) m2c++; });
+  const total = m1c + m2c;
+  const sat = estimateSAT(m1c, m2c, m2.isHard);
+
+  const allQs = [...m1Q.map((q,i)=>({q,a:m1.answers[i],mod:'Module 1',num:i+1})),
+                 ...m2Q.map((q,i)=>({q,a:m2.answers[i],mod:`Module 2 (${m2.isHard?'Advanced':'Standard'})`,num:i+1}))];
+
+  const topics = ['Algebra','Advanced Math','Problem Solving & Data Analysis','Geometry & Trigonometry'];
+  const topicStats = {};
+  topics.forEach(t => { topicStats[t] = {total:0, correct:0}; });
+  allQs.forEach(({q,a}) => {
+    const t = q.topic;
+    if (topicStats[t]) {
+      topicStats[t].total++;
+      if (isCorrect(q, a)) topicStats[t].correct++;
+    }
+  });
+
+  const suggestions = generateSuggestions(topicStats);
+
+  return `<div class="results-screen">
+    <div class="results-hdr">
+      <h1>Exam Complete</h1>
+      <p>Here are your results and detailed explanations.</p>
+    </div>
+    <div class="score-display">
+      <div class="score-card main">
+        <div class="sc-label">SAT Math Score (Est.)</div>
+        <div class="sc-val">${sat}</div>
+        <div class="sc-sub">Scaled 200–800</div>
+      </div>
+      <div class="score-card">
+        <div class="sc-label">Module 1</div>
+        <div class="sc-val">${m1c}/22</div>
+        <div class="sc-sub">${Math.round(m1c/22*100)}% correct</div>
+      </div>
+      <div class="score-card">
+        <div class="sc-label">Module 2</div>
+        <div class="sc-val">${m2c}/22</div>
+        <div class="sc-sub">${Math.round(m2c/22*100)}% correct &nbsp;·&nbsp; ${m2.isHard?'Advanced':'Standard'}</div>
+      </div>
+      <div class="score-card">
+        <div class="sc-label">Total Correct</div>
+        <div class="sc-val">${total}/44</div>
+        <div class="sc-sub">${Math.round(total/44*100)}% overall</div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <h2>Topic Breakdown</h2>
+      ${topics.map(t => {
+        const s = topicStats[t];
+        if (!s.total) return '';
+        const pct = Math.round(s.correct/s.total*100);
+        return `<div class="topic-row">
+          <div class="topic-row-hdr"><span>${t}</span><span>${s.correct}/${s.total} &nbsp;(${pct}%)</span></div>
+          <div class="topic-bar-track"><div class="topic-bar-fill" style="width:${pct}%"></div></div>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div class="section-card">
+      <h2>Suggested Areas to Study</h2>
+      ${suggestions}
+    </div>
+
+    <div class="section-card">
+      <h2>Answer Review — Module 1</h2>
+      ${m1Q.map((q,i) => renderReviewItem(q, m1.answers[i], i+1, 'Module 1')).join('')}
+    </div>
+
+    <div class="section-card">
+      <h2>Answer Review — Module 2 (${m2.isHard ? 'Advanced' : 'Standard'})</h2>
+      ${m2Q.map((q,i) => renderReviewItem(q, m2.answers[i], i+1, 'Module 2')).join('')}
+    </div>
+
+    <button class="btn-restart" id="restart-btn">Take Exam Again</button>
+  </div>`;
+}
+
+function renderReviewItem(q, answer, num, mod) {
+  const correct = isCorrect(q, answer);
+  const unanswered = answer === null;
+  let iconCls = unanswered ? 'u' : (correct ? 'c' : 'w');
+  let iconChar = unanswered ? '−' : (correct ? '✓' : '✗');
+  let answerText = '';
+  if (q.type === 'mc') {
+    const letters = ['A','B','C','D'];
+    const correctOpt = q.opts[letters.indexOf(q.ans)];
+    if (unanswered) answerText = `<span style="color:var(--muted)">No answer given.</span> Correct: <strong>${q.ans}</strong>. ${correctOpt}`;
+    else if (correct) answerText = `Your answer: <strong>${answer}</strong>. ${q.opts[letters.indexOf(answer)]} ✓`;
+    else answerText = `Your answer: <strong>${answer}</strong> (${q.opts[letters.indexOf(answer)] || '—'}). Correct: <strong>${q.ans}</strong>. ${correctOpt}`;
+  } else {
+    if (unanswered) answerText = `No answer given. Correct answer: <strong>${q.ans}</strong>`;
+    else if (correct) answerText = `Your answer: <strong>${answer}</strong> ✓`;
+    else answerText = `Your answer: <strong>${answer}</strong>. Correct answer: <strong>${q.ans}</strong>`;
+  }
+  return `<div class="review-item">
+    <div class="rev-icon ${iconCls}">${iconChar}</div>
+    <div class="rev-body">
+      <div class="rev-qnum">${mod} · Q${num} · ${q.topic} · ${q.diff}</div>
+      <div class="rev-qtext">${q.q}</div>
+      <div class="rev-ans">${answerText}</div>
+      <div class="rev-exp"><strong>Explanation:</strong> ${q.exp}</div>
+    </div>
+  </div>`;
+}
+
+function generateSuggestions(topicStats) {
+  const topics = Object.entries(topicStats).map(([t,s]) => ({t, pct: s.total ? s.correct/s.total : 1}));
+  topics.sort((a,b) => a.pct - b.pct);
+  const resources = {
+    'Algebra': 'Focus on linear equations, systems of equations, inequalities, and word problems. Practice setting up equations from real-world scenarios.',
+    'Advanced Math': 'Review quadratics (factoring, completing the square, discriminant), polynomial operations, rational expressions, exponential functions, and complex numbers.',
+    'Problem Solving & Data Analysis': 'Practice interpreting data displays, statistics (mean, median, mode, standard deviation), probability, and linear/exponential models.',
+    'Geometry & Trigonometry': 'Review area and volume formulas, the Pythagorean theorem, special right triangles (30-60-90, 45-45-90), circle properties, and basic trig (sin, cos, tan).'
+  };
+  const icons = {'Algebra':'📐','Advanced Math':'🔢','Problem Solving & Data Analysis':'📊','Geometry & Trigonometry':'📏'};
+  return topics.map(({t, pct}) => {
+    const pctStr = Math.round(pct * 100);
+    let priority = pct < 0.5 ? '🔴 High priority' : pct < 0.75 ? '🟡 Needs practice' : '🟢 Strong';
+    return `<div class="sug-item">
+      <div class="sug-icon">${icons[t]||'📌'}</div>
+      <div class="sug-text">
+        <h4>${t} &nbsp;<span style="font-weight:400;color:var(--muted);font-size:.8rem">${pctStr}% correct &nbsp;·&nbsp; ${priority}</span></h4>
+        <p>${resources[t]||''}</p>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// =====================================================================
+// SCORING
+// =====================================================================
+function isCorrect(q, answer) {
+  if (answer === null || answer === undefined || answer === '') return false;
+  if (q.type === 'mc') return answer === q.ans;
+  // SPR: normalize
+  const normalize = s => String(s).trim().replace(/\s/g,'').toLowerCase();
+  return normalize(answer) === normalize(q.ans);
+}
+
+function estimateSAT(m1c, m2c, isHard) {
+  const total = m1c + m2c;
+  // Conversion table: [raw, score]
+  const table = [
+    [0,200],[2,220],[4,250],[6,280],[8,310],
+    [10,350],[12,380],[14,410],[16,440],[18,470],
+    [20,500],[22,530],[24,560],[26,580],[28,610],
+    [30,640],[32,660],[34,690],[36,710],[38,740],
+    [40,760],[42,780],[44,800]
+  ];
+  let base = 200;
+  for (let i = 0; i < table.length-1; i++) {
+    const [r1,s1] = table[i], [r2,s2] = table[i+1];
+    if (total >= r1 && total <= r2) {
+      base = Math.round(s1 + (total-r1)/(r2-r1)*(s2-s1));
+      break;
+    }
+  }
+  const bonus = isHard ? 20 : -20;
+  return Math.min(800, Math.max(200, Math.round((base+bonus)/10)*10));
+}
+
+// =====================================================================
+// TIMER
+// =====================================================================
+function formatTime(secs) {
+  const m = Math.floor(secs/60).toString().padStart(2,'0');
+  const s = (secs%60).toString().padStart(2,'0');
+  return `${m}:${s}`;
+}
+
+function startTimer(mod) {
+  stopTimer(mod);
+  state[mod].timer = setInterval(() => {
+    state[mod].timeLeft--;
+    const td = document.getElementById('timer-disp');
+    if (td) {
+      td.textContent = state.timerHidden ? 'Hidden' : formatTime(state[mod].timeLeft);
+      if (state[mod].timeLeft <= 300) td.classList.add('warn');
+    }
+    if (state[mod].timeLeft <= 0) {
+      stopTimer(mod);
+      submitMod(mod);
+    }
+  }, 1000);
+}
+
+function stopTimer(mod) {
+  if (state[mod] && state[mod].timer) {
+    clearInterval(state[mod].timer);
+    state[mod].timer = null;
+  }
+}
+
+// =====================================================================
+// ACTIONS
+// =====================================================================
+function saveSPR(mod) {
+  const input = document.getElementById('spr-input');
+  if (input) state[mod].answers[state[mod].current] = input.value.trim() || null;
+}
+
+function submitMod(mod) {
+  if (mod === 'm1') {
+    saveSPR('m1');
+    stopTimer('m1');
+    state.m1.submitted = true;
+    state.phase = 'm1-end';
+  } else {
+    saveSPR('m2');
+    stopTimer('m2');
+    state.m2.submitted = true;
+    state.phase = 'results';
+  }
+  state.calcVisible = false;
+  state.navVisible = false;
+  state.refVisible = false;
+  render();
+}
+
+// =====================================================================
+// GRAPHING CALCULATOR
+// =====================================================================
+const GRAPH_COLORS = ['#c74440','#2d70b3','#388c46','#6042a6','#fa7e19','#000000'];
+
+function escapeAttr(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function key(label, insert, cls='') {
+  return {label, insert, cls};
+}
+
+function actionKey(label, action, cls='') {
+  return {label, action, cls};
+}
+
+function getKeypadKeys(tab) {
+  const main = [
+    key('x','x'), key('y','y'), key('a²','^2'), key('a^b','^'), key('sqrt','sqrt('), key('|','abs('), key('7','7','num'), key('8','8','num'), key('9','9','num'), key('/','/'),
+    key('pi','pi'), key('e','e'), key('<','<'), key('>','>'), key('<=','<='), key('>=','>='), key('4','4','num'), key('5','5','num'), key('6','6','num'), key('*','*'),
+    key('(', '('), key(')', ')'), key(',', ','), key('=', '='), actionKey('⌫','backspace'), actionKey('clear','clear'), key('1','1','num'), key('2','2','num'), key('3','3','num'), key('-','-'),
+    actionKey('undo','undo'), actionKey('redo','redo'), actionKey('←','left'), actionKey('→','right'), actionKey('enter','enter','blue'), key('space',' '), key('0','0','num'), key('.','.'), key('neg','-'), key('+','+')
+  ];
+  const funcs = ['sin','cos','tan','arcsin','arccos','arctan','log','ln','abs','floor','ceil','round','min','max','mod','sum','product','mean','median','stdev']
+    .map(name => key(name, `${name}(`));
+  const abc = 'abcdefghijklmnopqrstuvwxyz'.split('').slice(0,20).map(ch => key(ch, ch));
+  const trig = [
+    key('sin','sin('), key('cos','cos('), key('tan','tan('), key('csc','csc('), key('sec','sec('), key('cot','cot('),
+    key('sin^-1','arcsin('), key('cos^-1','arccos('), key('tan^-1','arctan('),
+    key('csc^-1','arccsc('), key('sec^-1','arcsec('), key('cot^-1','arccot('),
+    key('sinh','sinh('), key('cosh','cosh('), key('tanh','tanh(')
+  ];
+  const misc = [key('y=','y='),key('x=','x='),key('π','pi'),key('e','e'),key('≤','<='),key('≥','>='),key('≠','!='),key('[','['),key(']',']'),key('{','{'),key('}','}'),key('stdev','stdev('),key('mean','mean('),key('median','median('),key('min','min('),key('max','max('),actionKey('clear','clear'),actionKey('⌫','backspace'),actionKey('enter','enter','blue'),key('+','+')];
+  return tab === 'functions' ? funcs : tab === 'abc' ? abc : tab === 'trig' ? trig : tab === 'misc' ? misc : main;
+}
+
+function initGraphCalc() {
+  const canvas = document.getElementById('graph-canvas');
+  if (!canvas) return;
+  bindGraphControls(canvas);
+  drawGraph(canvas);
+}
+
+function bindGraphControls(canvas) {
+  document.querySelectorAll('[data-graph-expr]').forEach(input => {
+    input.oninput = () => {
+      state.graph.expressions[+input.dataset.graphExpr].expr = input.value;
+      drawGraph(canvas);
+    };
+  });
+  document.querySelectorAll('[data-graph-remove]').forEach(btn => {
+    btn.onclick = () => {
+      state.graph.expressions.splice(+btn.dataset.graphRemove, 1);
+      if (!state.graph.expressions.length) addGraphExpression('');
+      render();
+    };
+  });
+  const add = document.getElementById('graph-add');
+  if (add) add.onclick = () => { addGraphExpression(''); render(); };
+  const reset = document.getElementById('graph-reset');
+  if (reset) reset.onclick = () => { Object.assign(state.graph, {xMin:-10,xMax:10,yMin:-10,yMax:10}); drawGraph(canvas); };
+  const zin = document.getElementById('graph-zoom-in');
+  if (zin) zin.onclick = () => { zoomGraph(.75); drawGraph(canvas); };
+  const zout = document.getElementById('graph-zoom-out');
+  if (zout) zout.onclick = () => { zoomGraph(1.35); drawGraph(canvas); };
+  const settings = document.getElementById('graph-settings');
+  if (settings) settings.onclick = () => {
+    state.graph.settingsOpen = !state.graph.settingsOpen;
+    render();
+  };
+  document.querySelectorAll('[data-setting]').forEach(input => {
+    input.onchange = () => {
+      state.graph.settings[input.dataset.setting] = input.checked;
+      drawGraph(canvas);
+    };
+  });
+  document.querySelectorAll('[data-angle-mode]').forEach(btn => {
+    btn.onclick = () => {
+      state.graph.settings.radians = btn.dataset.angleMode === 'radians';
+      render();
+    };
+  });
+  document.querySelectorAll('[data-row-settings]').forEach(btn => {
+    btn.onclick = () => {
+      const row = btn.closest('.graph-row');
+      if (row) row.classList.toggle('row-options-open');
+    };
+  });
+  document.querySelectorAll('[data-keypad-tab]').forEach(btn => {
+    btn.onclick = () => {
+      state.graph.keypadTab = btn.dataset.keypadTab;
+      render();
+    };
+  });
+  document.querySelectorAll('[data-graph-insert]').forEach(btn => {
+    btn.onclick = () => {
+      const input = document.querySelector('.graph-input:focus') || document.querySelector('.graph-input');
+      if (!input) return;
+      const text = btn.dataset.graphInsert;
+      const start = input.selectionStart || 0;
+      const end = input.selectionEnd || 0;
+      input.value = input.value.slice(0,start) + text + input.value.slice(end);
+      input.focus();
+      input.selectionStart = input.selectionEnd = start + text.length;
+      state.graph.expressions[+input.dataset.graphExpr].expr = input.value;
+      drawGraph(canvas);
+    };
+  });
+  document.querySelectorAll('[data-graph-action]').forEach(btn => {
+    btn.onclick = () => handleGraphAction(btn.dataset.graphAction, canvas);
+  });
+
+  let drag = null;
+  let moved = false;
+  canvas.onpointerdown = e => {
+    canvas.setPointerCapture(e.pointerId);
+    canvas.classList.add('dragging');
+    drag = {x:e.clientX, y:e.clientY, xMin:state.graph.xMin, xMax:state.graph.xMax, yMin:state.graph.yMin, yMax:state.graph.yMax};
+    moved = false;
+  };
+  canvas.onpointermove = e => {
+    const rect = canvas.getBoundingClientRect();
+    if (!drag) {
+      state.graph.hoverPoint = findNearestPoint(e.clientX - rect.left, e.clientY - rect.top, rect.width, rect.height);
+      drawGraph(canvas);
+      return;
+    }
+    const dx = (e.clientX - drag.x) / rect.width * (drag.xMax - drag.xMin);
+    const dy = (e.clientY - drag.y) / rect.height * (drag.yMax - drag.yMin);
+    if (Math.abs(e.clientX - drag.x) + Math.abs(e.clientY - drag.y) > 4) moved = true;
+    state.graph.xMin = drag.xMin - dx;
+    state.graph.xMax = drag.xMax - dx;
+    state.graph.yMin = drag.yMin + dy;
+    state.graph.yMax = drag.yMax + dy;
+    drawGraph(canvas);
+  };
+  canvas.onpointerup = e => {
+    const rect = canvas.getBoundingClientRect();
+    if (!moved) state.graph.selectedPoint = findNearestPoint(e.clientX - rect.left, e.clientY - rect.top, rect.width, rect.height);
+    drag = null;
+    canvas.classList.remove('dragging');
+    drawGraph(canvas);
+  };
+  canvas.onpointercancel = () => { drag = null; canvas.classList.remove('dragging'); };
+  canvas.onwheel = e => {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width;
+    const py = (e.clientY - rect.top) / rect.height;
+    zoomGraph(e.deltaY < 0 ? .85 : 1.18, px, py);
+    drawGraph(canvas);
+  };
+  window.onresize = () => {
+    const c = document.getElementById('graph-canvas');
+    if (c) drawGraph(c);
+  };
+}
+
+function activeGraphInput() {
+  return document.querySelector('.graph-input:focus') || document.querySelector('.graph-input');
+}
+
+function handleGraphAction(action, canvas) {
+  const input = activeGraphInput();
+  if (!input) return;
+  const start = input.selectionStart || 0;
+  const end = input.selectionEnd || 0;
+  if (action === 'backspace') {
+    if (start !== end) input.value = input.value.slice(0,start) + input.value.slice(end);
+    else if (start > 0) input.value = input.value.slice(0,start-1) + input.value.slice(end);
+    const pos = start !== end ? start : Math.max(0, start - 1);
+    input.selectionStart = input.selectionEnd = pos;
+  } else if (action === 'clear') {
+    input.value = '';
+    input.selectionStart = input.selectionEnd = 0;
+  } else if (action === 'left') {
+    input.selectionStart = input.selectionEnd = Math.max(0, start - 1);
+  } else if (action === 'right') {
+    input.selectionStart = input.selectionEnd = Math.min(input.value.length, end + 1);
+  } else if (action === 'enter') {
+    addGraphExpression('');
+    render();
+    return;
+  }
+  input.focus();
+  state.graph.expressions[+input.dataset.graphExpr].expr = input.value;
+  drawGraph(canvas);
+}
+
+function addGraphExpression(expr) {
+  const color = GRAPH_COLORS[state.graph.expressions.length % GRAPH_COLORS.length];
+  state.graph.expressions.push({expr, color});
+}
+
+function zoomGraph(factor, px=.5, py=.5) {
+  const g = state.graph;
+  const xAnchor = g.xMin + px * (g.xMax - g.xMin);
+  const yAnchor = g.yMax - py * (g.yMax - g.yMin);
+  const xSpan = (g.xMax - g.xMin) * factor;
+  const ySpan = (g.yMax - g.yMin) * factor;
+  g.xMin = xAnchor - px * xSpan;
+  g.xMax = g.xMin + xSpan;
+  g.yMax = yAnchor + py * ySpan;
+  g.yMin = g.yMax - ySpan;
+}
+
+function drawGraph(canvas) {
+  const rect = canvas.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+  canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  const w = rect.width, h = rect.height;
+  ctx.clearRect(0,0,w,h);
+  drawGrid(ctx,w,h);
+  state.graph.errors = {};
+  const plots = state.graph.expressions.map((item, i) => drawExpression(ctx,w,h,item,i)).filter(Boolean);
+  state.graph.points = collectGraphPoints(plots);
+  drawGraphPoints(ctx,w,h,state.graph.points);
+  const err = document.getElementById('graph-error');
+  if (err) err.textContent = Object.values(state.graph.errors)[0] || '';
+}
+
+function toPx(x, y, w, h) {
+  const g = state.graph;
+  return [(x - g.xMin) / (g.xMax - g.xMin) * w, (g.yMax - y) / (g.yMax - g.yMin) * h];
+}
+
+function drawGrid(ctx,w,h) {
+  const g = state.graph;
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0,0,w,h);
+  const step = niceStep((g.xMax - g.xMin) / 10);
+  ctx.lineWidth = 1;
+  ctx.font = '11px Segoe UI, sans-serif';
+  ctx.fillStyle = '#6c757d';
+  if (g.settings.grid) {
+    if (g.settings.minorGrid) {
+      ctx.strokeStyle = '#eeeeee';
+      const minor = step / 5;
+      for (let x = Math.ceil(g.xMin / minor) * minor; x <= g.xMax; x += minor) {
+        const [px] = toPx(x,0,w,h);
+        ctx.beginPath(); ctx.moveTo(px,0); ctx.lineTo(px,h); ctx.stroke();
+      }
+      for (let y = Math.ceil(g.yMin / minor) * minor; y <= g.yMax; y += minor) {
+        const [,py] = toPx(0,y,w,h);
+        ctx.beginPath(); ctx.moveTo(0,py); ctx.lineTo(w,py); ctx.stroke();
+      }
+    }
+    ctx.strokeStyle = '#c4c4c4';
+    for (let x = Math.ceil(g.xMin / step) * step; x <= g.xMax; x += step) {
+      const [px] = toPx(x,0,w,h);
+      ctx.beginPath(); ctx.moveTo(px,0); ctx.lineTo(px,h); ctx.stroke();
+      if (g.settings.axisNumbers && Math.abs(x) > step/100) ctx.fillText(fmtNum(x), px+3, Math.min(h-4, Math.max(12, toPx(0,0,w,h)[1]+12)));
+    }
+    for (let y = Math.ceil(g.yMin / step) * step; y <= g.yMax; y += step) {
+      const [,py] = toPx(0,y,w,h);
+      ctx.beginPath(); ctx.moveTo(0,py); ctx.lineTo(w,py); ctx.stroke();
+      if (g.settings.axisNumbers && Math.abs(y) > step/100) ctx.fillText(fmtNum(y), Math.min(w-32, Math.max(3, toPx(0,0,w,h)[0]+4)), py-3);
+    }
+  }
+  ctx.strokeStyle = '#495057';
+  ctx.lineWidth = 1.5;
+  const [x0,y0] = toPx(0,0,w,h);
+  ctx.beginPath(); ctx.moveTo(x0,0); ctx.lineTo(x0,h); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0,y0); ctx.lineTo(w,y0); ctx.stroke();
+}
+
+function drawExpression(ctx,w,h,item,index) {
+  const raw = item.expr.trim();
+  if (!raw) return null;
+  const vertical = raw.match(/^\s*x\s*=\s*(.+)$/i);
+  if (vertical) {
+    let xVal;
+    try { xVal = compileExpression(vertical[1])(0); }
+    catch (e) { state.graph.errors[index] = `Expression ${index+1}: ${e.message}`; return null; }
+    if (!Number.isFinite(xVal)) return null;
+    const [px] = toPx(xVal,0,w,h);
+    ctx.strokeStyle = item.color;
+    ctx.lineWidth = 2.25;
+    ctx.beginPath(); ctx.moveTo(px,0); ctx.lineTo(px,h); ctx.stroke();
+    return {type:'vertical', x:xVal, color:item.color, index};
+  }
+  const expr = raw.replace(/^\s*y\s*=/i,'');
+  let fn;
+  try { fn = compileExpression(expr); }
+  catch (e) { state.graph.errors[index] = `Expression ${index+1}: ${e.message}`; return null; }
+  ctx.strokeStyle = item.color;
+  ctx.lineWidth = 2.25;
+  ctx.beginPath();
+  let drawing = false;
+  const samples = Math.max(300, Math.floor(w * 1.5));
+  const pts = [];
+  for (let i=0; i<=samples; i++) {
+    const x = state.graph.xMin + i / samples * (state.graph.xMax - state.graph.xMin);
+    let y;
+    try { y = fn(x); } catch { y = NaN; }
+    const finite = Number.isFinite(y);
+    const [px, py] = toPx(x, y, w, h);
+    if (!finite || py < -h*3 || py > h*4) { drawing = false; continue; }
+    pts.push({x,y});
+    if (!drawing) { ctx.moveTo(px, py); drawing = true; }
+    else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+  return {type:'function', fn, points:pts, color:item.color, index};
+}
+
+function collectGraphPoints(plots) {
+  const found = [];
+  const add = (x,y,label) => {
+    if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+    if (x < state.graph.xMin || x > state.graph.xMax || y < state.graph.yMin || y > state.graph.yMax) return;
+    const dup = found.find(p => Math.hypot(p.x-x,p.y-y) < (state.graph.xMax-state.graph.xMin)/350);
+    if (dup) {
+      if (label === 'intersection') dup.label = label;
+    } else found.push({x,y,label});
+  };
+  plots.forEach(plot => {
+    if (plot.type === 'vertical') add(plot.x, 0, 'x-intercept');
+    else {
+      const y0 = safeEval(plot.fn, 0);
+      add(0, y0, 'y-intercept');
+      rootsFromSamples(plot.points).forEach(x => add(x, 0, 'x-intercept'));
+    }
+  });
+  for (let i=0; i<plots.length; i++) {
+    for (let j=i+1; j<plots.length; j++) {
+      intersectionsFor(plots[i], plots[j]).forEach(p => add(p.x,p.y,'intersection'));
+    }
+  }
+  return found;
+}
+
+function safeEval(fn, x) {
+  try { return fn(x); } catch { return NaN; }
+}
+
+function rootsFromSamples(points) {
+  const roots = [];
+  for (let i=1; i<points.length; i++) {
+    const a = points[i-1], b = points[i];
+    if (a.y === 0) roots.push(a.x);
+    if (a.y * b.y < 0) roots.push(a.x + (0-a.y) * (b.x-a.x) / (b.y-a.y));
+  }
+  return roots;
+}
+
+function intersectionsFor(a,b) {
+  const pts = [];
+  if (a.type === 'vertical' && b.type === 'vertical') return pts;
+  if (a.type === 'vertical' || b.type === 'vertical') {
+    const v = a.type === 'vertical' ? a : b;
+    const f = a.type === 'vertical' ? b : a;
+    const y = safeEval(f.fn, v.x);
+    if (Number.isFinite(y)) pts.push({x:v.x,y});
+    return pts;
+  }
+  const samples = Math.max(300, Math.floor((state.graph.xMax-state.graph.xMin) * 18));
+  let prev = null;
+  for (let i=0; i<=samples; i++) {
+    const x = state.graph.xMin + i / samples * (state.graph.xMax - state.graph.xMin);
+    const diff = safeEval(a.fn,x) - safeEval(b.fn,x);
+    if (!Number.isFinite(diff)) { prev = null; continue; }
+    if (Math.abs(diff) < 1e-9) pts.push({x,y:safeEval(a.fn,x)});
+    if (prev && prev.diff * diff < 0) {
+      const ix = prev.x + (0-prev.diff) * (x-prev.x) / (diff-prev.diff);
+      pts.push({x:ix,y:safeEval(a.fn,ix)});
+    }
+    prev = {x,diff};
+  }
+  return pts;
+}
+
+function drawGraphPoints(ctx,w,h,points) {
+  const active = state.graph.selectedPoint || state.graph.hoverPoint;
+  points.forEach(p => {
+    const [px,py] = toPx(p.x,p.y,w,h);
+    ctx.beginPath();
+    ctx.fillStyle = '#111';
+    ctx.arc(px,py,4,0,Math.PI*2);
+    ctx.fill();
+  });
+  if (active) drawPointLabel(ctx,w,h,active);
+}
+
+function drawPointLabel(ctx,w,h,p) {
+  const [px,py] = toPx(p.x,p.y,w,h);
+  const text = `(${fmtCoord(p.x)}, ${fmtCoord(p.y)})`;
+  ctx.font = '12px Segoe UI, sans-serif';
+  const tw = ctx.measureText(text).width;
+  const x = Math.min(w - tw - 16, Math.max(8, px + 8));
+  const y = Math.max(22, py - 12);
+  ctx.fillStyle = '#fff';
+  ctx.strokeStyle = '#b9b9b9';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.roundRect(x, y-18, tw+10, 22, 4);
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = '#111';
+  ctx.fillText(text, x+5, y-3);
+  ctx.beginPath();
+  ctx.arc(px,py,5,0,Math.PI*2);
+  ctx.fillStyle = '#2f7de1';
+  ctx.fill();
+}
+
+function findNearestPoint(px,py,w,h) {
+  const points = state.graph.points || [];
+  let best = null, bestDist = Infinity;
+  points.forEach(p => {
+    const [gx,gy] = toPx(p.x,p.y,w,h);
+    const d = Math.hypot(gx-px, gy-py);
+    if (d < bestDist) { best = p; bestDist = d; }
+  });
+  return bestDist <= 16 ? best : null;
+}
+
+function fmtCoord(n) {
+  return Math.abs(n) < 1e-8 ? '0' : parseFloat(n.toFixed(3)).toString();
+}
+
+function niceStep(raw) {
+  const pow = Math.pow(10, Math.floor(Math.log10(raw || 1)));
+  const n = raw / pow;
+  return (n < 1.5 ? 1 : n < 3 ? 2 : n < 7 ? 5 : 10) * pow;
+}
+
+function fmtNum(n) {
+  return Math.abs(n) >= 1000 || Math.abs(n) < .001 ? n.toExponential(0) : parseFloat(n.toFixed(4)).toString();
+}
+
+function compileExpression(input) {
+  const tokens = insertImplicitMul(tokenize(input));
+  const rpn = toRpn(tokens);
+  return x => evalRpn(rpn, x);
+}
+
+function tokenize(input) {
+  const s = input.toLowerCase().replace(/\s+/g,'');
+  const tokens = [];
+  let i = 0;
+  while (i < s.length) {
+    const ch = s[i];
+    if (/[0-9.]/.test(ch)) {
+      let j = i + 1;
+      while (j < s.length && /[0-9.]/.test(s[j])) j++;
+      const value = Number(s.slice(i,j));
+      if (!Number.isFinite(value)) throw new Error('Invalid number');
+      tokens.push({type:'num', value}); i = j; continue;
+    }
+    if (/[a-z]/.test(ch)) {
+      let j = i + 1;
+      while (j < s.length && /[a-z]/.test(s[j])) j++;
+      const name = s.slice(i,j);
+      tokens.push({type:['x','pi','e'].includes(name) ? 'var' : 'func', value:name}); i = j; continue;
+    }
+    if ('+-*/^(),'.includes(ch)) { tokens.push({type:ch, value:ch}); i++; continue; }
+    throw new Error(`Unexpected "${ch}"`);
+  }
+  return tokens;
+}
+
+function insertImplicitMul(tokens) {
+  const out = [];
+  const left = t => t && (t.type === 'num' || t.type === 'var' || t.type === ')');
+  const right = t => t && (t.type === 'num' || t.type === 'var' || t.type === 'func' || t.type === '(');
+  tokens.forEach((t, i) => {
+    if (i && left(tokens[i-1]) && right(t)) out.push({type:'op', value:'*'});
+    out.push(t);
+  });
+  return out;
+}
+
+function toRpn(tokens) {
+  const out = [], ops = [];
+  const prec = {'+':1,'-':1,'*':2,'/':2,'^':4,'neg':3};
+  const right = {'^':true,'neg':true};
+  let prev = null;
+  for (const t of tokens) {
+    if (t.type === 'num' || t.type === 'var') out.push(t);
+    else if (t.type === 'func') ops.push(t);
+    else if (t.type === ',') {
+      while (ops.length && ops[ops.length-1].type !== '(') out.push(ops.pop());
+    } else if (['+','-','*','/','^','op'].includes(t.type)) {
+      const rawOp = t.type === 'op' ? t.value : t.type;
+      const op = (rawOp === '-' && (!prev || ['+','-','*','/','^','op','(',','].includes(prev.type))) ? 'neg' : rawOp;
+      while (ops.length) {
+        const top = ops[ops.length-1];
+        const tv = top.value;
+        if (!(tv in prec)) break;
+        const shouldPop = right[op] ? prec[op] < prec[tv] : prec[op] <= prec[tv];
+        if (!shouldPop) break;
+        out.push(ops.pop());
+      }
+      ops.push({type:'op', value:op});
+    } else if (t.type === '(') ops.push(t);
+    else if (t.type === ')') {
+      while (ops.length && ops[ops.length-1].type !== '(') out.push(ops.pop());
+      if (!ops.length) throw new Error('Mismatched parentheses');
+      ops.pop();
+      if (ops.length && ops[ops.length-1].type === 'func') out.push(ops.pop());
+    }
+    prev = t;
+  }
+  while (ops.length) {
+    const op = ops.pop();
+    if (op.type === '(') throw new Error('Mismatched parentheses');
+    out.push(op);
+  }
+  return out;
+}
+
+function evalRpn(rpn, x) {
+  const stack = [];
+  const angle = v => state.graph.settings.radians ? v : v * Math.PI / 180;
+  const funcs = {
+    sin:v=>Math.sin(angle(v)), cos:v=>Math.cos(angle(v)), tan:v=>Math.tan(angle(v)),
+    arcsin:v=>Math.asin(v), arccos:v=>Math.acos(v), arctan:v=>Math.atan(v),
+    arccsc:v=>Math.asin(1/v), arcsec:v=>Math.acos(1/v), arccot:v=>Math.atan(1/v),
+    csc:v=>1/Math.sin(angle(v)), sec:v=>1/Math.cos(angle(v)), cot:v=>1/Math.tan(angle(v)),
+    sqrt:Math.sqrt, abs:Math.abs, log:Math.log10, ln:Math.log, exp:Math.exp,
+    floor:Math.floor, ceil:Math.ceil, round:Math.round,
+    sum:v=>v, product:v=>v, mean:v=>v, median:v=>v, stdev:v=>0
+  };
+  const binaryFuncs = {
+    min:Math.min, max:Math.max, mod:(a,b)=>a%b
+  };
+  for (const t of rpn) {
+    if (t.type === 'num') stack.push(t.value);
+    else if (t.type === 'var') stack.push(t.value === 'x' ? x : t.value === 'pi' ? Math.PI : Math.E);
+    else if (t.type === 'func') {
+      if (binaryFuncs[t.value]) {
+        const b = stack.pop(), a = stack.pop();
+        stack.push(binaryFuncs[t.value](a,b));
+      } else {
+        if (!funcs[t.value]) throw new Error(`Unknown function ${t.value}`);
+        stack.push(funcs[t.value](stack.pop()));
+      }
+    } else {
+      if (t.value === 'neg') stack.push(-stack.pop());
+      else {
+        const b = stack.pop(), a = stack.pop();
+        if (t.value === '+') stack.push(a+b);
+        else if (t.value === '-') stack.push(a-b);
+        else if (t.value === '*') stack.push(a*b);
+        else if (t.value === '/') stack.push(a/b);
+        else if (t.value === '^') stack.push(Math.pow(a,b));
+      }
+    }
+  }
+  if (stack.length !== 1) throw new Error('Invalid expression');
+  return stack[0];
+}
+
+// =====================================================================
+// EVENT BINDING
+// =====================================================================
+function bindAll() {
+  // Start
+  const startBtn = document.getElementById('start-btn');
+  if (startBtn) startBtn.onclick = () => {
+    state.phase = 'm1'; render(); startTimer('m1');
+  };
+  // Start M2
+  const sm2 = document.getElementById('start-m2-btn');
+  if (sm2) sm2.onclick = () => {
+    state.m2.qs = state.m2.isHard ? Q_M2_HARD : Q_M2_EASY;
+    state.m2.answers = new Array(22).fill(null);
+    state.m2.flags = new Array(22).fill(false);
+    state.phase = 'm2'; render(); startTimer('m2');
+  };
+  // Restart
+  const rb = document.getElementById('restart-btn');
+  if (rb) rb.onclick = () => {
+    state.phase='start'; state.calcVisible=false; state.navVisible=false; state.refVisible=false;
+    state.m1={qs:Q_M1,answers:new Array(22).fill(null),flags:new Array(22).fill(false),current:0,timeLeft:35*60,timer:null,submitted:false};
+    state.m2={qs:null,answers:null,flags:null,current:0,timeLeft:35*60,timer:null,submitted:false,isHard:false};
+    state.graph={expressions:[{expr:'',color:'#c74440'},{expr:'',color:'#2d70b3'}],xMin:-10,xMax:10,yMin:-10,yMax:10,errors:{},keypadTab:'main',settingsOpen:false,selectedPoint:null,hoverPoint:null,settings:{grid:true,minorGrid:true,axisNumbers:true,radians:true}};
+    render();
+  };
+
+  // Module-specific controls
+  ['m1','m2'].forEach(mod => {
+    if (state.phase !== mod) return;
+    const m = state[mod];
+
+    // Flag
+    const fb = document.getElementById('flag-btn');
+    if (fb) fb.onclick = () => {
+      m.flags[m.current] = !m.flags[m.current];
+      fb.className = `flag-toggle${m.flags[m.current]?' flagged':''}`;
+      fb.innerHTML = `<span class="flag-icon">${m.flags[m.current]?'🚩':'⚑'}</span>${m.flags[m.current]?'Flagged':'Flag for Review'}`;
+    };
+
+    // MC options
+    document.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.onclick = () => {
+        const letter = btn.dataset.letter;
+        m.answers[m.current] = letter;
+        document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+      };
+    });
+
+    // SPR save on change
+    const spr = document.getElementById('spr-input');
+    if (spr) spr.oninput = () => { m.answers[m.current] = spr.value.trim() || null; };
+
+    // Prev
+    const pv = document.getElementById('prev-btn');
+    if (pv) pv.onclick = () => {
+      saveSPR(mod);
+      m.current--;
+      state.navVisible = false;
+      render();
+    };
+
+    // Next
+    const nx = document.getElementById('next-btn');
+    if (nx) nx.onclick = () => {
+      saveSPR(mod);
+      m.current++;
+      state.navVisible = false;
+      render();
+    };
+
+    // Submit
+    const sb = document.getElementById('submit-btn');
+    if (sb) sb.onclick = () => {
+      const unanswered = m.answers.filter(a => a === null).length;
+      if (unanswered > 0) {
+        if (!confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) return;
+      }
+      submitMod(mod);
+    };
+
+    // Timer hide
+    const ht = document.getElementById('hide-timer-btn');
+    if (ht) ht.onclick = () => {
+      state.timerHidden = !state.timerHidden;
+      const td = document.getElementById('timer-disp');
+      if (td) td.textContent = state.timerHidden ? 'Hidden' : formatTime(m.timeLeft);
+      ht.textContent = state.timerHidden ? 'Show' : 'Hide';
+    };
+
+    // Calculator toggle
+    const ct = document.getElementById('calc-toggle-btn');
+    if (ct) ct.onclick = () => {
+      saveSPR(mod);
+      state.calcVisible = !state.calcVisible;
+      render();
+    };
+
+    // Reference sheet toggle
+    const rt = document.getElementById('ref-toggle-btn');
+    if (rt) rt.onclick = () => {
+      saveSPR(mod);
+      state.refVisible = !state.refVisible;
+      render();
+    };
+
+    // Nav toggle
+    const nt = document.getElementById('nav-toggle-btn');
+    if (nt) nt.onclick = () => {
+      saveSPR(mod);
+      state.navVisible = true;
+      render();
+    };
+
+    // Close nav
+    const cn = document.getElementById('close-nav');
+    if (cn) cn.onclick = () => { state.navVisible = false; render(); };
+
+    // Close reference sheet
+    const rc = document.getElementById('ref-close-btn');
+    if (rc) rc.onclick = () => { state.refVisible = false; render(); };
+    const ro = document.getElementById('ref-overlay');
+    if (ro) ro.onclick = (e) => {
+      if (e.target === ro) { state.refVisible = false; render(); }
+    };
+
+    // Nav overlay click
+    const no = document.getElementById('nav-overlay');
+    if (no) no.onclick = (e) => {
+      if (e.target === no) { state.navVisible = false; render(); }
+    };
+
+    // Question dots
+    document.querySelectorAll('.q-dot').forEach(dot => {
+      dot.onclick = () => {
+        m.current = parseInt(dot.dataset.goto);
+        state.navVisible = false;
+        render();
+      };
+    });
+
+    // Calculator close
+    const calcClose = document.getElementById('calc-close-btn');
+    if (calcClose) calcClose.onclick = () => {
+      saveSPR(mod);
+      state.calcVisible = false;
+      render();
+    };
+
+  });
+}
+// =====================================================================
+// INIT
+// =====================================================================
+render();
+</script>
+</body>
+</html>
