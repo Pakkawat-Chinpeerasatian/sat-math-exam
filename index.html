@@ -404,26 +404,28 @@ const Q_M2_HARD = [
    <table class="q-table"><tr><th>Hours studied, x</th><td>2</td><td>5</td><td>8</td></tr><tr><th>Predicted increase, y</th><td>11</td><td>23</td><td>35</td></tr></table>`,
    opts:['Within the model range, each additional hour studied is associated with a 4-point predicted increase','A student who studies 0 hours is predicted to gain exactly 3 points','Studying 10 hours is predicted to increase a score by 43 points','Each additional point increase requires 4 more hours of studying'],ans:'A',
    exp:'The slope is (23−11)/(5−2)=4, so within the stated range the model predicts 4 additional points for each additional hour. Choices about x=0 or x=10 extrapolate outside the stated model range.'},
-  {id:'m2h_4',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
-   q:'For some constant <i>k</i>, the expression <i>x</i>² + <i>kx</i> + 36 can be written as (<i>x</i> + <i>a</i>)² for all values of <i>x</i>. What is the positive value of <i>k</i>?',
-   opts:['6','9','12','18'],ans:'C',
-   exp:'If x² + kx + 36 = (x+a)² = x² + 2ax + a², then a² = 36, so the positive a is 6. Thus k = 2a = 12.'},
+  {id:'m2h_4',diff:'hard',topic:'Geometry & Trigonometry',type:'mc',calc:true,
+   q:`Triangle ABC is similar to triangle DEF. The table shows corresponding side lengths. What is the value of <i>x</i>?
+   <table class="q-table"><tr><th>Triangle ABC</th><td>AB = 9</td><td>BC = 12</td><td>AC = <i>x</i></td></tr><tr><th>Triangle DEF</th><td>DE = 15</td><td>EF = 20</td><td>DF = 25</td></tr></table>`,
+   opts:['13','15','18','21'],ans:'B',
+   exp:'The scale factor from DEF to ABC is 9/15 = 12/20 = 3/5. Therefore x = (3/5)(25) = 15.'},
   {id:'m2h_5',diff:'hard',topic:'Algebra',type:'spr',calc:false,
    q:'If 2<sup><i>x</i>+1</sup> = 8<sup><i>x</i>−3</sup>, what is the value of <i>x</i>?',
    ans:'5',
    exp:'Rewrite 8 as 2³: 2^(x+1) = (2³)^(x−3) = 2^(3x−9). Therefore x+1 = 3x−9, so 10 = 2x and x = 5.'},
-  {id:'m2h_6',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
-   q:'The polynomial <i>p</i>(<i>x</i>) = <i>x</i>³ − 7<i>x</i> + 6 can be written as (<i>x</i> − 1)(<i>x</i> − 2)(<i>x</i> + <i>r</i>). What is the value of <i>r</i>?',
-   opts:['−3','−1','1','3'],ans:'D',
-   exp:'The constant term of (x−1)(x−2)(x+r) is (−1)(−2)r = 2r. Since the constant term is 6, 2r=6 and r=3.'},
+  {id:'m2h_6',diff:'hard',topic:'Problem Solving & Data Analysis',type:'mc',calc:true,
+   q:`The table gives selected values for an exponential model <i>y</i> = <i>ab</i><sup><i>x</i></sup>. Which equation represents the model?
+   <table class="q-table"><tr><th><i>x</i></th><td>0</td><td>1</td><td>2</td></tr><tr><th><i>y</i></th><td>48</td><td>36</td><td>27</td></tr></table>`,
+   opts:['<i>y</i> = 48(0.75)<sup><i>x</i></sup>','<i>y</i> = 48(1.25)<sup><i>x</i></sup>','<i>y</i> = 36(0.75)<sup><i>x</i></sup>','<i>y</i> = 48 − 12<i>x</i>'],ans:'A',
+   exp:'When x=0, y=a=48. The common ratio is 36/48 = 27/36 = 0.75. Thus y=48(0.75)^x.'},
   {id:'m2h_7',diff:'hard',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
    q:'A study found a correlation coefficient of <i>r</i> = 0.83 between hours of sleep and test scores. The researchers then controlled for course difficulty, and the correlation dropped to <i>r</i> = 0.18. Which conclusion is best supported?',
    opts:['Sleeping more causes higher test scores','The original association may have been partly explained by course difficulty','There is no relationship between any of the variables','A correlation of 0.18 proves the variables are independent'],ans:'B',
    exp:'The large drop after controlling for course difficulty suggests course difficulty may explain part of the original association. Correlation still does not prove causation.'},
-  {id:'m2h_8',diff:'hard',topic:'Algebra',type:'mc',calc:false,
-   q:'A store sells two sizes of notebooks. A small notebook costs <i>s</i> dollars, and a large notebook costs <i>l</i> dollars. The system 4<i>s</i> + 3<i>l</i> = 29 and 2<i>s</i> + 5<i>l</i> = 31 represents two purchases. What is the meaning of <i>l</i> in this context?',
-   opts:['The cost, in dollars, of one large notebook','The number of large notebooks in the first purchase','The total cost, in dollars, of the second purchase','The difference between the costs of the two notebook sizes'],ans:'A',
-   exp:'The variable l is defined as the cost, in dollars, of one large notebook. The coefficients count how many notebooks of each type are purchased.'},
+  {id:'m2h_8',diff:'hard',topic:'Geometry & Trigonometry',type:'mc',calc:true,
+   q:'A circle has center (2, −3) and radius 5. A line tangent to the circle is vertical and lies to the right of the center. Which equation represents this tangent line?',
+   opts:['<i>x</i> = 7','<i>x</i> = −3','<i>y</i> = 2','<i>y</i> = 5'],ans:'A',
+   exp:'A vertical tangent line to the right of the center is 5 units to the right of x=2. Thus x=2+5=7.'},
   {id:'m2h_9',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
    q:'The function <i>f</i> is defined by <i>f</i>(<i>x</i>) = <sup>2<i>x</i> − 1</sup>/<sub><i>x</i> + 3</sub>. Which statement best describes the behavior of <i>f</i> as <i>x</i> approaches −3?',
    opts:['The value of <i>f</i>(−3) is 0','The graph has a vertical asymptote at <i>x</i> = −3','The graph has a removable hole at <i>x</i> = −3','The graph crosses the x-axis at <i>x</i> = −3'],ans:'B',
@@ -433,9 +435,9 @@ const Q_M2_HARD = [
    opts:['(<i>x</i> − 3)² − 4','(<i>x</i> + 3)² − 4','2(<i>x</i> − 3)² − 4','−(<i>x</i> − 3)² − 4'],ans:'A',
    exp:'Use vertex form f(x)=a(x−3)²−4. Since (1,0) is on the graph, 0=a(−2)²−4, so 4a=4 and a=1. Thus f(x)=(x−3)²−4.'},
   {id:'m2h_11',diff:'hard',topic:'Problem Solving & Data Analysis',type:'spr',calc:false,
-   q:'In a class of 30 students, 18 play soccer, 12 play basketball, and 5 play both sports. How many students play neither soccer nor basketball?',
-   ans:'5',
-   exp:'By inclusion-exclusion: students who play at least one sport = 18 + 12 − 5 = 25. Students who play neither = 30 − 25 = 5.'},
+   q:'In a class of 40 students, 18 play soccer and 12 play basketball. If the number of students who play neither sport is twice the number who play both sports, how many students play both sports?',
+   ans:'10',
+   exp:'Let b be the number who play both. The number who play at least one sport is 18 + 12 − b = 30 − b. The number who play neither is 40 − (30 − b) = 10 + b. Since neither is twice both, 10 + b = 2b, so b = 10.'},
   {id:'m2h_12',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
    q:'The function <i>h</i> is defined by <i>h</i>(<i>x</i>) = (<i>x</i>² − 9)/(<i>x</i> − 3) for <i>x</i> ≠ 3. Which statement about the graph of <i>y</i> = <i>h</i>(<i>x</i>) is true?',
    opts:['It is the line <i>y</i> = <i>x</i> + 3 with a hole at <i>x</i> = 3','It is the line <i>y</i> = <i>x</i> − 3 with a hole at <i>x</i> = 3','It has a vertical asymptote at <i>x</i> = 3','It has no removable discontinuity'],ans:'A',
@@ -469,13 +471,14 @@ const Q_M2_HARD = [
    opts:['The graph opens upward and has <i>y</i>-intercept 1','The graph opens downward and has <i>y</i>-intercept 1','The graph opens upward and has <i>y</i>-intercept 4','The graph opens downward and has <i>y</i>-intercept 4'],ans:'A',
    exp:'Since f(0)=1, c=1. Solving the equations from f(−1)=4 and f(2)=7 gives a=2, which is positive, so the graph opens upward.'},
   {id:'m2h_20',diff:'hard',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
-   q:'A study models the relationship between years of education (<i>x</i>) and annual income in thousands of dollars (<i>y</i>) as <i>y</i> = 4.5<i>x</i> + 10.2. According to this model, what is the expected increase in annual income for each additional year of education?',
-   opts:['$4,500','$10,200','$14,700','$45,000'],ans:'A',
-   exp:'The slope 4.5 represents the increase in y (thousands of dollars) per unit increase in x (years). So each additional year of education is associated with a $4,500 increase in annual income.'},
+   q:`A model predicts annual income <i>y</i>, in thousands of dollars, from years of education <i>x</i> by <i>y</i> = 4.5<i>x</i> + 10.2. The table shows actual incomes for four people. For which person is the actual income greatest compared with the model's prediction?
+   <table class="q-table"><tr><th>Person</th><th><i>x</i></th><th>Actual income, <i>y</i></th></tr><tr><td>A</td><td>10</td><td>58</td></tr><tr><td>B</td><td>12</td><td>67</td></tr><tr><td>C</td><td>14</td><td>72</td></tr><tr><td>D</td><td>16</td><td>86</td></tr></table>`,
+   opts:['A','B','C','D'],ans:'D',
+   exp:'Predicted incomes are 55.2, 64.2, 73.2, and 82.2. Actual minus predicted is 2.8, 2.8, −1.2, and 3.8, respectively. Person D is greatest compared with the model.'},
   {id:'m2h_21',diff:'hard',topic:'Geometry & Trigonometry',type:'mc',calc:true,
-   q:'In the <i>xy</i>-plane, what is the distance between the centers of the circles (<i>x</i> − 2)² + (<i>y</i> + 3)² = 16 and (<i>x</i> + 4)² + (<i>y</i> − 1)² = 25?',
-   opts:['2√13','6√2','√52','10'],ans:'A',
-   exp:'Centers: (2, −3) and (−4, 1). Distance = √((2−(−4))² + (−3−1)²) = √(36 + 16) = √52 = 2√13.'},
+   q:'In the <i>xy</i>-plane, the circle (<i>x</i> − 2)² + (<i>y</i> + 3)² = 16 is tangent externally to the circle (<i>x</i> + 4)² + (<i>y</i> − 1)² = <i>r</i>². What is the value of <i>r</i>?',
+   opts:['2√13 − 4','2√13 + 4','√52','4'],ans:'A',
+   exp:'The centers are (2,−3) and (−4,1), so the distance between centers is √(6²+(-4)²)=√52=2√13. For external tangency, the distance between centers equals the sum of radii: 2√13 = 4 + r, so r = 2√13 − 4.'},
   {id:'m2h_22',diff:'hard',topic:'Advanced Math',type:'spr',calc:false,
    q:'For nonzero <i>x</i>, if (<i>x</i> + 1/<i>x</i>)² = 9, what is the value of (<i>x</i> − 1/<i>x</i>)²?',
    ans:'5',
@@ -883,7 +886,7 @@ function renderResults() {
   const sat = estimateSAT(m1c, m2c, m2.isHard);
 
   const allQs = [...m1Q.map((q,i)=>({q,a:m1.answers[i],mod:'Module 1',num:i+1})),
-                 ...m2Q.map((q,i)=>({q,a:m2.answers[i],mod:`Module 2 (${m2.isHard?'Advanced':'Standard'})`,num:i+1}))];
+                 ...m2Q.map((q,i)=>({q,a:m2.answers[i],mod:`Module 2 (Practice ${m2.isHard?'Advanced':'Standard'})`,num:i+1}))];
 
   const topics = ['Algebra','Advanced Math','Problem Solving & Data Analysis','Geometry & Trigonometry'];
   const topicStats = {};
@@ -912,7 +915,7 @@ function renderResults() {
       <div class="score-card">
         <div class="sc-label">Module 2</div>
         <div class="sc-val">${m2c}/22</div>
-        <div class="sc-sub">${Math.round(m2c/22*100)}% correct &nbsp;·&nbsp; ${m2.isHard?'Advanced':'Standard'}</div>
+        <div class="sc-sub">${Math.round(m2c/22*100)}% correct &nbsp;·&nbsp; Practice ${m2.isHard?'Advanced':'Standard'} route</div>
       </div>
       <div class="score-card">
         <div class="sc-label">Total Correct</div>
@@ -952,7 +955,7 @@ function renderResults() {
     </div>
 
     <div class="section-card">
-      <h2>Answer Review — Module 2 (${m2.isHard ? 'Advanced' : 'Standard'})</h2>
+      <h2>Answer Review — Module 2 (Practice ${m2.isHard ? 'Advanced' : 'Standard'} Route)</h2>
       ${m2Q.map((q,i) => renderReviewItem(q, m2.answers[i], i+1, 'Module 2')).join('')}
     </div>
 
