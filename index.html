@@ -392,26 +392,26 @@ const Q_M1 = [
 
 const Q_M2_HARD = [
   {id:'m2h_1',diff:'hard',topic:'Algebra',type:'mc',calc:false,
-   q:'The equation (<i>x</i> + <i>a</i>)² = 49 has one solution <i>x</i> = 3. What is the other solution in terms of <i>a</i>?',
-   opts:['3 − 2<i>a</i>','−3 − 2<i>a</i>','<i>a</i> − 10','10 − <i>a</i>'],ans:'A',
-   exp:'The two solutions of (x+a)²=49 are x = −a + 7 and x = −a − 7. If one solution is 3, then −a + 7 = 3, so a = 4. The other solution is −4 − 7 = −11. In terms of a, the other root is 3 − 2a.'},
+   q:'A linear function <i>f</i> has the property that <i>f</i>(<i>x</i> + 4) − <i>f</i>(<i>x</i>) = 18 for all values of <i>x</i>. If <i>f</i>(2) = 7, what is the value of <i>f</i>(10)?',
+   opts:['25','34','43','52'],ans:'C',
+   exp:'For a linear function, increasing x by 4 changes the output by 18, so the slope is 18/4 = 4.5. From x=2 to x=10 is an increase of 8, or two 4-unit intervals, so f(10)=7+2(18)=43.'},
   {id:'m2h_2',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
-   q:'For the function <i>g</i>(<i>x</i>) = <i>x</i>² − 4<i>x</i> + <i>k</i>, the minimum value of <i>g</i> is 7. What is the value of <i>k</i>?',
-   opts:['3','7','11','15'],ans:'C',
-   exp:'Rewrite g(x) = (x − 2)² + k − 4. The minimum is k − 4. Since k − 4 = 7, k = 11.'},
+   q:'The quadratic function <i>g</i> is defined by <i>g</i>(<i>x</i>) = <i>x</i>² − 4<i>x</i> + <i>k</i>. For all real numbers <i>x</i>, <i>g</i>(<i>x</i>) ≥ 7. What is the least possible value of <i>k</i>?',
+   opts:['7','9','11','15'],ans:'C',
+   exp:'Complete the square: g(x)=(x−2)²+k−4. The minimum value is k−4. To have g(x)≥7 for all x, the least possible k satisfies k−4=7, so k=11.'},
   {id:'m2h_3',diff:'hard',topic:'Problem Solving & Data Analysis',type:'mc',calc:true,
-   q:`The table shows values from a linear model relating hours studied, <i>x</i>, and predicted score increase, <i>y</i>. Which statement best interprets the slope of the model?
+   q:`The table shows values from a linear model relating hours studied, <i>x</i>, and predicted score increase, <i>y</i>. The model is used only for 2 ≤ <i>x</i> ≤ 8. Which statement is best supported?
    <table class="q-table"><tr><th>Hours studied, x</th><td>2</td><td>5</td><td>8</td></tr><tr><th>Predicted increase, y</th><td>11</td><td>23</td><td>35</td></tr></table>`,
-   opts:['For each additional hour studied, the predicted score increase is 4 points','For each additional 4 hours studied, the predicted score increase is 1 point','A student who studies 0 hours is predicted to gain 4 points','A student who studies 1 hour is predicted to gain 11 points'],ans:'A',
-   exp:'The slope is (23 − 11)/(5 − 2) = 12/3 = 4. The model predicts 4 additional points for each additional hour studied.'},
+   opts:['Within the model range, each additional hour studied is associated with a 4-point predicted increase','A student who studies 0 hours is predicted to gain exactly 3 points','Studying 10 hours is predicted to increase a score by 43 points','Each additional point increase requires 4 more hours of studying'],ans:'A',
+   exp:'The slope is (23−11)/(5−2)=4, so within the stated range the model predicts 4 additional points for each additional hour. Choices about x=0 or x=10 extrapolate outside the stated model range.'},
   {id:'m2h_4',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
    q:'For some constant <i>k</i>, the expression <i>x</i>² + <i>kx</i> + 36 can be written as (<i>x</i> + <i>a</i>)² for all values of <i>x</i>. What is the positive value of <i>k</i>?',
    opts:['6','9','12','18'],ans:'C',
    exp:'If x² + kx + 36 = (x+a)² = x² + 2ax + a², then a² = 36, so the positive a is 6. Thus k = 2a = 12.'},
   {id:'m2h_5',diff:'hard',topic:'Algebra',type:'spr',calc:false,
-   q:'If 2<sup><i>x</i>+1</sup> = 32, what is the value of <i>x</i>?',
-   ans:'4',
-   exp:'Write 32 as a power of 2: 32 = 2⁵. So 2^(x+1) = 2⁵ → x + 1 = 5 → x = 4.'},
+   q:'If 2<sup><i>x</i>+1</sup> = 8<sup><i>x</i>−3</sup>, what is the value of <i>x</i>?',
+   ans:'5',
+   exp:'Rewrite 8 as 2³: 2^(x+1) = (2³)^(x−3) = 2^(3x−9). Therefore x+1 = 3x−9, so 10 = 2x and x = 5.'},
   {id:'m2h_6',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
    q:'The polynomial <i>p</i>(<i>x</i>) = <i>x</i>³ − 7<i>x</i> + 6 can be written as (<i>x</i> − 1)(<i>x</i> − 2)(<i>x</i> + <i>r</i>). What is the value of <i>r</i>?',
    opts:['−3','−1','1','3'],ans:'D',
@@ -856,9 +856,8 @@ function renderReferenceSheet() {
 }
 function renderModEnd() {
   const m1 = state.m1;
-  let correct = 0;
-  m1.qs.forEach((q, i) => { if (isCorrect(q, m1.answers[i])) correct++; });
-  const isHard = correct >= 14;
+  const route = getPracticeRoute(m1.qs, m1.answers);
+  const isHard = route === 'advanced';
   state.m2.isHard = isHard;
   state.m2.qs = state.m2.isHard ? Q_M2_HARD : Q_M2_EASY;
   state.m2.answers = new Array(22).fill(null);
@@ -921,13 +920,13 @@ function renderResults() {
         <div class="sc-sub">${Math.round(total/44*100)}% overall</div>
       </div>
       <div class="score-card main${state.showEstimate ? '' : ' estimate-hidden'}" id="estimate-card">
-        <div class="sc-label">Rough Math Score Estimate</div>
+        <div class="sc-label">Experimental Score Estimate</div>
         <div class="sc-val">${sat}</div>
-        <div class="sc-sub">Not predictive · unofficial</div>
+        <div class="sc-sub">Hidden by default · not predictive</div>
       </div>
     </div>
-    <button class="estimate-toggle" id="estimate-toggle">${state.showEstimate ? 'Hide Rough Score Estimate' : 'Show Rough Score Estimate'}</button>
-    <p class="score-caveat">This score is a rough practice estimate based on raw correct answers and module path. The real digital SAT uses adaptive item-level scoring, so students with the same raw score can receive different scaled scores depending on which questions they miss.</p>
+    <button class="estimate-toggle" id="estimate-toggle">${state.showEstimate ? 'Hide Experimental Estimate' : 'Show Experimental Estimate'}</button>
+    <p class="score-caveat">Use the raw scores above as the main result. The optional 200-800 number is an experimental, unofficial practice estimate based on raw correct answers and practice routing. It is not calibrated to College Board item-level scoring and should not be treated as predictive.</p>
 
     <div class="section-card">
       <h2>Topic Breakdown</h2>
@@ -1021,6 +1020,18 @@ function isCorrect(q, answer) {
   if (q.type === 'mc') return answer === q.ans;
   const accepted = Array.isArray(q.ans) ? q.ans : [q.ans];
   return accepted.some(ans => sprEquivalent(answer, ans));
+}
+
+function getPracticeRoute(questions, answers) {
+  const weights = {easy:0.75, medium:1, hard:1.35};
+  let earned = 0, possible = 0;
+  questions.forEach((q, i) => {
+    const w = weights[q.diff] || 1;
+    possible += w;
+    if (isCorrect(q, answers[i])) earned += w;
+  });
+  const index = possible ? earned / possible : 0;
+  return index >= 0.64 ? 'advanced' : 'standard';
 }
 
 function sprEquivalent(given, expected) {
