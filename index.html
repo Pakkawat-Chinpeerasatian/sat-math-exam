@@ -217,6 +217,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .sc-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:.4rem}
 .sc-val{font-size:2.4rem;font-weight:800;color:var(--primary);line-height:1}
 .sc-sub{font-size:.78rem;color:var(--muted);margin-top:.25rem}
+.score-caveat{max-width:720px;margin:-1rem auto 2rem;color:var(--muted);font-size:.86rem;line-height:1.5;text-align:center}
 .section-card{background:var(--card);border-radius:12px;padding:1.5rem;margin-bottom:1.25rem;box-shadow:0 2px 10px rgba(0,0,0,.06)}
 .section-card h2{font-size:1rem;font-weight:700;margin-bottom:1.1rem;padding-bottom:.75rem;border-bottom:1px solid var(--border)}
 /* Topic bars */
@@ -388,17 +389,18 @@ const Q_M1 = [
 
 const Q_M2_HARD = [
   {id:'m2h_1',diff:'hard',topic:'Algebra',type:'mc',calc:false,
-   q:'If (<i>x</i> + 2)² = 49, what are all possible values of <i>x</i>?',
-   opts:['<i>x</i> = 5 only','<i>x</i> = −9 only','<i>x</i> = 5 or <i>x</i> = −9','<i>x</i> = 7 or <i>x</i> = −7'],ans:'C',
-   exp:'Take the square root of both sides: x + 2 = ±7. So x = 5 or x = −9.'},
+   q:'The equation (<i>x</i> + <i>a</i>)² = 49 has one solution <i>x</i> = 3. What is the other solution in terms of <i>a</i>?',
+   opts:['3 − 2<i>a</i>','−3 − 2<i>a</i>','<i>a</i> − 10','10 − <i>a</i>'],ans:'A',
+   exp:'The two solutions of (x+a)²=49 are x = −a + 7 and x = −a − 7. If one solution is 3, then −a + 7 = 3, so a = 4. The other solution is −4 − 7 = −11. In terms of a, the other root is 3 − 2a.'},
   {id:'m2h_2',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
-   q:'The function <i>g</i> is defined by <i>g</i>(<i>x</i>) = <i>x</i>² − 4<i>x</i> + <i>k</i>. For what value of <i>k</i> does <i>g</i> have exactly one real root?',
-   opts:['−4','0','4','8'],ans:'C',
-   exp:'For exactly one real root, the discriminant equals zero: b² − 4ac = 0. Here: 16 − 4k = 0 → k = 4.'},
+   q:'For the function <i>g</i>(<i>x</i>) = <i>x</i>² − 4<i>x</i> + <i>k</i>, the minimum value of <i>g</i> is 7. What is the value of <i>k</i>?',
+   opts:['3','7','11','15'],ans:'C',
+   exp:'Rewrite g(x) = (x − 2)² + k − 4. The minimum is k − 4. Since k − 4 = 7, k = 11.'},
   {id:'m2h_3',diff:'hard',topic:'Problem Solving & Data Analysis',type:'mc',calc:true,
-   q:'A data set of adult heights is approximately normally distributed with a mean of 68 inches and a standard deviation of 3 inches. Approximately what percentage of adults have heights between 62 and 74 inches?',
-   opts:['68%','95%','99.7%','50%'],ans:'B',
-   exp:'62 = 68 − 2(3) and 74 = 68 + 2(3), so the interval is within 2 standard deviations of the mean. By the empirical rule, approximately 95% of data falls within 2 SDs.'},
+   q:`The table shows values from a linear model relating hours studied, <i>x</i>, and predicted score increase, <i>y</i>. Which statement best interprets the slope of the model?
+   <table class="q-table"><tr><th>Hours studied, x</th><td>2</td><td>5</td><td>8</td></tr><tr><th>Predicted increase, y</th><td>11</td><td>23</td><td>35</td></tr></table>`,
+   opts:['For each additional hour studied, the predicted score increase is 4 points','For each additional 4 hours studied, the predicted score increase is 1 point','A student who studies 0 hours is predicted to gain 4 points','A student who studies 1 hour is predicted to gain 11 points'],ans:'A',
+   exp:'The slope is (23 − 11)/(5 − 2) = 12/3 = 4. The model predicts 4 additional points for each additional hour studied.'},
   {id:'m2h_4',diff:'hard',topic:'Geometry & Trigonometry',type:'mc',calc:true,
    q:`A regular hexagon with side length 6 is shown. What is the area of the hexagon?
    <div class="q-figure"><svg width="260" height="210" viewBox="0 0 260 210" role="img" aria-label="Regular hexagon with side length 6 divided into six equilateral triangles">
@@ -417,9 +419,9 @@ const Q_M2_HARD = [
    opts:['<i>x</i> + 1','<i>x</i> − 2','<i>x</i> + 3','<i>x</i> − 6'],ans:'B',
    exp:'Test x = 2: p(2) = 8 − 14 + 6 = 0. Since p(2) = 0, (x − 2) is a factor by the Factor Theorem.'},
   {id:'m2h_7',diff:'hard',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
-   q:'A researcher studying hours of sleep and test scores finds a correlation coefficient of r = 0.83. Which of the following conclusions is most appropriate?',
-   opts:['Students who sleep more will score higher','There is a strong positive linear association between sleep hours and test scores','Sleeping more causes higher test scores','There is a weak relationship between the two variables'],ans:'B',
-   exp:'r = 0.83 indicates a strong positive linear association. Correlation does not imply causation, so "causes" is not justified.'},
+   q:'A study found a correlation coefficient of <i>r</i> = 0.83 between hours of sleep and test scores. The researchers then controlled for course difficulty, and the correlation dropped to <i>r</i> = 0.18. Which conclusion is best supported?',
+   opts:['Sleeping more causes higher test scores','The original association may have been partly explained by course difficulty','There is no relationship between any of the variables','A correlation of 0.18 proves the variables are independent'],ans:'B',
+   exp:'The large drop after controlling for course difficulty suggests course difficulty may explain part of the original association. Correlation still does not prove causation.'},
   {id:'m2h_8',diff:'hard',topic:'Geometry & Trigonometry',type:'mc',calc:true,
    q:`A circle is inscribed in the square shown. The side length of the square is 10. What is the area of the shaded region inside the square but outside the circle?
    <div class="q-figure"><svg width="230" height="230" viewBox="0 0 230 230" role="img" aria-label="Circle inscribed in square side length 10, shaded outside circle">
@@ -435,9 +437,9 @@ const Q_M2_HARD = [
    opts:['<i>x</i> = 1/2','<i>x</i> = −1/2','<i>x</i> = 3','<i>x</i> = −3'],ans:'D',
    exp:'A rational function is undefined when the denominator equals zero: x + 3 = 0 → x = −3.'},
   {id:'m2h_10',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
-   q:'The graph of <i>y</i> = <i>f</i>(<i>x</i>) is a parabola with vertex at (3, −4). The graph passes through the point (1, 0). What is the value of <i>f</i>(5)?',
-   opts:['0','4','−4','8'],ans:'A',
-   exp:'Parabolas are symmetric about their vertex. Point (1, 0) is 2 units left of the vertex (x = 3). By symmetry, (5, 0) is 2 units right. So f(5) = 0.'},
+   q:'The graph of <i>y</i> = <i>f</i>(<i>x</i>) is a parabola with vertex at (3, −4). The graph passes through (1, 0). Which expression is equivalent to <i>f</i>(<i>x</i>)?',
+   opts:['(<i>x</i> − 3)² − 4','(<i>x</i> + 3)² − 4','2(<i>x</i> − 3)² − 4','−(<i>x</i> − 3)² − 4'],ans:'A',
+   exp:'Use vertex form f(x)=a(x−3)²−4. Since (1,0) is on the graph, 0=a(−2)²−4, so 4a=4 and a=1. Thus f(x)=(x−3)²−4.'},
   {id:'m2h_11',diff:'hard',topic:'Problem Solving & Data Analysis',type:'spr',calc:false,
    q:'In a class of 30 students, 18 play soccer, 12 play basketball, and 5 play both sports. How many students play neither soccer nor basketball?',
    ans:'5',
@@ -456,9 +458,9 @@ const Q_M2_HARD = [
    opts:['sin²θ','cos²θ','1','2sin²θ'],ans:'C',
    exp:'Factor: sin²θ + cos²θ(sin²θ + cos²θ) = sin²θ + cos²θ · 1 = sin²θ + cos²θ = 1.'},
   {id:'m2h_14',diff:'hard',topic:'Algebra',type:'mc',calc:true,
-   q:'The cost to rent a piece of equipment is a flat fee of $40 plus $0.25 per mile driven. James paid a total of $95. How many miles did he drive?',
-   opts:['180','220','240','380'],ans:'B',
-   exp:'40 + 0.25m = 95 → 0.25m = 55 → m = 220.'},
+   q:'A company charges a flat setup fee plus a constant rate per mile. A 120-mile trip costs $70, and a 260-mile trip costs $105. If <i>C</i> is the total cost in dollars for a trip of <i>m</i> miles, which equation represents this relationship?',
+   opts:['<i>C</i> = 0.25<i>m</i> + 40','<i>C</i> = 0.25<i>m</i> + 70','<i>C</i> = 4<i>m</i> − 410','<i>C</i> = 35<i>m</i> + 120'],ans:'A',
+   exp:'The rate is (105−70)/(260−120)=35/140=0.25 dollars per mile. Using 70=0.25(120)+b gives b=40. So C=0.25m+40.'},
   {id:'m2h_15',diff:'hard',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
    q:'A data set has a mean of 50 and a standard deviation of 8. A new data point of 74 is added to the data set. Which of the following best describes the effect on the mean and standard deviation?',
    opts:['The mean increases and the standard deviation increases','The mean increases and the standard deviation decreases','The mean decreases and the standard deviation increases','Both the mean and standard deviation remain the same'],ans:'A',
@@ -469,16 +471,16 @@ const Q_M2_HARD = [
    exp:'sin(x°) = cos(52°) = sin(90° − 52°) = sin(38°). Therefore x = 38.'},
   {id:'m2h_17',diff:'hard',topic:'Advanced Math',type:'spr',calc:false,
    q:'If <i>x</i> and <i>y</i> are positive integers and <i>x</i>² − <i>y</i>² = 45, what is one possible value of <i>x</i> + <i>y</i>?',
-   ans:'9',
+   ans:['9','15','45'],
    exp:'Factor: (x + y)(x − y) = 45. Factor pairs of 45: (9,5), (15,3), (45,1). For (x+y)=9 and (x−y)=5: x=7, y=2 ✓. So x + y = 9. (Also acceptable: 15 or 45.)'},
   {id:'m2h_18',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
    q:'The expression (3 + 2<i>i</i>)(4 − <i>i</i>) is equivalent to which of the following? (where <i>i</i>² = −1)',
    opts:['10 + 5<i>i</i>','14 + 5<i>i</i>','12 − 2<i>i</i>','10 − <i>i</i>'],ans:'B',
    exp:'FOIL: 12 − 3i + 8i − 2i² = 12 + 5i − 2(−1) = 12 + 5i + 2 = 14 + 5i.'},
   {id:'m2h_19',diff:'hard',topic:'Algebra',type:'mc',calc:true,
-   q:'The graph of <i>f</i>(<i>x</i>) = <i>ax</i>² + <i>bx</i> + <i>c</i> passes through the points (−1, 4), (0, 1), and (2, 7). What is the value of <i>a</i>?',
-   opts:['1','2','3','4'],ans:'B',
-   exp:'From (0,1): c = 1. From (−1,4): a − b + 1 = 4 → a − b = 3. From (2,7): 4a + 2b + 1 = 7 → 2a + b = 3. Adding: 3a = 6 → a = 2.'},
+   q:'The quadratic function <i>f</i> satisfies <i>f</i>(−1)=4, <i>f</i>(0)=1, and <i>f</i>(2)=7. If <i>f</i>(<i>x</i>) = <i>ax</i>² + <i>bx</i> + <i>c</i>, which statement must be true?',
+   opts:['The graph opens upward and has <i>y</i>-intercept 1','The graph opens downward and has <i>y</i>-intercept 1','The graph opens upward and has <i>y</i>-intercept 4','The graph opens downward and has <i>y</i>-intercept 4'],ans:'A',
+   exp:'Since f(0)=1, c=1. Solving the equations from f(−1)=4 and f(2)=7 gives a=2, which is positive, so the graph opens upward.'},
   {id:'m2h_20',diff:'hard',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
    q:'A study models the relationship between years of education (<i>x</i>) and annual income in thousands of dollars (<i>y</i>) as <i>y</i> = 4.5<i>x</i> + 10.2. According to this model, what is the expected increase in annual income for each additional year of education?',
    opts:['$4,500','$10,200','$14,700','$45,000'],ans:'A',
@@ -654,11 +656,11 @@ function renderStart() {
         <div class="info-item"><div class="i-label">Modules</div><div class="i-val">2 Modules</div></div>
         <div class="info-item"><div class="i-label">Questions</div><div class="i-val">22 per module</div></div>
         <div class="info-item"><div class="i-label">Time per module</div><div class="i-val">35 minutes</div></div>
-        <div class="info-item"><div class="i-label">Score range</div><div class="i-val">200–800</div></div>
+        <div class="info-item"><div class="i-label">Score report</div><div class="i-val">Raw + rough estimate</div></div>
       </div>
       <div class="directions">
         <strong>Before You Begin</strong>
-        Module 2 difficulty adapts based on your Module 1 performance. A calculator is available for select questions. Flag questions for review and revisit them before submitting. Explanations are shown only after completing the full exam.
+        Module 2 difficulty adapts based on your Module 1 performance. A calculator is available throughout the Math section. Flag questions for review and revisit them before submitting. Explanations and score information are shown only after completing the full exam.
       </div>
       <button class="btn-primary" id="start-btn">Start Module 1</button>
     </div>
@@ -702,7 +704,6 @@ function renderExam(mod) {
           </button>
         </div>
         <div class="question-card">
-          ${q.calc ? '<div class="calc-note">Calculator available for this question</div>' : ''}
           <div class="question-text">${q.q}</div>
           ${renderAnswerArea(q, mod, m)}
         </div>
@@ -869,23 +870,15 @@ function renderModEnd() {
   const m1 = state.m1;
   let correct = 0;
   m1.qs.forEach((q, i) => { if (isCorrect(q, m1.answers[i])) correct++; });
-  const pct = Math.round(correct / m1.qs.length * 100);
   const isHard = correct >= 14;
   state.m2.isHard = isHard;
 
   return `<div class="mod-end-screen">
     <div class="mod-end-card">
-      <div class="score-ring">
-        <div class="ring-num">${correct}</div>
-        <div class="ring-of">out of 22</div>
-      </div>
       <h2>Module 1 Complete</h2>
-      <p>You answered ${correct} of 22 questions correctly (${pct}%).</p>
-      <div class="path-badge ${isHard ? 'hard' : 'easy'}">
-        ${isHard ? '🔥 Routing to Advanced Module 2' : '📘 Routing to Standard Module 2'}
-      </div>
-      <p style="margin-bottom:1.5rem">Take a short break if needed. Module 2 has 22 questions and 35 minutes. Click below when you are ready.</p>
-      <button class="btn-primary" id="start-m2-btn">Start Module 2</button>
+      <p>Your answers have been saved. The next module will begin when you continue. Scores, explanations, and module routing are shown only after the full exam is complete.</p>
+      <p style="margin-bottom:1.5rem">For a more realistic mock test, continue directly to Module 2 without taking an untimed break.</p>
+      <button class="btn-primary" id="start-m2-btn">Continue to Module 2</button>
     </div>
   </div>`;
 }
@@ -922,9 +915,9 @@ function renderResults() {
     </div>
     <div class="score-display">
       <div class="score-card main">
-        <div class="sc-label">SAT Math Score (Est.)</div>
+        <div class="sc-label">Rough Math Score Estimate</div>
         <div class="sc-val">${sat}</div>
-        <div class="sc-sub">Scaled 200–800</div>
+        <div class="sc-sub">Not predictive · unofficial</div>
       </div>
       <div class="score-card">
         <div class="sc-label">Module 1</div>
@@ -942,6 +935,7 @@ function renderResults() {
         <div class="sc-sub">${Math.round(total/44*100)}% overall</div>
       </div>
     </div>
+    <p class="score-caveat">This score is a rough practice estimate based on raw correct answers and module path. The real digital SAT uses adaptive item-level scoring, so students with the same raw score can receive different scaled scores depending on which questions they miss.</p>
 
     <div class="section-card">
       <h2>Topic Breakdown</h2>
@@ -981,6 +975,7 @@ function renderReviewItem(q, answer, num, mod) {
   let iconCls = unanswered ? 'u' : (correct ? 'c' : 'w');
   let iconChar = unanswered ? '−' : (correct ? '✓' : '✗');
   let answerText = '';
+  const correctAnswerText = Array.isArray(q.ans) ? q.ans.join(' or ') : q.ans;
   if (q.type === 'mc') {
     const letters = ['A','B','C','D'];
     const correctOpt = q.opts[letters.indexOf(q.ans)];
@@ -988,9 +983,9 @@ function renderReviewItem(q, answer, num, mod) {
     else if (correct) answerText = `Your answer: <strong>${answer}</strong>. ${q.opts[letters.indexOf(answer)]} ✓`;
     else answerText = `Your answer: <strong>${answer}</strong> (${q.opts[letters.indexOf(answer)] || '—'}). Correct: <strong>${q.ans}</strong>. ${correctOpt}`;
   } else {
-    if (unanswered) answerText = `No answer given. Correct answer: <strong>${q.ans}</strong>`;
+    if (unanswered) answerText = `No answer given. Correct answer: <strong>${correctAnswerText}</strong>`;
     else if (correct) answerText = `Your answer: <strong>${answer}</strong> ✓`;
-    else answerText = `Your answer: <strong>${answer}</strong>. Correct answer: <strong>${q.ans}</strong>`;
+    else answerText = `Your answer: <strong>${answer}</strong>. Correct answer: <strong>${correctAnswerText}</strong>`;
   }
   return `<div class="review-item">
     <div class="rev-icon ${iconCls}">${iconChar}</div>
@@ -1032,9 +1027,29 @@ function generateSuggestions(topicStats) {
 function isCorrect(q, answer) {
   if (answer === null || answer === undefined || answer === '') return false;
   if (q.type === 'mc') return answer === q.ans;
-  // SPR: normalize
+  const accepted = Array.isArray(q.ans) ? q.ans : [q.ans];
+  return accepted.some(ans => sprEquivalent(answer, ans));
+}
+
+function sprEquivalent(given, expected) {
   const normalize = s => String(s).trim().replace(/\s/g,'').toLowerCase();
-  return normalize(answer) === normalize(q.ans);
+  const g = normalize(given), e = normalize(expected);
+  if (g === e) return true;
+  const gn = parseSPRNumber(g), en = parseSPRNumber(e);
+  return gn !== null && en !== null && Math.abs(gn - en) < 1e-9;
+}
+
+function parseSPRNumber(value) {
+  if (!value || /[a-z]/i.test(value)) return null;
+  if (value.includes('/')) {
+    const parts = value.split('/');
+    if (parts.length !== 2) return null;
+    const n = Number(parts[0]), d = Number(parts[1]);
+    if (!Number.isFinite(n) || !Number.isFinite(d) || d === 0) return null;
+    return n / d;
+  }
+  const n = Number(value);
+  return Number.isFinite(n) ? n : null;
 }
 
 function estimateSAT(m1c, m2c, isHard) {
