@@ -401,15 +401,10 @@ const Q_M2_HARD = [
    <table class="q-table"><tr><th>Hours studied, x</th><td>2</td><td>5</td><td>8</td></tr><tr><th>Predicted increase, y</th><td>11</td><td>23</td><td>35</td></tr></table>`,
    opts:['For each additional hour studied, the predicted score increase is 4 points','For each additional 4 hours studied, the predicted score increase is 1 point','A student who studies 0 hours is predicted to gain 4 points','A student who studies 1 hour is predicted to gain 11 points'],ans:'A',
    exp:'The slope is (23 − 11)/(5 − 2) = 12/3 = 4. The model predicts 4 additional points for each additional hour studied.'},
-  {id:'m2h_4',diff:'hard',topic:'Geometry & Trigonometry',type:'mc',calc:true,
-   q:`A regular hexagon with side length 6 is shown. What is the area of the hexagon?
-   <div class="q-figure"><svg width="260" height="210" viewBox="0 0 260 210" role="img" aria-label="Regular hexagon with side length 6 divided into six equilateral triangles">
-     <polygon points="130,25 205,68 205,152 130,195 55,152 55,68" fill="#fff8e8" stroke="#222" stroke-width="2"/>
-     <line x1="130" y1="25" x2="130" y2="195" stroke="#adb5bd"/><line x1="55" y1="68" x2="205" y2="152" stroke="#adb5bd"/><line x1="205" y1="68" x2="55" y2="152" stroke="#adb5bd"/>
-     <text x="164" y="43" font-size="18">6</text><text x="112" y="112" font-size="14">6 congruent</text><text x="112" y="130" font-size="14">triangles</text>
-   </svg></div>`,
-   opts:['36√3','54√3','72√3','108√3'],ans:'B',
-   exp:'Area of a regular hexagon = (3√3/2)s² = (3√3/2)(36) = 54√3.'},
+  {id:'m2h_4',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
+   q:'For some constant <i>k</i>, the expression <i>x</i>² + <i>kx</i> + 36 can be written as (<i>x</i> + <i>a</i>)² for all values of <i>x</i>. What is the positive value of <i>k</i>?',
+   opts:['6','9','12','18'],ans:'C',
+   exp:'If x² + kx + 36 = (x+a)² = x² + 2ax + a², then a² = 36, so the positive a is 6. Thus k = 2a = 12.'},
   {id:'m2h_5',diff:'hard',topic:'Algebra',type:'spr',calc:false,
    q:'If 2<sup><i>x</i>+1</sup> = 32, what is the value of <i>x</i>?',
    ans:'4',
@@ -422,16 +417,10 @@ const Q_M2_HARD = [
    q:'A study found a correlation coefficient of <i>r</i> = 0.83 between hours of sleep and test scores. The researchers then controlled for course difficulty, and the correlation dropped to <i>r</i> = 0.18. Which conclusion is best supported?',
    opts:['Sleeping more causes higher test scores','The original association may have been partly explained by course difficulty','There is no relationship between any of the variables','A correlation of 0.18 proves the variables are independent'],ans:'B',
    exp:'The large drop after controlling for course difficulty suggests course difficulty may explain part of the original association. Correlation still does not prove causation.'},
-  {id:'m2h_8',diff:'hard',topic:'Geometry & Trigonometry',type:'mc',calc:true,
-   q:`A circle is inscribed in the square shown. The side length of the square is 10. What is the area of the shaded region inside the square but outside the circle?
-   <div class="q-figure"><svg width="230" height="230" viewBox="0 0 230 230" role="img" aria-label="Circle inscribed in square side length 10, shaded outside circle">
-     <defs><mask id="hole"><rect x="35" y="35" width="160" height="160" fill="white"/><circle cx="115" cy="115" r="80" fill="black"/></mask></defs>
-     <rect x="35" y="35" width="160" height="160" fill="#dbeafe" mask="url(#hole)"/><rect x="35" y="35" width="160" height="160" fill="none" stroke="#222" stroke-width="2"/>
-     <circle cx="115" cy="115" r="80" fill="none" stroke="#222" stroke-width="2"/>
-     <text x="105" y="218" font-size="18">10</text>
-   </svg></div>`,
-   opts:['100 − 25π','100 − 10π','100 − 50π','50 − 25π'],ans:'A',
-   exp:'The inscribed circle has radius 5 (half the side). Area of square = 100. Area of circle = π(5²) = 25π. Shaded area = 100 − 25π.'},
+  {id:'m2h_8',diff:'hard',topic:'Algebra',type:'mc',calc:false,
+   q:'A store sells two sizes of notebooks. A small notebook costs <i>s</i> dollars, and a large notebook costs <i>l</i> dollars. The system 4<i>s</i> + 3<i>l</i> = 29 and 2<i>s</i> + 5<i>l</i> = 31 represents two purchases. What is the meaning of <i>l</i> in this context?',
+   opts:['The cost, in dollars, of one large notebook','The number of large notebooks in the first purchase','The total cost, in dollars, of the second purchase','The difference between the costs of the two notebook sizes'],ans:'A',
+   exp:'The variable l is defined as the cost, in dollars, of one large notebook. The coefficients count how many notebooks of each type are purchased.'},
   {id:'m2h_9',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
    q:'The function <i>f</i> is defined by <i>f</i>(<i>x</i>) = <sup>2<i>x</i> − 1</sup>/<sub><i>x</i> + 3</sub>. For what value of <i>x</i> is <i>f</i>(<i>x</i>) undefined?',
    opts:['<i>x</i> = 1/2','<i>x</i> = −1/2','<i>x</i> = 3','<i>x</i> = −3'],ans:'D',
@@ -444,15 +433,10 @@ const Q_M2_HARD = [
    q:'In a class of 30 students, 18 play soccer, 12 play basketball, and 5 play both sports. How many students play neither soccer nor basketball?',
    ans:'5',
    exp:'By inclusion-exclusion: students who play at least one sport = 18 + 12 − 5 = 25. Students who play neither = 30 − 25 = 5.'},
-  {id:'m2h_12',diff:'hard',topic:'Geometry & Trigonometry',type:'mc',calc:true,
-   q:`A cone has base radius 5 and slant height 13, as shown. What is the volume of the cone? (Use V = ⅓πr²h)
-   <div class="q-figure"><svg width="250" height="220" viewBox="0 0 250 220" role="img" aria-label="Cone with radius 5 and slant height 13">
-     <ellipse cx="125" cy="170" rx="70" ry="22" fill="#f8fbff" stroke="#222" stroke-width="2"/><path d="M55 170 L125 30 L195 170" fill="none" stroke="#222" stroke-width="2"/>
-     <line x1="125" y1="30" x2="125" y2="170" stroke="#0d6efd" stroke-dasharray="5 4" stroke-width="2"/><line x1="125" y1="170" x2="195" y2="170" stroke="#198754" stroke-width="2"/>
-     <text x="158" y="91" font-size="18">13</text><text x="154" y="190" font-size="18">5</text><text x="131" y="103" fill="#0d6efd" font-size="16">h</text>
-   </svg></div>`,
-   opts:['100π','200π','300π','400π'],ans:'A',
-   exp:'Find height: h = √(13² − 5²) = √(169 − 25) = √144 = 12. V = (1/3)π(25)(12) = 100π.'},
+  {id:'m2h_12',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
+   q:'The function <i>h</i> is defined by <i>h</i>(<i>x</i>) = (<i>x</i>² − 9)/(<i>x</i> − 3) for <i>x</i> ≠ 3. Which statement about the graph of <i>y</i> = <i>h</i>(<i>x</i>) is true?',
+   opts:['It is the line <i>y</i> = <i>x</i> + 3 with a hole at <i>x</i> = 3','It is the line <i>y</i> = <i>x</i> − 3 with a hole at <i>x</i> = 3','It has a vertical asymptote at <i>x</i> = 3','It has no removable discontinuity'],ans:'A',
+   exp:'Factor x² − 9 as (x−3)(x+3). For x ≠ 3, h(x)=x+3, but x=3 is excluded, so the graph is y=x+3 with a hole at x=3.'},
   {id:'m2h_13',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
    q:'Which of the following is equivalent to sin²θ + cos²θ · sin²θ + cos⁴θ for all values of θ?',
    opts:['sin²θ','cos²θ','1','2sin²θ'],ans:'C',
@@ -461,10 +445,10 @@ const Q_M2_HARD = [
    q:'A company charges a flat setup fee plus a constant rate per mile. A 120-mile trip costs $70, and a 260-mile trip costs $105. If <i>C</i> is the total cost in dollars for a trip of <i>m</i> miles, which equation represents this relationship?',
    opts:['<i>C</i> = 0.25<i>m</i> + 40','<i>C</i> = 0.25<i>m</i> + 70','<i>C</i> = 4<i>m</i> − 410','<i>C</i> = 35<i>m</i> + 120'],ans:'A',
    exp:'The rate is (105−70)/(260−120)=35/140=0.25 dollars per mile. Using 70=0.25(120)+b gives b=40. So C=0.25m+40.'},
-  {id:'m2h_15',diff:'hard',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
-   q:'A data set has a mean of 50 and a standard deviation of 8. A new data point of 74 is added to the data set. Which of the following best describes the effect on the mean and standard deviation?',
-   opts:['The mean increases and the standard deviation increases','The mean increases and the standard deviation decreases','The mean decreases and the standard deviation increases','Both the mean and standard deviation remain the same'],ans:'A',
-   exp:'74 > 50 so the mean increases. 74 is 3 standard deviations above the mean, far from center, so it increases the spread, hence the standard deviation increases.'},
+  {id:'m2h_15',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
+   q:'A population of bacteria is modeled by <i>P</i>(<i>t</i>) = 800(1.25)<sup><i>t</i></sup>, where <i>t</i> is measured in hours. Which expression represents the predicted percent increase in the population over a 3-hour period?',
+   opts:['25%','75%','(1.25)³ − 1','800(1.25)³'],ans:'C',
+   exp:'Over any 3-hour period, the multiplicative factor is (1.25)³. The percent increase as a decimal is final/original − 1 = (1.25)³ − 1.'},
   {id:'m2h_16',diff:'hard',topic:'Geometry & Trigonometry',type:'mc',calc:false,
    q:'If sin(<i>x</i>°) = cos(52°) and 0 &lt; <i>x</i> &lt; 90, what is the value of <i>x</i>?',
    opts:['28','38','48','52'],ans:'B',
@@ -505,10 +489,10 @@ const Q_M2_EASY = [
    q:'Which expression is equivalent to 3(<i>x</i> + 4) − 2<i>x</i>?',
    opts:['<i>x</i> + 12','<i>x</i> + 4','5<i>x</i> + 12','<i>x</i> − 4'],ans:'A',
    exp:'Distribute: 3x + 12 − 2x = x + 12.'},
-  {id:'m2e_3',diff:'easy',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
-   q:'A car travels at a constant speed of 55 miles per hour. How far will the car travel in 3 hours?',
-   opts:['155 miles','160 miles','165 miles','170 miles'],ans:'C',
-   exp:'Distance = rate × time = 55 × 3 = 165 miles.'},
+  {id:'m2e_3',diff:'easy',topic:'Algebra',type:'mc',calc:false,
+   q:'A car travels at a constant speed of 55 miles per hour. Which equation gives the distance <i>d</i>, in miles, that the car travels in <i>t</i> hours?',
+   opts:['<i>d</i> = 55<i>t</i>','<i>d</i> = <i>t</i> + 55','<i>d</i> = 55/<i>t</i>','<i>d</i> = <i>t</i>/55'],ans:'A',
+   exp:'Distance equals rate times time. With rate 55 miles per hour, d = 55t.'},
   {id:'m2e_4',diff:'easy',topic:'Geometry & Trigonometry',type:'mc',calc:false,
    q:`The square shown has area 36. What is its perimeter?
    <div class="q-figure"><svg width="200" height="170" viewBox="0 0 200 170" role="img" aria-label="Square with area 36">
@@ -521,18 +505,18 @@ const Q_M2_EASY = [
    q:'If <i>y</i> = 3<i>x</i> − 2, what is the value of <i>y</i> when <i>x</i> = 4?',
    ans:'10',
    exp:'y = 3(4) − 2 = 12 − 2 = 10.'},
-  {id:'m2e_6',diff:'easy',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
-   q:'The scores on a quiz are: 8, 10, 7, 10, 6, 10, 8. What is the mode of these scores?',
-   opts:['7','8','9','10'],ans:'D',
-   exp:'10 appears 3 times, more than any other value. The mode is 10.'},
+  {id:'m2e_6',diff:'easy',topic:'Advanced Math',type:'mc',calc:false,
+   q:'If <i>f</i>(<i>x</i>) = 2<i>x</i>² + 1, which expression represents <i>f</i>(<i>x</i> + 3)?',
+   opts:['2(<i>x</i> + 3)² + 1','2<i>x</i>² + 4','2<i>x</i>² + 7','(2<i>x</i> + 3)² + 1'],ans:'A',
+   exp:'Replace x in the rule f(x)=2x²+1 with x+3: f(x+3)=2(x+3)²+1.'},
   {id:'m2e_7',diff:'easy',topic:'Algebra',type:'mc',calc:false,
    q:'If −2<i>x</i> &gt; 8, which of the following must be true?',
    opts:['<i>x</i> &gt; −4','<i>x</i> &lt; −4','<i>x</i> &gt; 4','<i>x</i> &lt; 4'],ans:'B',
    exp:'Divide both sides by −2 and flip the inequality: x < −4.'},
-  {id:'m2e_8',diff:'easy',topic:'Geometry & Trigonometry',type:'mc',calc:false,
-   q:'Two angles are supplementary. If one angle measures 73°, what is the measure of the other angle?',
-   opts:['17°','90°','107°','117°'],ans:'C',
-   exp:'Supplementary angles sum to 180°. 180° − 73° = 107°.'},
+  {id:'m2e_8',diff:'easy',topic:'Algebra',type:'mc',calc:false,
+   q:'A line has slope 4 and passes through the point (0, −7). Which equation represents the line?',
+   opts:['<i>y</i> = 4<i>x</i> − 7','<i>y</i> = −7<i>x</i> + 4','<i>y</i> = 4<i>x</i> + 7','<i>y</i> = −4<i>x</i> − 7'],ans:'A',
+   exp:'A line with slope m and y-intercept b has equation y=mx+b. Here m=4 and b=−7, so y=4x−7.'},
   // ── MEDIUM ──
   {id:'m2e_9',diff:'medium',topic:'Algebra',type:'mc',calc:false,
    q:'What is the slope of the line passing through the points (−2, 3) and (4, −9)?',
@@ -542,10 +526,10 @@ const Q_M2_EASY = [
    q:'If <i>f</i>(<i>x</i>) = <i>x</i>² − 4, what is the value of <i>f</i>(3) + <i>f</i>(−3)?',
    opts:['5','10','15','20'],ans:'B',
    exp:'f(3) = 9 − 4 = 5. f(−3) = 9 − 4 = 5. Sum = 10.'},
-  {id:'m2e_11',diff:'medium',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
-   q:'A box contains 5 red balls, 3 blue balls, and 2 yellow balls. If one ball is drawn at random, what is the probability of drawing a blue ball?',
-   opts:['1/5','3/10','2/5','1/2'],ans:'B',
-   exp:'P(blue) = 3 ÷ (5 + 3 + 2) = 3/10.'},
+  {id:'m2e_11',diff:'medium',topic:'Advanced Math',type:'mc',calc:false,
+   q:'The expression <i>x</i>² + 10<i>x</i> + 25 is equivalent to which of the following?',
+   opts:['(<i>x</i> + 5)²','(<i>x</i> − 5)²','(<i>x</i> + 10)²','<i>x</i>(<i>x</i> + 10) + 25<i>x</i>'],ans:'A',
+   exp:'x² + 10x + 25 is a perfect square trinomial: x² + 2(5)x + 5² = (x+5)².'},
   {id:'m2e_12',diff:'medium',topic:'Geometry & Trigonometry',type:'mc',calc:true,
    q:`The area of the circle shown is 36π. What is the diameter of the circle?
    <div class="q-figure"><svg width="220" height="170" viewBox="0 0 220 170" role="img" aria-label="Circle with area 36 pi">
@@ -562,10 +546,10 @@ const Q_M2_EASY = [
    q:'If <i>x</i>² − 7<i>x</i> + 12 = 0, what is the larger value of <i>x</i> that satisfies the equation?',
    ans:'4',
    exp:'Factor: (x − 3)(x − 4) = 0, so x = 3 or x = 4. The larger value is 4.'},
-  {id:'m2e_15',diff:'medium',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
-   q:'A line has the equation <i>y</i> = 3<i>x</i> + 2. What is the <i>y</i>-intercept of this line?',
-   opts:['2','3','−2','0'],ans:'A',
-   exp:'In the form y = mx + b, the y-intercept is b = 2.'},
+  {id:'m2e_15',diff:'medium',topic:'Algebra',type:'mc',calc:false,
+   q:'A line has equation <i>y</i> = 3<i>x</i> + 2. If the line is translated down 5 units, which equation represents the new line?',
+   opts:['<i>y</i> = 3<i>x</i> − 3','<i>y</i> = 3<i>x</i> + 7','<i>y</i> = −2<i>x</i> + 2','<i>y</i> = 8<i>x</i> + 2'],ans:'A',
+   exp:'Translating down 5 subtracts 5 from every y-value: y = 3x + 2 − 5 = 3x − 3.'},
   {id:'m2e_16',diff:'medium',topic:'Geometry & Trigonometry',type:'mc',calc:false,
    q:`In triangle ABC shown, angle A = 45° and angle B = 75°. What is the measure of angle C?
    <div class="q-figure"><svg width="270" height="180" viewBox="0 0 270 180" role="img" aria-label="Triangle ABC with angles A 45 degrees and B 75 degrees">
