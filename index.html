@@ -218,6 +218,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .sc-val{font-size:2.4rem;font-weight:800;color:var(--primary);line-height:1}
 .sc-sub{font-size:.78rem;color:var(--muted);margin-top:.25rem}
 .score-caveat{max-width:720px;margin:-1rem auto 2rem;color:var(--muted);font-size:.86rem;line-height:1.5;text-align:center}
+.estimate-toggle{display:block;margin:-.75rem auto 1.25rem;background:#fff;border:1px solid var(--border);border-radius:6px;padding:.45rem .85rem;font-size:.82rem;font-weight:700;color:var(--primary);cursor:pointer}
+.estimate-toggle:hover{border-color:var(--accent);color:var(--accent)}
+.score-card.estimate-hidden{display:none}
 .section-card{background:var(--card);border-radius:12px;padding:1.5rem;margin-bottom:1.25rem;box-shadow:0 2px 10px rgba(0,0,0,.06)}
 .section-card h2{font-size:1rem;font-weight:700;margin-bottom:1.1rem;padding-bottom:.75rem;border-bottom:1px solid var(--border)}
 /* Topic bars */
@@ -362,29 +365,29 @@ const Q_M1 = [
    exp:'Circumference = 2πr = 16π → r = 8. Area = π(8²) = 64π.'},
   // ── HARD ──
   {id:'m1_17',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
-   q:'The function <i>f</i> is defined by <i>f</i>(<i>x</i>) = 3 · 2<sup><i>x</i></sup>. What is the <i>y</i>-intercept of the graph of <i>y</i> = <i>f</i>(<i>x</i>) in the <i>xy</i>-plane?',
-   opts:['(0, 1)','(0, 2)','(0, 3)','(0, 6)'],ans:'C',
-   exp:'f(0) = 3 · 2⁰ = 3 · 1 = 3. The y-intercept is (0, 3).'},
+   q:'The function <i>f</i> is defined by <i>f</i>(<i>x</i>) = <i>a</i> · 2<sup><i>x</i></sup>. The graph of <i>y</i> = <i>f</i>(<i>x</i>) passes through (3, 40). What is the <i>y</i>-intercept of the graph?',
+   opts:['(0, 3)','(0, 5)','(0, 8)','(0, 10)'],ans:'B',
+   exp:'Since f(3)=a·2³=8a=40, a=5. The y-intercept is f(0)=5·2⁰=5, so the point is (0,5).'},
   {id:'m1_18',diff:'hard',topic:'Algebra',type:'spr',calc:true,
-   q:'A store sells apples for $1.50 each and oranges for $0.90 each. Maria buys a total of 20 pieces of fruit and spends exactly $24.00. How many apples did she buy?',
+   q:'A store sells apples for $1.50 each and oranges for $0.90 each. Maria buys 20 pieces of fruit. If replacing 4 oranges with 4 apples increases the total cost by $2.40, how many apples did Maria buy if her final total was $24.00?',
    ans:'10',
-   exp:'Let a = apples, o = oranges. System: a + o = 20 and 1.50a + 0.90o = 24. Substitute o = 20 − a: 1.50a + 0.90(20 − a) = 24 → 0.60a = 6 → a = 10.'},
+   exp:'Each apple costs $0.60 more than each orange, so replacing 4 oranges with 4 apples increases cost by 4(0.60)=$2.40, matching the condition. Let a be apples. Then 1.50a + 0.90(20−a)=24, so 0.60a=6 and a=10.'},
   {id:'m1_19',diff:'hard',topic:'Problem Solving & Data Analysis',type:'mc',calc:true,
-   q:'A random survey of 1,000 households found that 340 had at least one pet. Based on this survey, what is the best estimate of the number of households with at least one pet in a city of 250,000 households?',
-   opts:['65,000','75,000','85,000','95,000'],ans:'C',
-   exp:'340/1000 = 0.34. Estimate: 0.34 × 250,000 = 85,000.'},
+   q:'A random survey of 1,000 households found that 340 had at least one pet. The margin of error for the estimate is 3 percentage points. Which of the following is the best estimate of the possible range for the number of households with at least one pet in a city of 250,000 households?',
+   opts:['77,500 to 92,500','82,000 to 88,000','85,000 to 88,000','250,000 to 340,000'],ans:'A',
+   exp:'The estimate is 34%, with margin of error 3 percentage points, so the plausible percent range is 31% to 37%. For 250,000 households, that is 77,500 to 92,500.'},
   {id:'m1_20',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
-   q:'Which of the following is equivalent to <sup>2<i>x</i>³ − 5<i>x</i>² + 3<i>x</i></sup>/<sub><i>x</i></sub> for <i>x</i> ≠ 0?',
-   opts:['2<i>x</i>² − 5<i>x</i> + 3','2<i>x</i>² + 5<i>x</i> + 3','2<i>x</i>² − 5<i>x</i> − 3','2<i>x</i>³ − 5<i>x</i> + 3'],ans:'A',
-   exp:'Divide each term by x: 2x³/x − 5x²/x + 3x/x = 2x² − 5x + 3.'},
+   q:'For <i>x</i> ≠ 0, the expression <sup>2<i>x</i>³ − 5<i>x</i>² + 3<i>x</i></sup>/<sub><i>x</i></sub> is equivalent to <i>ax</i>² + <i>bx</i> + <i>c</i>. What is the value of <i>a</i> + <i>b</i> + <i>c</i>?',
+   opts:['0','1','5','10'],ans:'A',
+   exp:'Dividing each term by x gives 2x² − 5x + 3, so a=2, b=−5, and c=3. Therefore a+b+c=0.'},
   {id:'m1_21',diff:'hard',topic:'Geometry & Trigonometry',type:'mc',calc:true,
-   q:'In a right triangle, one acute angle measures 30°. The hypotenuse has a length of 20. What is the area of the triangle?',
-   opts:['50','50√3','100','100√3'],ans:'B',
-   exp:'In a 30-60-90 triangle: short leg = 10 (opposite 30°), long leg = 10√3 (opposite 60°). Area = ½ × 10 × 10√3 = 50√3.'},
+   q:'In a right triangle, one acute angle measures 30°. The hypotenuse has length 20. If the shorter leg is increased by 2 while the longer leg is unchanged, which expression represents the new area?',
+   opts:['50√3 + 10√3','50√3 + 5√3','60√3','100 + 20√3'],ans:'A',
+   exp:'The original shorter leg is 10 and the longer leg is 10√3. New area = 1/2(12)(10√3)=60√3 = 50√3 + 10√3.'},
   {id:'m1_22',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
-   q:'The system of equations below has no solution. Which of the following could be the value of <i>k</i>?<br><i>y</i> = 2<i>x</i> + 5<br><i>y</i> = <i>kx</i> − 3',
-   opts:['−2','−1','1','2'],ans:'D',
-   exp:'For no solution, lines must be parallel (same slope, different y-intercepts). The first line has slope 2, so k = 2. Since 5 ≠ −3, there is no solution.'},
+   q:'For the system <i>y</i> = 2<i>x</i> + 5 and <i>y</i> = <i>kx</i> − 3 to have no solution, which statement must be true?',
+   opts:['<i>k</i> = 2 because the lines have the same slope and different intercepts','<i>k</i> = −3 because the second line has y-intercept −3','<i>k</i> ≠ 2 because different slopes never intersect','<i>k</i> = 5 because the first line has y-intercept 5'],ans:'A',
+   exp:'A system of two linear equations has no solution when the lines are parallel and distinct. The first slope is 2, so k must be 2, and the y-intercepts 5 and −3 are different.'},
 ];
 
 const Q_M2_HARD = [
@@ -410,9 +413,9 @@ const Q_M2_HARD = [
    ans:'4',
    exp:'Write 32 as a power of 2: 32 = 2⁵. So 2^(x+1) = 2⁵ → x + 1 = 5 → x = 4.'},
   {id:'m2h_6',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
-   q:'The polynomial <i>p</i>(<i>x</i>) = <i>x</i>³ − 7<i>x</i> + 6. Which of the following is a factor of <i>p</i>(<i>x</i>)?',
-   opts:['<i>x</i> + 1','<i>x</i> − 2','<i>x</i> + 3','<i>x</i> − 6'],ans:'B',
-   exp:'Test x = 2: p(2) = 8 − 14 + 6 = 0. Since p(2) = 0, (x − 2) is a factor by the Factor Theorem.'},
+   q:'The polynomial <i>p</i>(<i>x</i>) = <i>x</i>³ − 7<i>x</i> + 6 can be written as (<i>x</i> − 1)(<i>x</i> − 2)(<i>x</i> + <i>r</i>). What is the value of <i>r</i>?',
+   opts:['−3','−1','1','3'],ans:'D',
+   exp:'The constant term of (x−1)(x−2)(x+r) is (−1)(−2)r = 2r. Since the constant term is 6, 2r=6 and r=3.'},
   {id:'m2h_7',diff:'hard',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
    q:'A study found a correlation coefficient of <i>r</i> = 0.83 between hours of sleep and test scores. The researchers then controlled for course difficulty, and the correlation dropped to <i>r</i> = 0.18. Which conclusion is best supported?',
    opts:['Sleeping more causes higher test scores','The original association may have been partly explained by course difficulty','There is no relationship between any of the variables','A correlation of 0.18 proves the variables are independent'],ans:'B',
@@ -422,9 +425,9 @@ const Q_M2_HARD = [
    opts:['The cost, in dollars, of one large notebook','The number of large notebooks in the first purchase','The total cost, in dollars, of the second purchase','The difference between the costs of the two notebook sizes'],ans:'A',
    exp:'The variable l is defined as the cost, in dollars, of one large notebook. The coefficients count how many notebooks of each type are purchased.'},
   {id:'m2h_9',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
-   q:'The function <i>f</i> is defined by <i>f</i>(<i>x</i>) = <sup>2<i>x</i> − 1</sup>/<sub><i>x</i> + 3</sub>. For what value of <i>x</i> is <i>f</i>(<i>x</i>) undefined?',
-   opts:['<i>x</i> = 1/2','<i>x</i> = −1/2','<i>x</i> = 3','<i>x</i> = −3'],ans:'D',
-   exp:'A rational function is undefined when the denominator equals zero: x + 3 = 0 → x = −3.'},
+   q:'The function <i>f</i> is defined by <i>f</i>(<i>x</i>) = <sup>2<i>x</i> − 1</sup>/<sub><i>x</i> + 3</sub>. Which statement best describes the behavior of <i>f</i> as <i>x</i> approaches −3?',
+   opts:['The value of <i>f</i>(−3) is 0','The graph has a vertical asymptote at <i>x</i> = −3','The graph has a removable hole at <i>x</i> = −3','The graph crosses the x-axis at <i>x</i> = −3'],ans:'B',
+   exp:'At x=−3, the denominator is 0 but the numerator is −7, not 0. The expression does not simplify to remove the factor, so the graph has a vertical asymptote at x=−3.'},
   {id:'m2h_10',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
    q:'The graph of <i>y</i> = <i>f</i>(<i>x</i>) is a parabola with vertex at (3, −4). The graph passes through (1, 0). Which expression is equivalent to <i>f</i>(<i>x</i>)?',
    opts:['(<i>x</i> − 3)² − 4','(<i>x</i> + 3)² − 4','2(<i>x</i> − 3)² − 4','−(<i>x</i> − 3)² − 4'],ans:'A',
@@ -438,9 +441,9 @@ const Q_M2_HARD = [
    opts:['It is the line <i>y</i> = <i>x</i> + 3 with a hole at <i>x</i> = 3','It is the line <i>y</i> = <i>x</i> − 3 with a hole at <i>x</i> = 3','It has a vertical asymptote at <i>x</i> = 3','It has no removable discontinuity'],ans:'A',
    exp:'Factor x² − 9 as (x−3)(x+3). For x ≠ 3, h(x)=x+3, but x=3 is excluded, so the graph is y=x+3 with a hole at x=3.'},
   {id:'m2h_13',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
-   q:'Which of the following is equivalent to sin²θ + cos²θ · sin²θ + cos⁴θ for all values of θ?',
-   opts:['sin²θ','cos²θ','1','2sin²θ'],ans:'C',
-   exp:'Factor: sin²θ + cos²θ(sin²θ + cos²θ) = sin²θ + cos²θ · 1 = sin²θ + cos²θ = 1.'},
+   q:'For all values of θ, which expression is equivalent to sin²θ + cos²θ · sin²θ + cos⁴θ?',
+   opts:['1','sin²θ + cos²θ','1 + sin²θ','cos²θ(1 + cos²θ)'],ans:'A',
+   exp:'Group the last two terms: cos²θ·sin²θ + cos⁴θ = cos²θ(sin²θ+cos²θ)=cos²θ. Then the expression is sin²θ+cos²θ=1.'},
   {id:'m2h_14',diff:'hard',topic:'Algebra',type:'mc',calc:true,
    q:'A company charges a flat setup fee plus a constant rate per mile. A 120-mile trip costs $70, and a 260-mile trip costs $105. If <i>C</i> is the total cost in dollars for a trip of <i>m</i> miles, which equation represents this relationship?',
    opts:['<i>C</i> = 0.25<i>m</i> + 40','<i>C</i> = 0.25<i>m</i> + 70','<i>C</i> = 4<i>m</i> − 410','<i>C</i> = 35<i>m</i> + 120'],ans:'A',
@@ -450,17 +453,17 @@ const Q_M2_HARD = [
    opts:['25%','75%','(1.25)³ − 1','800(1.25)³'],ans:'C',
    exp:'Over any 3-hour period, the multiplicative factor is (1.25)³. The percent increase as a decimal is final/original − 1 = (1.25)³ − 1.'},
   {id:'m2h_16',diff:'hard',topic:'Geometry & Trigonometry',type:'mc',calc:false,
-   q:'If sin(<i>x</i>°) = cos(52°) and 0 &lt; <i>x</i> &lt; 90, what is the value of <i>x</i>?',
-   opts:['28','38','48','52'],ans:'B',
-   exp:'sin(x°) = cos(52°) = sin(90° − 52°) = sin(38°). Therefore x = 38.'},
+   q:'In a right triangle, sin(<i>x</i>°) = cos(52°), where 0 &lt; <i>x</i> &lt; 90. If the side opposite angle <i>x</i> has length 15, what is the length of the hypotenuse?',
+   opts:['15/sin(38°)','15/cos(38°)','15sin(52°)','15cos(52°)'],ans:'A',
+   exp:'Since sin(x°)=cos(52°)=sin(38°), x=38. Also sin(38°)=opposite/hypotenuse=15/h, so h=15/sin(38°).'},
   {id:'m2h_17',diff:'hard',topic:'Advanced Math',type:'spr',calc:false,
    q:'If <i>x</i> and <i>y</i> are positive integers and <i>x</i>² − <i>y</i>² = 45, what is one possible value of <i>x</i> + <i>y</i>?',
    ans:['9','15','45'],
    exp:'Factor: (x + y)(x − y) = 45. Factor pairs of 45: (9,5), (15,3), (45,1). For (x+y)=9 and (x−y)=5: x=7, y=2 ✓. So x + y = 9. (Also acceptable: 15 or 45.)'},
   {id:'m2h_18',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
-   q:'The expression (3 + 2<i>i</i>)(4 − <i>i</i>) is equivalent to which of the following? (where <i>i</i>² = −1)',
-   opts:['10 + 5<i>i</i>','14 + 5<i>i</i>','12 − 2<i>i</i>','10 − <i>i</i>'],ans:'B',
-   exp:'FOIL: 12 − 3i + 8i − 2i² = 12 + 5i − 2(−1) = 12 + 5i + 2 = 14 + 5i.'},
+   q:'For real numbers <i>a</i> and <i>b</i>, (3 + 2<i>i</i>)(<i>a</i> − <i>i</i>) = <i>b</i> + 5<i>i</i>. What is the value of <i>a</i> + <i>b</i>?',
+   opts:['14','18','22','26'],ans:'B',
+   exp:'(3+2i)(a−i)=3a−3i+2ai−2i²=(3a+2)+(2a−3)i. Since the imaginary part is 5, 2a−3=5, so a=4. Then b=3a+2=14. Thus a+b=18.'},
   {id:'m2h_19',diff:'hard',topic:'Algebra',type:'mc',calc:true,
    q:'The quadratic function <i>f</i> satisfies <i>f</i>(−1)=4, <i>f</i>(0)=1, and <i>f</i>(2)=7. If <i>f</i>(<i>x</i>) = <i>ax</i>² + <i>bx</i> + <i>c</i>, which statement must be true?',
    opts:['The graph opens upward and has <i>y</i>-intercept 1','The graph opens downward and has <i>y</i>-intercept 1','The graph opens upward and has <i>y</i>-intercept 4','The graph opens downward and has <i>y</i>-intercept 4'],ans:'A',
@@ -474,9 +477,9 @@ const Q_M2_HARD = [
    opts:['2√13','6√2','√52','10'],ans:'A',
    exp:'Centers: (2, −3) and (−4, 1). Distance = √((2−(−4))² + (−3−1)²) = √(36 + 16) = √52 = 2√13.'},
   {id:'m2h_22',diff:'hard',topic:'Advanced Math',type:'spr',calc:false,
-   q:'If (<i>x</i> + 1/<i>x</i>)² = 9, what is the value of <i>x</i>² + 1/<i>x</i>²?',
-   ans:'7',
-   exp:'Expand: (x + 1/x)² = x² + 2(x)(1/x) + 1/x² = x² + 2 + 1/x² = 9. Therefore x² + 1/x² = 9 − 2 = 7.'},
+   q:'For nonzero <i>x</i>, if (<i>x</i> + 1/<i>x</i>)² = 9, what is the value of (<i>x</i> − 1/<i>x</i>)²?',
+   ans:'5',
+   exp:'Expand (x+1/x)² = x² + 2 + 1/x² = 9, so x² + 1/x² = 7. Then (x−1/x)² = x² − 2 + 1/x² = 7 − 2 = 5.'},
 ];
 
 const Q_M2_EASY = [
@@ -612,7 +615,8 @@ const state = {
     xMin:-10, xMax:10, yMin:-10, yMax:10, errors:{},
     keypadTab:'main', settingsOpen:false, selectedPoint:null, hoverPoint:null,
     settings:{grid:true, minorGrid:true, axisNumbers:true, radians:true}
-  }
+  },
+  showEstimate: false
 };
 
 // =====================================================================
@@ -856,13 +860,16 @@ function renderModEnd() {
   m1.qs.forEach((q, i) => { if (isCorrect(q, m1.answers[i])) correct++; });
   const isHard = correct >= 14;
   state.m2.isHard = isHard;
+  state.m2.qs = state.m2.isHard ? Q_M2_HARD : Q_M2_EASY;
+  state.m2.answers = new Array(22).fill(null);
+  state.m2.flags = new Array(22).fill(false);
 
   return `<div class="mod-end-screen">
     <div class="mod-end-card">
       <h2>Module 1 Complete</h2>
-      <p>Your answers have been saved. The next module will begin when you continue. Scores, explanations, and module routing are shown only after the full exam is complete.</p>
-      <p style="margin-bottom:1.5rem">For a more realistic mock test, continue directly to Module 2 without taking an untimed break.</p>
-      <button class="btn-primary" id="start-m2-btn">Continue to Module 2</button>
+      <p>Your answers have been saved. Scores, explanations, and module routing are shown only after the full exam is complete.</p>
+      <p style="margin-bottom:1.5rem">Module 2 will begin automatically in <strong id="m2-countdown">10</strong> seconds.</p>
+      <button class="btn-primary" id="start-m2-btn">Continue Now</button>
     </div>
   </div>`;
 }
@@ -898,11 +905,6 @@ function renderResults() {
       <p>Here are your results and detailed explanations.</p>
     </div>
     <div class="score-display">
-      <div class="score-card main">
-        <div class="sc-label">Rough Math Score Estimate</div>
-        <div class="sc-val">${sat}</div>
-        <div class="sc-sub">Not predictive · unofficial</div>
-      </div>
       <div class="score-card">
         <div class="sc-label">Module 1</div>
         <div class="sc-val">${m1c}/22</div>
@@ -918,7 +920,13 @@ function renderResults() {
         <div class="sc-val">${total}/44</div>
         <div class="sc-sub">${Math.round(total/44*100)}% overall</div>
       </div>
+      <div class="score-card main${state.showEstimate ? '' : ' estimate-hidden'}" id="estimate-card">
+        <div class="sc-label">Rough Math Score Estimate</div>
+        <div class="sc-val">${sat}</div>
+        <div class="sc-sub">Not predictive · unofficial</div>
+      </div>
     </div>
+    <button class="estimate-toggle" id="estimate-toggle">${state.showEstimate ? 'Hide Rough Score Estimate' : 'Show Rough Score Estimate'}</button>
     <p class="score-caveat">This score is a rough practice estimate based on raw correct answers and module path. The real digital SAT uses adaptive item-level scoring, so students with the same raw score can receive different scaled scores depending on which questions they miss.</p>
 
     <div class="section-card">
@@ -1685,12 +1693,23 @@ function bindAll() {
   };
   // Start M2
   const sm2 = document.getElementById('start-m2-btn');
-  if (sm2) sm2.onclick = () => {
-    state.m2.qs = state.m2.isHard ? Q_M2_HARD : Q_M2_EASY;
-    state.m2.answers = new Array(22).fill(null);
-    state.m2.flags = new Array(22).fill(false);
-    state.phase = 'm2'; render(); startTimer('m2');
-  };
+  if (sm2) {
+    const startM2 = () => {
+      stopTimer('m1');
+      state.phase = 'm2';
+      render();
+      startTimer('m2');
+    };
+    sm2.onclick = startM2;
+    let remaining = 10;
+    const cd = document.getElementById('m2-countdown');
+    const auto = setInterval(() => {
+      if (state.phase !== 'm1-end') { clearInterval(auto); return; }
+      remaining--;
+      if (cd) cd.textContent = remaining;
+      if (remaining <= 0) { clearInterval(auto); startM2(); }
+    }, 1000);
+  }
   // Restart
   const rb = document.getElementById('restart-btn');
   if (rb) rb.onclick = () => {
@@ -1698,8 +1717,11 @@ function bindAll() {
     state.m1={qs:Q_M1,answers:new Array(22).fill(null),flags:new Array(22).fill(false),current:0,timeLeft:35*60,timer:null,submitted:false};
     state.m2={qs:null,answers:null,flags:null,current:0,timeLeft:35*60,timer:null,submitted:false,isHard:false};
     state.graph={expressions:[{expr:'',color:'#c74440'},{expr:'',color:'#2d70b3'}],xMin:-10,xMax:10,yMin:-10,yMax:10,errors:{},keypadTab:'main',settingsOpen:false,selectedPoint:null,hoverPoint:null,settings:{grid:true,minorGrid:true,axisNumbers:true,radians:true}};
+    state.showEstimate=false;
     render();
   };
+  const est = document.getElementById('estimate-toggle');
+  if (est) est.onclick = () => { state.showEstimate = !state.showEstimate; render(); };
 
   // Module-specific controls
   ['m1','m2'].forEach(mod => {
