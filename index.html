@@ -275,44 +275,51 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 
 const Q_M1 = [
   // ── EASY ──
-  {id:'m1_1',diff:'easy',topic:'Algebra',type:'mc',calc:false,
-   q:'If 3<i>x</i> + 7 = 22, what is the value of <i>x</i>?',
-   opts:['3','4','5','6'],ans:'C',
-   exp:'Subtract 7 from both sides: 3x = 15. Divide by 3: x = 5.'},
+  {id:'m1_1',diff:'easy',topic:'Algebra',type:'mc',calc:true,
+   q:`A ride-share company charges a fixed booking fee plus a constant charge for each mile. The table shows the total charges for two trips.
+   <table class="q-table"><tr><th>Trip distance, miles</th><td>6</td><td>14</td></tr><tr><th>Total charge</th><td>$18.40</td><td>$31.20</td></tr></table>
+   What is the charge, in dollars, for each additional mile?`,
+   opts:['$1.20','$1.60','$2.30','$3.20'],ans:'B',
+   exp:'The charge increases by $31.20 - $18.40 = $12.80 over 14 - 6 = 8 miles. The unit rate is 12.80/8 = $1.60 per mile.'},
   {id:'m1_2',diff:'easy',topic:'Algebra',type:'mc',calc:false,
-   q:'Which of the following is equivalent to 4(2<i>x</i> − 3) + 5<i>x</i>?',
-   opts:['13<i>x</i> − 12','13<i>x</i> − 3','8<i>x</i> − 12','12<i>x</i> − 12'],ans:'A',
-   exp:'Distribute: 8x − 12 + 5x = 13x − 12.'},
+   q:'A club orders <i>n</i> shirts that cost $12 each. A coupon reduces the shirt total by 15%, and shipping costs $18. Which expression gives the total cost, in dollars?',
+   opts:['10.2<i>n</i> + 18','12<i>n</i> + 15 + 18','0.15(12<i>n</i> + 18)','12<i>n</i> - 0.15<i>n</i> + 18'],ans:'A',
+   exp:'After a 15% discount, the club pays 85% of the shirt cost: 0.85(12n)=10.2n. Adding shipping gives 10.2n+18.'},
   {id:'m1_3',diff:'easy',topic:'Problem Solving & Data Analysis',type:'mc',calc:true,
-   q:'A jacket is on sale for $120, which is 20% off its original price. What was the original price of the jacket?',
-   opts:['$96','$140','$144','$150'],ans:'D',
-   exp:'If the sale price is 80% of original: 120 = 0.80 × original, so original = 120 ÷ 0.80 = $150.'},
+   q:`The table gives two values from a linear model <i>y</i> = <i>mx</i> + <i>b</i>.
+   <table class="q-table"><tr><th><i>x</i></th><td>2</td><td>6</td></tr><tr><th><i>y</i></th><td>11</td><td>23</td></tr></table>
+   What is the value of <i>b</i>?`,
+   opts:['3','5','7','17'],ans:'B',
+   exp:'The slope is (23-11)/(6-2)=3. Using (2,11), 11=3(2)+b, so b=5.'},
   {id:'m1_4',diff:'easy',topic:'Geometry & Trigonometry',type:'mc',calc:false,
-   q:`The rectangle shown has side lengths 12 and 5. What is the length of diagonal <i>d</i>?
-   <div class="q-figure"><svg width="260" height="150" viewBox="0 0 260 150" role="img" aria-label="Rectangle with sides 12 and 5 and diagonal d">
-     <rect x="40" y="35" width="180" height="75" fill="#f8fbff" stroke="#222" stroke-width="2"/>
-     <line x1="40" y1="110" x2="220" y2="35" stroke="#0d6efd" stroke-width="3"/>
-     <text x="123" y="136" font-size="18">12</text><text x="225" y="78" font-size="18">5</text><text x="126" y="66" fill="#0d6efd" font-size="18">d</text>
+   q:`A 13-foot ladder leans against a wall. The foot of the ladder is 5 feet from the wall. If the foot of the same ladder is moved to 8 feet from the wall, what is the new height, in feet, reached by the top of the ladder?
+   <div class="q-figure"><svg width="280" height="170" viewBox="0 0 280 170" role="img" aria-label="Right triangle ladder diagram with hypotenuse 13 and horizontal distance 8">
+     <line x1="55" y1="140" x2="235" y2="140" stroke="#222" stroke-width="2"/>
+     <line x1="55" y1="140" x2="55" y2="25" stroke="#222" stroke-width="2"/>
+     <line x1="55" y1="42" x2="175" y2="140" stroke="#0d6efd" stroke-width="4"/>
+     <path d="M55 140 L75 140 L75 120 L55 120 Z" fill="none" stroke="#222" stroke-width="1.5"/>
+     <text x="103" y="155" font-size="17">8</text><text x="123" y="83" fill="#0d6efd" font-size="17">13</text><text x="24" y="96" font-size="17">h</text>
    </svg></div>`,
-   opts:['10','13','15','17'],ans:'B',
-   exp:'By the Pythagorean theorem: √(12² + 5²) = √(144 + 25) = √169 = 13.'},
+   opts:['5','√89','√105','21'],ans:'C',
+   exp:'The ladder is the hypotenuse. With horizontal distance 8, h^2+8^2=13^2, so h^2=105 and h=√105.'},
   {id:'m1_5',diff:'easy',topic:'Algebra',type:'spr',calc:false,
-   q:'If 2<i>x</i> − 5 = 11, what is the value of 4<i>x</i>?',
-   ans:'32',
-   exp:'2x = 16, so x = 8. Therefore 4x = 4 × 8 = 32.'},
+   q:'If 5(<i>a</i> + 2) = 3<i>a</i> + 34, what is the value of <i>a</i>/2?',
+   ans:'6',
+   exp:'5a+10=3a+34, so 2a=24 and a=12. Therefore a/2=6.'},
   {id:'m1_6',diff:'easy',topic:'Problem Solving & Data Analysis',type:'mc',calc:true,
-   q:`The table shows the number of books read by five students last month. What is the mean number of books read?
-   <table class="q-table"><tr><th>Student</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr><tr><th>Books</th><td>3</td><td>7</td><td>5</td><td>9</td><td>6</td></tr></table>`,
-   opts:['5','6','7','8'],ans:'B',
-   exp:'Mean = (3 + 7 + 5 + 9 + 6) ÷ 5 = 30 ÷ 5 = 6.'},
+   q:`The table summarizes a survey of juniors and seniors.
+   <table class="q-table"><tr><th></th><th>Plays an instrument</th><th>Does not play an instrument</th></tr><tr><th>Junior</th><td>18</td><td>42</td></tr><tr><th>Senior</th><td>30</td><td>30</td></tr></table>
+   Of the students in the survey who play an instrument, what percent are seniors?`,
+   opts:['40%','50%','62.5%','75%'],ans:'C',
+   exp:'There are 18+30=48 students who play an instrument. Of these, 30 are seniors, and 30/48=0.625=62.5%.'},
   {id:'m1_7',diff:'easy',topic:'Algebra',type:'mc',calc:false,
-   q:'Which inequality represents the statement "5 less than twice a number is greater than 15"?',
-   opts:['2<i>n</i> − 5 &gt; 15','5 − 2<i>n</i> &gt; 15','2<i>n</i> + 5 &gt; 15','2(<i>n</i> − 5) &gt; 15'],ans:'A',
-   exp:'"Twice a number" = 2n; "5 less than" = 2n − 5; "is greater than 15" gives 2n − 5 > 15.'},
+   q:'A tutoring service charges a $35 enrollment fee plus $12 per session. Priya can spend at most $125. Which inequality represents the number of sessions, <i>s</i>, Priya can attend?',
+   opts:['12<i>s</i> + 35 &ge; 125','35<i>s</i> + 12 &le; 125','12<i>s</i> + 35 &le; 125','35<i>s</i> - 12 &le; 125'],ans:'C',
+   exp:'The total cost is the fixed fee plus 12 dollars per session: 35+12s. "At most $125" means 12s+35 <= 125.'},
   {id:'m1_8',diff:'easy',topic:'Geometry & Trigonometry',type:'mc',calc:false,
-   q:'Two parallel lines are cut by a transversal. One of the angles formed is 65°. What is the measure of the alternate interior angle?',
-   opts:['25°','65°','115°','125°'],ans:'B',
-   exp:'Alternate interior angles are congruent when lines are parallel, so the angle is also 65°.'},
+   q:'Two parallel lines are cut by a transversal. One pair of alternate interior angles has measures (3<i>x</i> + 10)&deg; and (5<i>x</i> - 30)&deg;. What is the value of <i>x</i>?',
+   opts:['10','20','40','70'],ans:'B',
+   exp:'Alternate interior angles are congruent, so 3x+10=5x-30. Then 40=2x, so x=20.'},
   // ── MEDIUM ──
   {id:'m1_9',diff:'medium',topic:'Advanced Math',type:'mc',calc:false,
    q:'Which of the following is equivalent to <sup><i>x</i>² − 9</sup>/<sub><i>x</i> − 3</sub> for <i>x</i> ≠ 3?',
@@ -323,9 +330,11 @@ const Q_M1 = [
    opts:['15','11','9','−7'],ans:'A',
    exp:'f(−2) = 2(−2)² − 3(−2) + 1 = 2(4) + 6 + 1 = 8 + 6 + 1 = 15.'},
   {id:'m1_11',diff:'medium',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
-   q:'A bag contains 4 red marbles, 6 blue marbles, and 2 green marbles. If one marble is drawn at random, what is the probability that it is <em>not</em> red?',
-   opts:['1/3','2/3','3/4','1/4'],ans:'B',
-   exp:'Total marbles = 12. Not red = 8. Probability = 8/12 = 2/3.'},
+   q:`The histogram summarizes the number of books read by 24 students during one month.
+   <table class="q-table"><tr><th>Books read</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr><tr><th>Number of students</th><td>3</td><td>5</td><td>7</td><td>6</td><td>3</td></tr></table>
+   What is the median number of books read?`,
+   opts:['1','2','2.5','3'],ans:'B',
+   exp:'There are 24 students, so the median is the average of the 12th and 13th values in order. The 9th through 15th values are all 2, so the median is 2.'},
   {id:'m1_12',diff:'medium',topic:'Geometry & Trigonometry',type:'mc',calc:false,
    q:`In the right triangle shown, what is the value of <i>c</i>?
    <div class="q-figure"><svg width="260" height="160" viewBox="0 0 260 160" role="img" aria-label="Right triangle with legs 7 and 24 and hypotenuse c">
@@ -336,9 +345,11 @@ const Q_M1 = [
    opts:['25','26','27','31'],ans:'A',
    exp:'√(7² + 24²) = √(49 + 576) = √625 = 25.'},
   {id:'m1_13',diff:'medium',topic:'Algebra',type:'mc',calc:true,
-   q:'A train travels at a constant speed and covers 240 miles in 4 hours. At this same rate, how many hours will it take the train to travel 390 miles?',
-   opts:['5.5','6','6.5','7'],ans:'C',
-   exp:'Speed = 240 ÷ 4 = 60 mph. Time = 390 ÷ 60 = 6.5 hours.'},
+   q:`A water tank drains at a constant rate. The table shows the amount of water in the tank at two times.
+   <table class="q-table"><tr><th>Time, minutes</th><td>4</td><td>9</td></tr><tr><th>Water, gallons</th><td>74</td><td>49</td></tr></table>
+   If <i>W</i> is the amount of water, in gallons, after <i>t</i> minutes, which equation represents this relationship?`,
+   opts:['<i>W</i> = -5<i>t</i> + 94','<i>W</i> = -5<i>t</i> + 54','<i>W</i> = 5<i>t</i> + 54','<i>W</i> = -25<i>t</i> + 174'],ans:'A',
+   exp:'The rate is (49-74)/(9-4)=-25/5=-5 gallons per minute. Using (4,74), 74=-5(4)+b, so b=94.'},
   {id:'m1_14',diff:'medium',topic:'Advanced Math',type:'spr',calc:false,
    q:'If <i>x</i>² − 5<i>x</i> + 6 = 0, what is the sum of all values of <i>x</i> that satisfy the equation?',
    ans:'5',
@@ -388,8 +399,8 @@ const Q_M1 = [
    exp:'Dividing each term by x gives 2x² − 5x + 3, so a=2, b=−5, and c=3. Therefore a+b+c=0.'},
   {id:'m1_21',diff:'hard',topic:'Geometry & Trigonometry',type:'mc',calc:true,
    q:'In a right triangle, one acute angle measures 30°. The hypotenuse has length 20. If the shorter leg is increased by 2 while the longer leg is unchanged, which expression represents the new area?',
-   opts:['50√3 + 10√3','50√3 + 5√3','60√3','100 + 20√3'],ans:'A',
-   exp:'The original shorter leg is 10 and the longer leg is 10√3. New area = 1/2(12)(10√3)=60√3 = 50√3 + 10√3.'},
+   opts:['55√3','50√3 + 5√3','60√3','100 + 20√3'],ans:'C',
+   exp:'The original shorter leg is 10 and the longer leg is 10√3. The new area is (1/2)(12)(10√3)=60√3.'},
   {id:'m1_22',diff:'hard',topic:'Advanced Math',type:'mc',calc:false,
    q:'For the system <i>y</i> = 2<i>x</i> + 5 and <i>y</i> = <i>kx</i> − 3 to have no solution, which statement must be true?',
    opts:['<i>k</i> = 2 because the lines have the same slope and different intercepts','<i>k</i> = −3 because the second line has y-intercept −3','<i>k</i> ≠ 2 because different slopes never intersect','<i>k</i> = 5 because the first line has y-intercept 5'],ans:'A',
@@ -494,43 +505,45 @@ const Q_M2_HARD = [
 const Q_M2_EASY = [
   // ── EASY ──
   {id:'m2e_1',diff:'easy',topic:'Algebra',type:'mc',calc:false,
-   q:'What is the value of <i>x</i> if 5<i>x</i> − 3 = 17?',
-   opts:['2','3','4','5'],ans:'C',
-   exp:'5x = 20 → x = 4.'},
+   q:'A line has equation 3<i>x</i> + 2<i>y</i> = 18. What is the <i>y</i>-intercept of the line?',
+   opts:['3','6','9','18'],ans:'C',
+   exp:'At the y-intercept, x=0. Then 2y=18, so y=9.'},
   {id:'m2e_2',diff:'easy',topic:'Algebra',type:'mc',calc:false,
-   q:'Which expression is equivalent to 3(<i>x</i> + 4) − 2<i>x</i>?',
-   opts:['<i>x</i> + 12','<i>x</i> + 4','5<i>x</i> + 12','<i>x</i> − 4'],ans:'A',
-   exp:'Distribute: 3x + 12 − 2x = x + 12.'},
-  {id:'m2e_3',diff:'easy',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
-   q:`The table shows a proportional relationship between time and distance.
-   <table class="q-table"><tr><th>Time, hours</th><td>2</td><td>5</td></tr><tr><th>Distance, miles</th><td>110</td><td>275</td></tr></table>
-   What is the constant of proportionality?`,
-   opts:['55','110','165','275'],ans:'A',
-   exp:'For a proportional relationship, distance/time is constant. 110/2=55 and 275/5=55.'},
+   q:'A school buys <i>x</i> calculators for $18 each and receives a $45 discount on the order. Which expression represents the final cost, in dollars?',
+   opts:['18<i>x</i> - 45','45<i>x</i> - 18','18(<i>x</i> - 45)','45 - 18<i>x</i>'],ans:'A',
+   exp:'The calculator total is 18x dollars. Applying a $45 discount gives 18x-45.'},
+  {id:'m2e_3',diff:'easy',topic:'Problem Solving & Data Analysis',type:'mc',calc:true,
+   q:`The table shows the number of customers in a store at selected times after opening.
+   <table class="q-table"><tr><th>Hours after opening</th><td>1</td><td>3</td><td>5</td></tr><tr><th>Customers</th><td>24</td><td>38</td><td>52</td></tr></table>
+   If the relationship is linear, which statement is true?`,
+   opts:['The number of customers increases by 7 per hour','The number of customers increases by 14 per hour','The store had 24 customers when it opened','The model predicts 59 customers after 7 hours'],ans:'A',
+   exp:'From 1 to 3 hours, customers increase by 14 over 2 hours, or 7 per hour. The same rate holds from 3 to 5 hours.'},
   {id:'m2e_4',diff:'easy',topic:'Geometry & Trigonometry',type:'mc',calc:false,
-   q:`The square shown has area 36. What is its perimeter?
-   <div class="q-figure"><svg width="200" height="170" viewBox="0 0 200 170" role="img" aria-label="Square with area 36">
-     <rect x="50" y="25" width="100" height="100" fill="#f8fbff" stroke="#222" stroke-width="2"/>
-     <text x="78" y="80" font-size="18">Area</text><text x="83" y="103" font-size="18">36</text>
+   q:`A rectangle has perimeter 50 inches. Its length is 5 inches greater than its width. What is the area, in square inches, of the rectangle?
+   <div class="q-figure"><svg width="260" height="150" viewBox="0 0 260 150" role="img" aria-label="Rectangle with width w and length w plus 5">
+     <rect x="45" y="35" width="170" height="75" fill="#f8fbff" stroke="#222" stroke-width="2"/>
+     <text x="115" y="132" font-size="17">w + 5</text><text x="222" y="78" font-size="17">w</text>
    </svg></div>`,
-   opts:['6','18','24','36'],ans:'C',
-   exp:'Side length = √36 = 6. Perimeter = 4 × 6 = 24.'},
+   opts:['120','150','180','300'],ans:'B',
+   exp:'Let the width be w, so the length is w+5. Then 2w+2(w+5)=50, so 4w+10=50 and w=10. The area is 10(15)=150.'},
   {id:'m2e_5',diff:'easy',topic:'Algebra',type:'spr',calc:false,
-   q:'If <i>y</i> = 3<i>x</i> − 2, what is the value of <i>y</i> when <i>x</i> = 4?',
-   ans:'10',
-   exp:'y = 3(4) − 2 = 12 − 2 = 10.'},
+   q:'If 4<i>p</i> - 3 = 2<i>p</i> + 11, what is the value of 3<i>p</i>?',
+   ans:'21',
+   exp:'4p-3=2p+11 gives 2p=14, so p=7. Therefore 3p=21.'},
   {id:'m2e_6',diff:'easy',topic:'Advanced Math',type:'mc',calc:false,
-   q:'If <i>f</i>(<i>x</i>) = 2<i>x</i>² + 1, which expression represents <i>f</i>(<i>x</i> + 3)?',
-   opts:['2(<i>x</i> + 3)² + 1','2<i>x</i>² + 4','2<i>x</i>² + 7','(2<i>x</i> + 3)² + 1'],ans:'A',
-   exp:'Replace x in the rule f(x)=2x²+1 with x+3: f(x+3)=2(x+3)²+1.'},
-  {id:'m2e_7',diff:'easy',topic:'Problem Solving & Data Analysis',type:'mc',calc:false,
-   q:'The numbers of points scored by a team in five games were 8, 11, 11, 14, and 21. What is the median number of points scored?',
-   opts:['11','13','14','65'],ans:'A',
-   exp:'The values are already ordered. The median is the middle value, 11.'},
+   q:'The function <i>f</i> is defined by <i>f</i>(<i>x</i>) = <i>x</i><sup>2</sup> - 6<i>x</i>. Which expression is equivalent to <i>f</i>(<i>x</i> + 3)?',
+   opts:['<i>x</i><sup>2</sup> - 9','<i>x</i><sup>2</sup> + 9','<i>x</i><sup>2</sup> - 6<i>x</i> + 3','<i>x</i><sup>2</sup> + 6<i>x</i> - 9'],ans:'A',
+   exp:'f(x+3)=(x+3)^2-6(x+3)=x^2+6x+9-6x-18=x^2-9.'},
+  {id:'m2e_7',diff:'easy',topic:'Problem Solving & Data Analysis',type:'mc',calc:true,
+   q:`A sample of 80 seeds was planted. The table shows the results after two weeks.
+   <table class="q-table"><tr><th></th><th>Sprouted</th><th>Did not sprout</th></tr><tr><th>Type A</th><td>28</td><td>12</td></tr><tr><th>Type B</th><td>30</td><td>10</td></tr></table>
+   Which seed type had the greater sprouting percentage, and what was that percentage?`,
+   opts:['Type A, 70%','Type A, 75%','Type B, 70%','Type B, 75%'],ans:'D',
+   exp:'Type A sprouted percentage is 28/40=70%. Type B sprouted percentage is 30/40=75%, which is greater.'},
   {id:'m2e_8',diff:'easy',topic:'Algebra',type:'mc',calc:false,
-   q:'A line has slope 4 and passes through the point (0, −7). Which equation represents the line?',
-   opts:['<i>y</i> = 4<i>x</i> − 7','<i>y</i> = −7<i>x</i> + 4','<i>y</i> = 4<i>x</i> + 7','<i>y</i> = −4<i>x</i> − 7'],ans:'A',
-   exp:'A line with slope m and y-intercept b has equation y=mx+b. Here m=4 and b=−7, so y=4x−7.'},
+   q:'Line <i>k</i> passes through (0, -7) and (4, 9). Which equation represents line <i>k</i>?',
+   opts:['<i>y</i> = 4<i>x</i> - 7','<i>y</i> = -7<i>x</i> + 4','<i>y</i> = 4<i>x</i> + 7','<i>y</i> = -4<i>x</i> - 7'],ans:'A',
+   exp:'The slope is (9-(-7))/(4-0)=16/4=4. Since the point (0,-7) is the y-intercept, the equation is y=4x-7.'},
   // ── MEDIUM ──
   {id:'m2e_9',diff:'medium',topic:'Algebra',type:'mc',calc:false,
    q:'What is the slope of the line passing through the points (−2, 3) and (4, −9)?',
@@ -841,7 +854,7 @@ function renderAnswerArea(q, mod, m) {
     return `<div class="spr-wrap">
       <div class="spr-label">Enter your answer:</div>
       <input class="spr-input" id="spr-input" type="text" value="${saved || ''}" placeholder="e.g. 7" autocomplete="off" inputmode="decimal">
-      <div class="spr-hint">Enter a number, decimal, or fraction (e.g. 3/4). Do not include units.</div>
+      <div class="spr-hint">Enter a number, decimal, fraction, or exact expression such as sqrt(3)/2 or 2pi. Do not include units.</div>
     </div>`;
   }
 }
@@ -1082,10 +1095,11 @@ function renderReviewItem(q, answer, num, mod) {
   const correctAnswerText = Array.isArray(q.ans) ? q.ans.join(' or ') : q.ans;
   if (q.type === 'mc') {
     const letters = ['A','B','C','D'];
-    const correctOpt = q.opts[letters.indexOf(q.ans)];
-    if (unanswered) answerText = `<span style="color:var(--muted)">No answer given.</span> Correct: <strong>${q.ans}</strong>. ${correctOpt}`;
+    const accepted = Array.isArray(q.ans) ? q.ans : [q.ans];
+    const correctChoices = accepted.map(letter => `${letter}. ${q.opts[letters.indexOf(letter)]}`).join(' or ');
+    if (unanswered) answerText = `<span style="color:var(--muted)">No answer given.</span> Correct: <strong>${correctAnswerText}</strong>. ${correctChoices}`;
     else if (correct) answerText = `Your answer: <strong>${answer}</strong>. ${q.opts[letters.indexOf(answer)]} ✓`;
-    else answerText = `Your answer: <strong>${answer}</strong> (${q.opts[letters.indexOf(answer)] || '—'}). Correct: <strong>${q.ans}</strong>. ${correctOpt}`;
+    else answerText = `Your answer: <strong>${answer}</strong> (${q.opts[letters.indexOf(answer)] || '—'}). Correct: <strong>${correctAnswerText}</strong>. ${correctChoices}`;
   } else {
     if (unanswered) answerText = `No answer given. Correct answer: <strong>${correctAnswerText}</strong>`;
     else if (correct) answerText = `Your answer: <strong>${answer}</strong> ✓`;
@@ -1130,7 +1144,10 @@ function generateSuggestions(topicStats) {
 // =====================================================================
 function isCorrect(q, answer) {
   if (answer === null || answer === undefined || answer === '') return false;
-  if (q.type === 'mc') return answer === q.ans;
+  if (q.type === 'mc') {
+    const accepted = Array.isArray(q.ans) ? q.ans : [q.ans];
+    return accepted.includes(answer);
+  }
   const accepted = Array.isArray(q.ans) ? q.ans : [q.ans];
   return accepted.some(ans => sprEquivalent(answer, ans));
 }
@@ -1164,11 +1181,48 @@ function getPracticeRoute(questions, answers) {
 }
 
 function sprEquivalent(given, expected) {
-  const normalize = s => String(s).trim().replace(/\s/g,'').toLowerCase();
+  const normalize = s => normalizeMathInput(s);
   const g = normalize(given), e = normalize(expected);
   if (g === e) return true;
-  const gn = parseSPRNumber(g), en = parseSPRNumber(e);
-  return gn !== null && en !== null && Math.abs(gn - en) < 1e-9;
+  const gn = parseSPRValue(g), en = parseSPRValue(e);
+  if (gn === null || en === null) return false;
+  const tolerance = Math.max(1e-9, Math.abs(en) * 1e-9);
+  return Math.abs(gn - en) <= tolerance;
+}
+
+function normalizeMathInput(value) {
+  return String(value)
+    .trim()
+    .replace(/\s/g,'')
+    .replace(/,/g,'')
+    .replace(/[−–—]/g,'-')
+    .replace(/[×·]/g,'*')
+    .replace(/÷/g,'/')
+    .replace(/π/g,'pi')
+    .replace(/√\(([^)]+)\)/g,'sqrt($1)')
+    .replace(/√([0-9.]+)/g,'sqrt($1)')
+    .toLowerCase();
+}
+
+function parseSPRValue(value) {
+  if (!value) return null;
+  if (value.includes('/')) {
+    const parts = value.split('/');
+    if (parts.length === 2 && !/[a-z()^*+]/i.test(value)) {
+      const n = Number(parts[0]), d = Number(parts[1]);
+      if (!Number.isFinite(n) || !Number.isFinite(d) || d === 0) return null;
+      return n / d;
+    }
+  }
+  const numeric = Number(value);
+  if (Number.isFinite(numeric)) return numeric;
+  if (/[x]/i.test(value) || /[^0-9a-z+\-*/^().]/i.test(value)) return null;
+  try {
+    const evaluated = compileExpression(value)(0);
+    return Number.isFinite(evaluated) ? evaluated : null;
+  } catch {
+    return null;
+  }
 }
 
 function parseSPRNumber(value) {
